@@ -1,0 +1,32 @@
+# src/INCES/ComedorBundle/Resources/config/doctrine/Usuario.orm.yml
+INCES\ComedorBundle\Entity\Usuario:
+   type: entity
+   table: Usuario
+   id:
+     id:
+        type: integer
+        generator: { strategy: AUTO }
+   fields:
+     nombre:
+        type: string
+        length: 150
+        nullable: false
+     apellido:
+        type: string
+        length: 150
+        nullable: false
+     ncarnet:
+        type: integer
+        nullable: false
+     a_i:
+        type: boolean
+     correo:
+         type: string
+         length: 255
+         nullable: true
+   manyToOne:
+    rol:
+      targetEntity: Rol
+      joinColumn:
+        name: rol_id
+        referencedColumnName: id

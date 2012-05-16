@@ -1,0 +1,61 @@
+{# src/INCES/ComedorBundle/Resources/views/Menu/index.html.twig #}
+{#
+{% extends '::base.html.twig' %}
+
+{% block body %}
+#}
+
+<h1>Menu list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Seco</th>
+            <th>Sopa</th>
+            <th>Dia</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('menu_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.seco }}</td>
+            <td>{{ entity.sopa }}</td>
+            <td>{% if entity.dia %}{{ entity.dia|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>
+                <ul>
+                    <li>
+                    {#
+                    <a href="{{ path('menu_show', { 'id': entity.id }) }}">show</a>
+                    #}
+                        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/show">show2</a>
+                    </li>
+                    <li>
+                        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edit">edit2</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+    {#
+    <a href="{{ path('menu_new') }}">
+        Create a new entry
+    </a>
+    -->
+    <br />
+    #}
+    <a href="{{ app.request.uriForPath('/#!/menu/new') }}">
+        Create a new entry
+    </a>
+    </li>
+</ul>
+{#
+{% endblock %}
+#}

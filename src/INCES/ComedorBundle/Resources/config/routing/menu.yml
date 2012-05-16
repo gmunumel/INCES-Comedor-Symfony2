@@ -1,0 +1,30 @@
+menu:
+    pattern:  /
+    defaults: { _controller: "INCESComedorBundle:Menu:index" }
+
+menu_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "INCESComedorBundle:Menu:show" }
+
+menu_new:
+    pattern:  /new
+    defaults: { _controller: "INCESComedorBundle:Menu:new" }
+
+menu_create:
+    pattern:  /create
+    defaults: { _controller: "INCESComedorBundle:Menu:create" }
+    requirements: { _method: post }
+
+menu_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "INCESComedorBundle:Menu:edit" }
+
+menu_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "INCESComedorBundle:Menu:update" }
+    requirements: { _method: post }
+
+menu_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "INCESComedorBundle:Menu:delete" }
+    requirements: { _method: post }

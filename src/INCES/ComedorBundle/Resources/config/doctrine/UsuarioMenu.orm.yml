@@ -1,0 +1,24 @@
+# src/INCES/ComedorBundle/Resources/config/doctrine/UsuarioMenu.orm.yml
+INCES\ComedorBundle\Entity\UsuarioMenu:
+  type: entity
+  table: UsuarioMenu
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    dia:
+      type: datetime
+  manyToOne:
+    usuario:
+      targetEntity: Usuario
+      inversedBy: usuario_menus
+      joinColumn:
+        name: usuario_id
+        referencedColumnName: id
+    menu:
+      targetEntity: Menu
+      inversedBy: usuario_menus
+      joinColumn:
+        name: menu_id
+        referencedColumnName: id

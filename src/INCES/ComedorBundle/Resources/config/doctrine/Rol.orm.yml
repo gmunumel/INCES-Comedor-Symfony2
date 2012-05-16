@@ -1,0 +1,15 @@
+# src/INCES/ComedorBundle/config/doctrine/Rol.orm.yml
+INCES\ComedorBundle\Entity\Rol:
+   type: entity
+   table: Rol
+   id:
+     id:
+        type: integer
+        generator: { strategy: AUTO }
+   fields:
+     nombre:
+        type: string
+        length: 150
+        nullable: false
+     monto:
+        type: integer
