@@ -36,11 +36,15 @@
 
         <!-- Navigation -->
         <div id="nav">
-            <a href="#" id="nav-active">Ver Usuario</a> <span>|</span>
+        {% block session %}{% endblock %}
+            <a href= "{{ app.request.uriForPath('/#!/login') }}" id="nav-active">Login</a> <span>|</span>
+        <!--
             <a href="#">About us</a> <span>|</span>
             <a href="#">Support</a> <span>|</span>
             <a href="#">Contact</a>
-        </div> <!-- /nav -->
+        -->
+        </div>
+        <!-- /nav -->
 
     </div> <!-- /header -->
 

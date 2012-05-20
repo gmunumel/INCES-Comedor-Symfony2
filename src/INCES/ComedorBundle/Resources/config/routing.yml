@@ -5,3 +5,15 @@ INCESComedorBundle_homepage:
 INCESComedorBundle_menu:
     resource: "@INCESComedorBundle/Resources/config/routing/menu.yml"
     prefix:   /menu
+
+INCESComedorBundle_rol:
+    resource: "@INCESComedorBundle/Resources/config/routing/rol.yml"
+    prefix:   /rol
+
+INCESComedorBundle_usuario:
+    resource: "@INCESComedorBundle/Resources/config/routing/usuario.yml"
+    prefix:   /usuario
+
+INCESComedorBundle_admin_user:
+    resource: "@INCESComedorBundle/Resources/config/routing/userAdmin.yml"
+    prefix:   /
