@@ -1,0 +1,9 @@
+# src/INCES/ComedorBundle/Resources/config/doctrine/UserAdmin.orm.yml
+INCES\ComedorBundle\Entity\UserAdmin:
+   type: entity
+   table: UserAdmin
+   id:
+     id:
+        type: integer
+        generator: { strategy: AUTO }
+

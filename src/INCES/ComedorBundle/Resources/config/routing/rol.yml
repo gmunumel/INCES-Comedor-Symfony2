@@ -1,0 +1,30 @@
+rol:
+    pattern:  /
+    defaults: { _controller: "INCESComedorBundle:Rol:index" }
+
+rol_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "INCESComedorBundle:Rol:show" }
+
+rol_new:
+    pattern:  /new
+    defaults: { _controller: "INCESComedorBundle:Rol:new" }
+
+rol_create:
+    pattern:  /create
+    defaults: { _controller: "INCESComedorBundle:Rol:create" }
+    requirements: { _method: post }
+
+rol_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "INCESComedorBundle:Rol:edit" }
+
+rol_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "INCESComedorBundle:Rol:update" }
+    requirements: { _method: post }
+
+rol_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "INCESComedorBundle:Rol:delete" }
+    requirements: { _method: post }
