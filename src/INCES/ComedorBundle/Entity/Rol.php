@@ -28,7 +28,7 @@ class Rol
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -48,7 +48,7 @@ class Rol
     /**
      * Get nombre
      *
-     * @return string 
+     * @return string
      */
     public function getNombre()
     {
@@ -68,10 +68,14 @@ class Rol
     /**
      * Get monto
      *
-     * @return integer 
+     * @return integer
      */
     public function getMonto()
     {
         return $this->monto;
+    }
+
+    public function __toString(){
+        return $this->nombre;
     }
 }

@@ -21,7 +21,7 @@
 {% endblock %}
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
 
-    <title>{% block title %}INCES COMEDOR{% endblock %}</title>
+    <title>{% block title %}Welcome!{% endblock %}</title>
 </head>
 
 <body>
@@ -38,7 +38,6 @@
         <div id="nav">
         {% block session %}{% endblock %}
             <a href= "{{ app.request.uriForPath('/#!/login') }}" id="nav-active">Login</a> <span>|</span>
-            <a href= "{{ app.request.uriForPath('/#!/logout') }}" id="nav-active">Logout</a>
         <!--
             <a href="#">About us</a> <span>|</span>
             <a href="#">Support</a> <span>|</span>
@@ -53,12 +52,12 @@
     <div id="tray">
 
         <ul>
-            <li id="tray-active"><a href="#">Usuarios</a></li> <!-- Active page -->
-            <li><a href="#">Personal Administrativo</a></li>
-            <li><a href="#">Tickets</a></li>
-            <li><a href="#">Menu</a></li>
-            <li><a href="#">Contabilidad</a></li>
-            <li><a href="#"></a></li>
+            <li id="tray-active"><a href="#">Contacto</a></li> <!-- Active page -->
+            <li><a href="#">Live demo</a></li>
+            <li><a href="#">About product</a></li>
+            <li><a href="#">Testimonials</a></li>
+            <li><a href="#">Download</a></li>
+            <li><a href="#">Purchase</a></li>
         </ul>
 
         <!-- Search -->
@@ -259,48 +258,8 @@
 
 {% block javascripts %}
 <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
-<!--<script type="text/javascript" src="{{ asset('js/common.js') }}"></script>-->
-<script type="text/javascript">
-
-    // call init
-    $(init);
-
-    function init() {
-        ajax_page_handler();
-        page_load($(window.location).attr("hash")); // goto first page if #!: is available
-    }
-
-    function page_load($href) {
-        if($href != undefined && $href.substring(0, 2) == '#!') {
-            var str = document.URL;
-                str = str.replace("/#!","");
-                $('#content').load(str); // replace body the #content with loaded html
-                $('html, body').animate({scrollTop:0}, 'slow'); // bonus
-        }
-    }
-
-    /**
-    * This method load #content on every url hash change
-    *
-    * @return
-    */
-    function ajax_page_handler() {
-        $(window).bind('hashchange', function () {
-            $href = $(window.location).attr("hash");
-            page_load($href);
-        });
-        // this allow you to reload by clicking the same link
-        $('a[href^="#!"]').live('click', function() {
-            $curhref = $(window.location).attr("hash");
-            $href = $(this).attr('href');
-            if($curhref == $href) {
-                page_load($href);
-            }
-        });
-    }
-    //page_load('#!:menu');
-
-</script>
+<script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
 {% endblock %}
 </body>
 </html>

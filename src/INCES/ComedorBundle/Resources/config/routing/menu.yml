@@ -1,5 +1,5 @@
 menu:
-    pattern:  /
+    pattern:  /{field}
     defaults: { _controller: "INCESComedorBundle:Menu:index" }
 
 menu_show:

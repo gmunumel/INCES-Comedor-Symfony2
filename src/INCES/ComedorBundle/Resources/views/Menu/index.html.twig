@@ -5,6 +5,16 @@
 {% block body %}
 #}
 
+{#
+<form action="{{ path('menu_search') }}" method="get">
+    <input type="text" name="query" value="<?php echo $sf_request->getParameter('query') ?>" id="search_keywords" />
+    <input type="submit" value="search" />
+    <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
+    <div class="help">
+        Enter some keywords (city, country, position, ...)
+    </div>
+</form>
+#}
 <h1>Menu list</h1>
 
 <table class="records_list">
@@ -18,7 +28,7 @@
         </tr>
     </thead>
     <tbody>
-    {% for entity in entities %}
+    {% for entity in pagination %}
         <tr>
             <td><a href="{{ path('menu_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{{ entity.seco }}</td>
@@ -51,6 +61,10 @@
     -->
     <br />
     #}
+    <div class="navigation">
+        {{ pagination.render()|raw }}
+    </div>
+    <br />
     <a href="{{ app.request.uriForPath('/#!/menu/new') }}">
         Create a new entry
     </a>

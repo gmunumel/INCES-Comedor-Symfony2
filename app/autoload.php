@@ -16,9 +16,9 @@ $loader->registerNamespaces(array(
     'Assetic'          => __DIR__.'/../vendor/assetic/src',
     'Metadata'         => __DIR__.'/../vendor/metadata/src',
     'FOS'              => __DIR__.'/../vendor/bundles',
-    //'Knp\\Component'   => __DIR__.'/../vendor/knp-components/src',
-    //'Knp'              => __DIR__.'/../vendor/bundles',
-    //'Zend'             => __DIR__.'/../vendor/Zend/library',
+    'Knp\\Component'   => __DIR__.'/../vendor/knp-components/src',
+    'Knp'              => __DIR__.'/../vendor/bundles',
+    'Zend'             => __DIR__.'/../vendor/Zend/library',
 ));
 $loader->registerPrefixes(array(
     'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',

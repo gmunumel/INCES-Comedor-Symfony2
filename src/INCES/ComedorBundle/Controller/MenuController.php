@@ -17,14 +17,52 @@ class MenuController extends Controller
      * Lists all Menu entities.
      *
      */
-    public function indexAction()
+    public function indexAction($field = null)
     {
+        /*
         $em = $this->getDoctrine()->getEntityManager();
-
         $entities = $em->getRepository('INCESComedorBundle:Menu')->findAll();
 
+
+        $dql = "Select a from INCESComedorBundle:Menu a";
+        $query = $em->createQuery($dql);
+
+        $adapter = $this->get('knp_paginator.adapter');
+        $adapter->setQuery($query);
+        $adapter->setDistinct(true);
+
+        $paginator = new \Zend\Paginator\Paginator($adapter);
+        $paginator->setCurrentPageNumber($this->get('request')->query->get('page', 1));
+        $paginator->setItemCountPerPage(2);
+        $paginator->setPageRange(5);
+
         return $this->render('INCESComedorBundle:Menu:index.html.twig', array(
-            'entities' => $entities
+            'entities' => $entities//, 'paginator' => $paginator
+        ));
+         */
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = $em->createQueryBuilder();
+        if ($field == null)
+            $dql->add('select', 'a')
+            ->add('from', 'INCESComedorBundle:Menu a');
+        else
+            $dql->add('select', 'a')
+            ->add('from', 'INCESComedorBundle:Menu a')
+            ->add('orderBy', 'a.seco ASC');
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $this->get('request')->query->get('page', 1)/*page number*/,
+            2/*limit per page*/
+        );
+
+        // parameters to template
+        //return compact('pagination');
+        return $this->render('INCESComedorBundle:Menu:index.html.twig', array(
+            'pagination' => $pagination
         ));
     }
 
@@ -83,7 +121,7 @@ class MenuController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('menu_show', array('id' => $entity->getId())));
-            
+
         }
 
         return $this->render('INCESComedorBundle:Menu:new.html.twig', array(

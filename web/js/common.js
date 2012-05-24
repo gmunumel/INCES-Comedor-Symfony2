@@ -8,11 +8,9 @@ function init() {
 
 function page_load($href) {
     if($href != undefined && $href.substring(0, 2) == '#!') {
-        var str = document.URL.replace("http://","");
-        str = str.replace("#!","");
-        alert(str);
-        //$('#content').load('{{ path('$href.substring(3)') }}'); // replace body the #content with loaded html
-        $('#content').load('app_dev.php' + $href.substring(2)); // replace body the #content with loaded html
+        var str = document.URL;
+        str = str.replace("/#!","");
+        $('#content').load(str); // replace body the #content with loaded html
         $('html, body').animate({scrollTop:0}, 'slow'); // bonus
     }
 }
@@ -37,4 +35,5 @@ function ajax_page_handler() {
     });
 }
 //page_load('#!:menu');
+
 
