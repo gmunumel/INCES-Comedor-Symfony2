@@ -4,72 +4,110 @@
 
 {% block body %}
 #}
+<div class="search">
+    <form action="{{ path('menu_search') }}" method="get">
+        <input type="text" name="query" value="{{query}}" id="search_keywords" />
+        <input type="submit" value="search" style="display:none;"/>
+        <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
+        <div class="help">
+            Enter some keywords (city, country, position, ...)
+        </div>
+    </form>
+</div>
 
-{#
-<form action="{{ path('menu_search') }}" method="get">
-    <input type="text" name="query" value="<?php echo $sf_request->getParameter('query') ?>" id="search_keywords" />
-    <input type="submit" value="search" />
-    <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
-    <div class="help">
-        Enter some keywords (city, country, position, ...)
-    </div>
-</form>
-#}
-<h1>Menu list</h1>
+<div id="menus">
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Seco</th>
-            <th>Sopa</th>
-            <th>Dia</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in pagination %}
-        <tr>
-            <td><a href="{{ path('menu_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.seco }}</td>
-            <td>{{ entity.sopa }}</td>
-            <td>{% if entity.dia %}{{ entity.dia|date('Y-m-d H:i:s') }}{% endif%}</td>
-            <td>
-                <ul>
-                    <li>
-                    {#
-                    <a href="{{ path('menu_show', { 'id': entity.id }) }}">show</a>
-                    #}
+    <h1>Menu list</h1>
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                {% if field is defined %}
+                    {% if attr is defined %}
+                        {% if field == "seco" and attr == "1" %}
+                            <th><a class="filter" value="seco" asc="{{attr}}" href="{{ path('menu_search') }}">Seco /\</a></th>
+                        {% elseif field == "seco" and attr == "0" %}
+                            <th><a class="filter" value="seco" asc="{{attr}}" href="{{ path('menu_search') }}">Seco \/</a></th>
+                        {% else %}
+                            <th><a class="filter" value="seco" asc="1" href="{{ path('menu_search') }}">Seco</a></th>
+                        {% endif %}
+                        {% if field == "sopa" and attr == "1" %}
+                            <th><a class="filter" value="sopa" asc="{{attr}}" href="{{ path('menu_search') }}">Sopa /\</a></th>
+                        {% elseif field == "sopa" and attr == "0" %}
+                            <th><a class="filter" value="sopa" asc="{{attr}}" href="{{ path('menu_search') }}">Sopa \/</a></th>
+                        {% else %}
+                            <th><a class="filter" value="sopa" asc="1" href="{{ path('menu_search') }}">Sopa</a></th>
+                        {% endif %}
+                        {% if field == "dia" and attr == "1" %}
+                            <th><a class="filter" value="dia"  asc="{{attr}}" href="{{ path('menu_search') }}">Dia /\</a></th>
+                        {% elseif field == "dia" and attr == "0" %}
+                            <th><a class="filter" value="dia"  asc="{{attr}}" href="{{ path('menu_search') }}">Dia \/</a></th>
+                        {% else %}
+                            <th><a class="filter" value="dia"  asc="1" href="{{ path('menu_search') }}">Dia</a></th>
+                        {% endif %}
+                    {% else %}
+                        <th><a class="filter" value="seco" asc="1" href="{{ path('menu_search') }}">Seco</a></th>
+                        <th><a class="filter" value="sopa" asc="1" href="{{ path('menu_search') }}">Sopa</a></th>
+                        <th><a class="filter" value="dia"  asc="1" href="{{ path('menu_search') }}">Dia</a></th>
+                    {% endif %}
+                {% else %}
+                    <th><a class="filter" value="seco" asc="1" href="{{ path('menu_search') }}">Seco</a></th>
+                    <th><a class="filter" value="sopa" asc="1" href="{{ path('menu_search') }}">Sopa</a></th>
+                    <th><a class="filter" value="dia"  asc="1" href="{{ path('menu_search') }}">Dia</a></th>
+                {% endif %}
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if pagination|length == 0 %}
+            <p>No hay resultados</p>
+            {% endif %}
+            {% for entity in pagination %}
+            <tr>
+                <td><a href="{{ path('menu_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.seco }}</td>
+                <td>{{ entity.sopa }}</td>
+                <td>{% if entity.dia %}{{ entity.dia|date('Y-m-d H:i:s') }}{% endif%}</td>
+                <td>
+                    <ul>
+                        <li>
+                        {#
+                        <a href="{{ path('menu_show', { 'id': entity.id }) }}">show</a>
+                        #}
                         <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/show">show2</a>
-                    </li>
-                    <li>
+                        </li>
+                        <li>
                         <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edit">edit2</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-<ul>
-    <li>
-    {#
-    <a href="{{ path('menu_new') }}">
-        Create a new entry
-    </a>
-    -->
-    <br />
-    #}
-    <div class="navigation">
-        {{ pagination.render()|raw }}
-    </div>
-    <br />
-    <a href="{{ app.request.uriForPath('/#!/menu/new') }}">
-        Create a new entry
-    </a>
-    </li>
-</ul>
+    <ul>
+        <li>
+        {#
+        <a href="{{ path('menu_new') }}">
+            Create a new entry
+        </a>
+        -->
+        <br />
+        #}
+        <div class="navigation">
+            {{ pagination.render()|raw }}
+        </div>
+        <br />
+        <a href="{{ app.request.uriForPath('/#!/menu/new') }}">
+            Create a new entry
+        </a>
+        </li>
+    </ul>
+
+</div>
 {#
 {% endblock %}
 #}
+<script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

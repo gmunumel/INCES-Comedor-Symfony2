@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new INCES\ComedorBundle\INCESComedorBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new EWZ\Bundle\SearchBundle\EWZSearchBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

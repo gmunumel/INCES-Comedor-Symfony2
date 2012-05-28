@@ -4,8 +4,12 @@ namespace INCES\ComedorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use EWZ\Bundle\SearchBundle\Lucene\Document;
+use EWZ\Bundle\SearchBundle\Lucene\Field;
+use Zend\Search\Search\Lucene\Search\Query\MultiTerm;
 use INCES\ComedorBundle\Entity\Menu;
 use INCES\ComedorBundle\Form\MenuType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Menu controller.
@@ -13,56 +17,132 @@ use INCES\ComedorBundle\Form\MenuType;
  */
 class MenuController extends Controller
 {
+
+    public function updateLuceneIndex($form)
+    {
+        $search = $this->get('ewz_search.lucene');
+        //$index = Menu::getLuceneIndex();
+
+        // remove existing entries
+        /*
+        foreach ($index->find('id:'.$this->getId()) as $hit)
+        {
+            $index->delete($hit->id);
+        }
+        */
+        //$query = new MultiTerm();
+
+        //$doc = new Zend_Search_Lucene_Document();
+        $doc = new Document();
+
+        // store job primary key to identify it in the search results
+        print_r($form->getData()->getId());
+        print_r($form->getData()->getDia()->format('d-m-Y'));
+        $doc->addField(Field::keyword('key', $form->getData()->getId()));
+
+        // index job fields
+        $doc->addField(Field::text('seco', $form->getData()->getSeco()));
+        $doc->addField(Field::text('sopa', $form->getData()->getSopa()));
+        $doc->addField(Field::text('dia',  $form->getData()->getDia()->format('d-m-Y')));
+
+        // add job to the index
+        $search->addDocument($doc);
+        $search->updateIndex();
+        //$index->addDocument($doc);
+        //$index->commit();
+    }
+
+    public function _indexAction($query, $field, $attr){
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = $em->createQueryBuilder();
+        if (!$field)
+            $dql->add('select', 'a')
+            ->add('from', 'INCESComedorBundle:Menu a');
+        elseif ($attr == '1')
+            $dql->add('select', 'a')
+            ->add('from', 'INCESComedorBundle:Menu a')
+            ->add('orderBy', 'a.'.$field.' ASC');
+        else
+            $dql->add('select', 'a')
+            ->add('from', 'INCESComedorBundle:Menu a')
+            ->add('orderBy', 'a.'.$field.' DESC');
+        $qry = $em->createQuery($dql);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qry,
+            $this->get('request')->query->get('page', 1),//page number
+            2//limit per page
+        );
+        return $pagination;
+    }
+
+    /**
+     * Search for Menus.
+     *
+     */
+    public function searchAction(){
+        $search = $this->get('ewz_search.lucene');
+
+        $request = $this->get('request');
+        $query   = $request->request->get('query');
+        if (!$query) {
+            $field      = $request->request->get('field');
+            $attr       = $request->request->get('attr');
+            $pagination = $this->_indexAction($query, $field, $attr);
+            return $this->render('INCESComedorBundle:Menu:_index.html.twig', array(
+                'pagination' => $pagination
+                ,'query' => $query
+                ,'field' => $field
+                ,'attr'  => $attr
+            ));
+        }else{
+            if ($request->isXmlHttpRequest()){
+                if ('*' == $query){
+
+                    $field = $request->request->get('field');
+                    $attr  = $request->request->get('attr');
+                    $pagination = $this->_indexAction($query, $field, $attr);
+                    return $this->render('INCESComedorBundle:Menu:_index.html.twig', array(
+                        'pagination' => $pagination
+                        ,'query' => $query
+                        ,'field' => $field
+                        ,'attr'  => $attr
+                    ));
+
+                }
+
+                $menus = $search->find($query);
+                return $this->render('INCESComedorBundle:Menu:_list.html.twig', array(
+                    'menus' => $menus
+                    ,'query' => $query
+                ));
+            }
+        }
+    }
+
     /**
      * Lists all Menu entities.
      *
      */
-    public function indexAction($field = null)
+    public function indexAction($query = '')
     {
-        /*
-        $em = $this->getDoctrine()->getEntityManager();
-        $entities = $em->getRepository('INCESComedorBundle:Menu')->findAll();
-
-
-        $dql = "Select a from INCESComedorBundle:Menu a";
-        $query = $em->createQuery($dql);
-
-        $adapter = $this->get('knp_paginator.adapter');
-        $adapter->setQuery($query);
-        $adapter->setDistinct(true);
-
-        $paginator = new \Zend\Paginator\Paginator($adapter);
-        $paginator->setCurrentPageNumber($this->get('request')->query->get('page', 1));
-        $paginator->setItemCountPerPage(2);
-        $paginator->setPageRange(5);
-
-        return $this->render('INCESComedorBundle:Menu:index.html.twig', array(
-            'entities' => $entities//, 'paginator' => $paginator
-        ));
-         */
-
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = $em->createQueryBuilder();
-        if ($field == null)
             $dql->add('select', 'a')
             ->add('from', 'INCESComedorBundle:Menu a');
-        else
-            $dql->add('select', 'a')
-            ->add('from', 'INCESComedorBundle:Menu a')
-            ->add('orderBy', 'a.seco ASC');
-        $query = $em->createQuery($dql);
+        $qry = $em->createQuery($dql);
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $query,
-            $this->get('request')->query->get('page', 1)/*page number*/,
-            2/*limit per page*/
+            $qry,
+            $this->get('request')->query->get('page', 1),//page number
+            2//limit per page
         );
-
-        // parameters to template
-        //return compact('pagination');
         return $this->render('INCESComedorBundle:Menu:index.html.twig', array(
-            'pagination' => $pagination
+             'pagination' => $pagination
+            ,'query' => $query
         ));
     }
 
@@ -119,6 +199,9 @@ class MenuController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
+
+            // Update Index Lucene
+            $this->updateLuceneIndex($form);
 
             return $this->redirect($this->generateUrl('menu_show', array('id' => $entity->getId())));
 
@@ -222,4 +305,5 @@ class MenuController extends Controller
             ->getForm()
         ;
     }
+
 }

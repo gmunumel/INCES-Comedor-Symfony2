@@ -1,6 +1,5 @@
-{# app/Resources/views/base.html.twig #}
 <?xml version="1.0"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -18,6 +17,7 @@
     <!--[if lte IE 6]><link href="{{ asset('css/main-msie.css') }}" type="text/css" rel="stylesheet" /><![endif]-->
     <link href="{{ asset('css/style.css') }}" media="screen,projection" type="text/css" rel="stylesheet" />
     <link href="{{ asset('css/print.css') }}" media="print" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/menu.css') }}" media="screen,projection" type="text/css" rel="stylesheet" />
 {% endblock %}
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
 
@@ -49,18 +49,81 @@
 
     </div> <!-- /header -->
 
-    <!-- Tray -->
-    <div id="tray">
-
-        <ul>
-            <li id="tray-active"><a href="#">Usuarios</a></li> <!-- Active page -->
-            <li><a href="#">Personal Administrativo</a></li>
-            <li><a href="#">Tickets</a></li>
-            <li><a href="#">Menu</a></li>
-            <li><a href="#">Contabilidad</a></li>
-            <li><a href="#"></a></li>
+    <!-- Menu -->
+    <br />
+    <a href="http://apycom.com/" ></a>
+    <div id="menu">
+        <ul class="menu">
+            <li><a href="#" class="parent"><span>Usuarios</span></a>
+            <div><ul>
+                    <li><a href="#" class="parent"><span>Sub Item 1</span></a>
+                    <div><ul>
+                            <li><a href="#" class="parent"><span>Sub Item 1.1</span></a>
+                            <div><ul>
+                                    <li><a href="#"><span>Sub Item 1.1.1</span></a></li>
+                                    <li><a href="#"><span>Sub Item 1.1.2</span></a></li>
+                            </ul></div>
+                            </li>
+                            <li><a href="#"><span>Sub Item 1.2</span></a></li>
+                            <li><a href="#"><span>Sub Item 1.3</span></a></li>
+                            <li><a href="#"><span>Sub Item 1.4</span></a></li>
+                            <li><a href="#"><span>Sub Item 1.5</span></a></li>
+                            <li><a href="#"><span>Sub Item 1.6</span></a></li>
+                            <li><a href="#" class="parent"><span>Sub Item 1.7</span></a>
+                            <div><ul>
+                                    <li><a href="#"><span>Sub Item 1.7.1</span></a></li>
+                                    <li><a href="#"><span>Sub Item 1.7.2</span></a></li>
+                            </ul></div>
+                            </li>
+                    </ul></div>
+                    </li>
+                    <li><a href="#"><span>Sub Item 2</span></a></li>
+                    <li><a href="#"><span>Sub Item 3</span></a></li>
+            </ul></div>
+            </li>
+            <li><a href="#"><span>Personal Administrativo</span></a>
+            <div><ul>
+                    <li><a href="#" class="parent"><span>Sub Item 1</span></a>
+                    <div><ul>
+                            <li><a href="#"><span>Sub Item 1.1</span></a></li>
+                            <li><a href="#"><span>Sub Item 1.2</span></a></li>
+                    </ul></div>
+                    </li>
+                    <li><a href="#" class="parent"><span>Sub Item 2</span></a>
+                    <div><ul>
+                            <li><a href="#"><span>Sub Item 2.1</span></a></li>
+                            <li><a href="#"><span>Sub Item 2.2</span></a></li>
+                    </ul></div>
+                    </li>
+                    <li><a href="#"><span>Sub Item 3</span></a></li>
+                    <li><a href="#"><span>Sub Item 4</span></a></li>
+                    <li><a href="#"><span>Sub Item 5</span></a></li>
+                    <li><a href="#"><span>Sub Item 6</span></a></li>
+                    <li><a href="#"><span>Sub Item 7</span></a></li>
+            </ul></div>
+            </li>
+            <li><a href="#"><span>Tickets</span></a></li>
+            <li><a href="#"><span>Menu</span></a></li>
+            <li><a href="#"><span>Contabilidad</span></a></li>
+            <li class="last">
+                <a href="#">
+                    <span >
+                        <form action="#" method="get">
+                            &nbsp;<input type="text" size="10" name="" value="Search" />
+                            <img height="25" width="25" alt="image" src="{{ asset('design/search-submit.gif') }}" />
+                        </form>
+                        {#
+                        <form action="#" method="get">
+                            Search: <input type="text" size="10" name="" value="Search" />
+                        </form>
+                        <input type="image" src="{{ asset('design/search-submit.gif') }}" value="OK" />
+                        #}
+                    </span>
+                </a>
+            </li>
         </ul>
 
+        {#
         <!-- Search -->
         <div id="search" class="box">
             <form action="#" method="get">
@@ -70,9 +133,10 @@
                 </div>
             </form>
         </div> <!-- /search -->
+        #}
+    </div>
+    <!-- End Menu -->
 
-    <hr class="noscreen" />
-    </div> <!-- /tray -->
 
     <!-- Promo -->
     <div id="col-top"></div>
@@ -259,48 +323,8 @@
 
 {% block javascripts %}
 <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
-<!--<script type="text/javascript" src="{{ asset('js/common.js') }}"></script>-->
-<script type="text/javascript">
-
-    // call init
-    $(init);
-
-    function init() {
-        ajax_page_handler();
-        page_load($(window.location).attr("hash")); // goto first page if #!: is available
-    }
-
-    function page_load($href) {
-        if($href != undefined && $href.substring(0, 2) == '#!') {
-            var str = document.URL;
-                str = str.replace("/#!","");
-                $('#content').load(str); // replace body the #content with loaded html
-                $('html, body').animate({scrollTop:0}, 'slow'); // bonus
-        }
-    }
-
-    /**
-    * This method load #content on every url hash change
-    *
-    * @return
-    */
-    function ajax_page_handler() {
-        $(window).bind('hashchange', function () {
-            $href = $(window.location).attr("hash");
-            page_load($href);
-        });
-        // this allow you to reload by clicking the same link
-        $('a[href^="#!"]').live('click', function() {
-            $curhref = $(window.location).attr("hash");
-            $href = $(this).attr('href');
-            if($curhref == $href) {
-                page_load($href);
-            }
-        });
-    }
-    //page_load('#!:menu');
-
-</script>
+<script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>
 {% endblock %}
 </body>
 </html>

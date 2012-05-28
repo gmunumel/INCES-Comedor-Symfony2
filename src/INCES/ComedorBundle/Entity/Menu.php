@@ -38,11 +38,11 @@ class Menu
     {
         $this->usuario_menus = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -62,7 +62,7 @@ class Menu
     /**
      * Get seco
      *
-     * @return string 
+     * @return string
      */
     public function getSeco()
     {
@@ -82,7 +82,7 @@ class Menu
     /**
      * Get sopa
      *
-     * @return string 
+     * @return string
      */
     public function getSopa()
     {
@@ -102,7 +102,7 @@ class Menu
     /**
      * Get dia
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDia()
     {
@@ -122,10 +122,11 @@ class Menu
     /**
      * Get usuario_menus
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getUsuarioMenus()
     {
         return $this->usuario_menus;
     }
+
 }

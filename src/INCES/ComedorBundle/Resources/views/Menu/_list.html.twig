@@ -1,0 +1,81 @@
+{#
+<?php include_partial('job/list', array('jobs' => $jobs)) ?>
+#}
+
+{#
+{% include 'INCESComedorBundle:Menu:index.html.twig' with {pagination: pagination} %}
+#}
+
+<h1>Menu list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            {% if field is defined %}
+                {% if attr is defined %}
+                    {% if field == "seco" and attr == "1" %}
+                        <th><a class="filter" value="seco" asc="{{attr}}" href="{{ path('menu_search') }}">Seco /\</a></th>
+                    {% elseif field == "seco" and attr == "0" %}
+                        <th><a class="filter" value="seco" asc="{{attr}}" href="{{ path('menu_search') }}">Seco \/</a></th>
+                    {% else %}
+                        <th><a class="filter" value="seco" asc="1" href="{{ path('menu_search') }}">Seco</a></th>
+                    {% endif %}
+                    {% if field == "sopa" and attr == "1" %}
+                        <th><a class="filter" value="sopa" asc="{{attr}}" href="{{ path('menu_search') }}">Sopa /\</a></th>
+                    {% elseif field == "sopa" and attr == "0" %}
+                        <th><a class="filter" value="sopa" asc="{{attr}}" href="{{ path('menu_search') }}">Sopa \/</a></th>
+                    {% else %}
+                        <th><a class="filter" value="sopa" asc="1" href="{{ path('menu_search') }}">Sopa</a></th>
+                    {% endif %}
+                    {% if field == "dia" and attr == "1" %}
+                        <th><a class="filter" value="dia"  asc="{{attr}}" href="{{ path('menu_search') }}">Dia /\</a></th>
+                    {% elseif field == "dia" and attr == "0" %}
+                        <th><a class="filter" value="dia"  asc="{{attr}}" href="{{ path('menu_search') }}">Dia \/</a></th>
+                    {% else %}
+                        <th><a class="filter" value="dia"  asc="1" href="{{ path('menu_search') }}">Dia</a></th>
+                    {% endif %}
+                {% else %}
+                    <th><a class="filter" value="seco" asc="1" href="{{ path('menu_search') }}">Seco</a></th>
+                    <th><a class="filter" value="sopa" asc="1" href="{{ path('menu_search') }}">Sopa</a></th>
+                    <th><a class="filter" value="dia"  asc="1" href="{{ path('menu_search') }}">Dia</a></th>
+                {% endif %}
+            {% else %}
+                <th><a class="filter" value="seco" asc="1" href="{{ path('menu_search') }}">Seco</a></th>
+                <th><a class="filter" value="sopa" asc="1" href="{{ path('menu_search') }}">Sopa</a></th>
+                <th><a class="filter" value="dia"  asc="1" href="{{ path('menu_search') }}">Dia</a></th>
+            {% endif %}
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if menus|length == 0 %}
+        <p>No hay resultados</p>
+    {% endif %}
+    <div id="menus">
+    {% for entity in menus %}
+        <tr>
+            <td><a href="{{ path('menu_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.seco }}</td>
+            <td>{{ entity.sopa }}</td>
+            <td>{% if entity.dia %}{{ entity.dia|date('Y-m-d H:i:s') }}{% endif%}</td>
+            <td>
+                <ul>
+                    <li>
+                    {#
+                    <a href="{{ path('menu_show', { 'id': entity.id }) }}">show</a>
+                    #}
+                        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/show">show2</a>
+                    </li>
+                    <li>
+                        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edit">edit2</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </div>
+    </tbody>
+</table>
+<script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

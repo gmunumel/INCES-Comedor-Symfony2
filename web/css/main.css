@@ -52,19 +52,14 @@ ul.ul-list span.date {padding-right:10px;}
         #nav span {margin:0 8px;}
         #nav #nav-active {font-weight:bold; text-decoration:none;}
     
-    #tray {position:relative; width:960px; height:45px; background:url("../design/tray.gif") 0 0 no-repeat; overflow:hidden; font:bold 90%/1 "tahoma",sans-serif;}
-    #tray ul {margin:0 20px; list-style:none;}
-    #tray li {display:inline;}
-    #tray li a {display:block; float:left; padding:17px 20px 17px 18px; background:url("../design/tray-separator.gif") 100% 0 no-repeat; text-decoration:none;}
-    #tray li a:hover {background:url("../design/tray-hover.gif");}
-    #tray li#tray-active a {background:url("../design/tray-active.gif");}
-
+        /*
         #search {position:absolute; top:8px; right:20px;}
         #search div {position:relative; width:185px;}
         
         #search #search-input {position:absolute; top:0; left:0; width:150px; height:30px; background:url("../design/search-input.gif") 0 0 no-repeat; overflow:hidden;}
         #search #search-input input {width:136px; margin:8px; border:0; font:100%/1 "arial",sans-serif;}
         #search #search-submit {position:absolute; top:0; right:0; width:30px;}
+        */
 
     #footer {clear:both; padding:20px 20px 40px 20px; font-size:85%;}
     #footer p {margin:0;}

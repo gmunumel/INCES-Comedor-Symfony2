@@ -1,5 +1,5 @@
 menu:
-    pattern:  /{field}
+    pattern:  /
     defaults: { _controller: "INCESComedorBundle:Menu:index" }
 
 menu_show:
@@ -28,3 +28,8 @@ menu_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "INCESComedorBundle:Menu:delete" }
     requirements: { _method: post }
+
+menu_search:
+    pattern:  /search
+    defaults: { _controller: "INCESComedorBundle:Menu:search" }
+    requirements: { _method: get|post }

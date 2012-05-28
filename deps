@@ -67,13 +67,19 @@
     target=bundles/FOS/UserBundle
     version=1.2.0
 
-[Zend]
-    git=git://github.com/zendframework/zf2.git
-    target=/Zend
-
 [knp-components]
     git=http://github.com/KnpLabs/knp-components.git
 
 [KnpPaginatorBundle]
     git=http://github.com/KnpLabs/KnpPaginatorBundle.git
     target=bundles/Knp/Bundle/PaginatorBundle
+
+[EWZSearchBundle]
+    git=http://github.com/excelwebzone/EWZSearchBundle.git
+    target=/bundles/EWZ/Bundle/SearchBundle
+
+; Dependency:
+;------------
+[Search]
+    git=http://github.com/excelwebzone/zend-search.git
+    target=/zend-search
