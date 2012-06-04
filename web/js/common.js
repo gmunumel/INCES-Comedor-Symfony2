@@ -1,4 +1,5 @@
 // call init
+
 $(init);
 
 function init() {
@@ -7,10 +8,15 @@ function init() {
 }
 
 function page_load($href) {
+    //alert($href);
     if($href != undefined && $href.substring(0, 2) == '#!') {
-        var str = document.URL;
-        str = str.replace("/#!","");
-        $('#content').load(str); // replace body the #content with loaded html
+        $str = document.URL;
+        $str = $str.split("/#!");
+        $href = $href.replace("#!","");
+        $str = $str[0] + $href;
+        //str = str.replace("/#!","");
+        //alert("hola "+ $str);
+        $('#content').load($str); // replace body the #content with loaded html
         $('html, body').animate({scrollTop:0}, 'slow'); // bonus
     }
 }
@@ -20,9 +26,11 @@ function page_load($href) {
 *
 * @return
 */
+
 function ajax_page_handler() {
     $(window).bind('hashchange', function () {
         $href = $(window.location).attr("hash");
+        //alert($href);
         page_load($href);
     });
     // this allow you to reload by clicking the same link
@@ -34,6 +42,5 @@ function ajax_page_handler() {
         }
     });
 }
+
 //page_load('#!:menu');
-
-
