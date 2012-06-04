@@ -37,7 +37,7 @@
         </a>
     </li>
     <li>
-        <form action="{{ path('rol_delete', { 'id': entity.id }) }}" method="post">
+        <form action="{{ app.request.uriForPath('/#!/rol/') }}{{ entity.id }}/delete" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>

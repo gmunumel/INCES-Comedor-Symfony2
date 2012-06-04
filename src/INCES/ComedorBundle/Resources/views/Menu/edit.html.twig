@@ -8,14 +8,14 @@
 <h1>Menu Modificar</h1>
 
 
-<form action="{{ path('menu_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+<form action="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/update" method="post" {{ form_enctype(edit_form) }}>
 	{{ form_widget(edit_form) }}
 	<p>
 	<button type="submit">Modificar</button>
 	</p>
 </form>
 
-<form action="{{ path('menu_delete', { 'id': entity.id }) }}" method="post">
+<form action="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/delete" method="post">
 	{{ form_widget(delete_form) }}
 	<button type="submit">Borrar</button>
 </form>

@@ -8,7 +8,7 @@
 
 <div id="menus">
     <div class="search">
-        <form action="{{ path('menu_search') }}" method="get">
+        <form action="{{ app.request.uriForPath('/#!/menu/search') }}" method="get">
             <input type="text" name="query" value="{{query}}" id="search_keywords" />
             <input type="submit" value="search" style="display:none;"/>
             <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
