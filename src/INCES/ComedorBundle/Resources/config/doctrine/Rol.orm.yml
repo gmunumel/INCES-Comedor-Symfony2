@@ -12,4 +12,9 @@ INCES\ComedorBundle\Entity\Rol:
         length: 150
         nullable: false
      monto:
-        type: integer
+        type: string
+        length: 5
+     horaComerStart:
+        type: string
+     horaComerEnd:
+        type: string

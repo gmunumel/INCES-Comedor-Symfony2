@@ -12,6 +12,10 @@ class MenuType extends AbstractType
         $builder
             ->add('seco')
             ->add('sopa')
+            ->add('salado')
+            ->add('jugo')
+            ->add('ensalada')
+            ->add('postre')
             ->add('dia')
         ;
     }

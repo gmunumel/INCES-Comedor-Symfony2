@@ -1,16 +1,18 @@
-<h1>Usuario creation</h1>
-
-<form action="{{ path('usuario_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
-
+<h1>Agregar Usuario</h1>
+<table>
+	<th>
+    <form action="{{ path('usuario_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <p>
+            <button type="submit">Agregar</button>
+        </p>
+    </form>
+	</th>
+</table>
 <ul class="record_actions">
     <li>
-        <a href="{{ path('usuario') }}">
-            Back to the list
+        <a href="{{ app.request.uriForPath('/#!/usuario') }}">
+            Regresar a la Lista
         </a>
     </li>
 </ul>

@@ -129,4 +129,104 @@ class Menu
         return $this->usuario_menus;
     }
 
+    /**
+     * @var string $salado
+     */
+    private $salado;
+
+    /**
+     * @var string $jugo
+     */
+    private $jugo;
+
+    /**
+     * @var string $ensalada
+     */
+    private $ensalada;
+
+    /**
+     * @var string $postre
+     */
+    private $postre;
+
+
+    /**
+     * Set salado
+     *
+     * @param string $salado
+     */
+    public function setSalado($salado)
+    {
+        $this->salado = $salado;
+    }
+
+    /**
+     * Get salado
+     *
+     * @return string 
+     */
+    public function getSalado()
+    {
+        return $this->salado;
+    }
+
+    /**
+     * Set jugo
+     *
+     * @param string $jugo
+     */
+    public function setJugo($jugo)
+    {
+        $this->jugo = $jugo;
+    }
+
+    /**
+     * Get jugo
+     *
+     * @return string 
+     */
+    public function getJugo()
+    {
+        return $this->jugo;
+    }
+
+    /**
+     * Set ensalada
+     *
+     * @param string $ensalada
+     */
+    public function setEnsalada($ensalada)
+    {
+        $this->ensalada = $ensalada;
+    }
+
+    /**
+     * Get ensalada
+     *
+     * @return string 
+     */
+    public function getEnsalada()
+    {
+        return $this->ensalada;
+    }
+
+    /**
+     * Set postre
+     *
+     * @param string $postre
+     */
+    public function setPostre($postre)
+    {
+        $this->postre = $postre;
+    }
+
+    /**
+     * Get postre
+     *
+     * @return string 
+     */
+    public function getPostre()
+    {
+        return $this->postre;
+    }
 }

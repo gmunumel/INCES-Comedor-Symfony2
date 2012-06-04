@@ -1,8 +1,11 @@
 security:
     
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_USUARIO:     ROLE_USUARIO
+        ROLE_OPERADOR:    ROLE_OPERADOR
+        ROLE_GERENTE:     ROLE_GERENTE
+        ROLE_ADMIN:       ROLE_ADMIN
+        ROLE_SUPER_ADMIN: [ROLE_USUARIO, ROLE_OPERADOR, ROLE_GERENTE, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
         fos_userbundle:
@@ -25,10 +28,15 @@ security:
             logout:
                 path:   /logout
                 target: /
-            anonymous: ~
+            anonymous: true
             #http_basic:
             #    realm: "Secured Demo Area"
 
     access_control:
+        - { path: ^/secured/admin, roles: ROLE_ADMIN }
+        #- { path: ^/menu/new, roles: [ROLE_OPERADOR, ROLE_GERENTE, ROLE_ADMIN] }
+        #- { path: ^/menu, roles: [ROLE_USUARIO, ROLE_OPERADOR, ROLE_GERENTE, ROLE_ADMIN] }
+        #- { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

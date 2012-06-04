@@ -4,18 +4,21 @@
 
 {% block body %}
 #}
-<h1>Menu creation</h1>
-
+<h1>Agregar Menu</h1>
+<table>
+	<th>
 <form action="{{ path('menu_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
-        <button type="submit">Create</button>
+        <button type="submit">Agregar</button>
     </p>
 </form>
+	</th>
+</table>
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('menu') }}">
+        <a href="{{ app.request.uriForPath('/#!/menu') }}">
             Back to the list
         </a>
     </li>

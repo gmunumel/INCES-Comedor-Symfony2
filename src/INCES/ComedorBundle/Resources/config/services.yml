@@ -2,6 +2,14 @@ parameters:
 #    inces_comedor.example.class: INCES\ComedorBundle\Example
 
 services:
-#    inces_comedor.example:
-#        class: %inces_comedor.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    inces_user.registration.form.type:
+        class: INCES\ComedorBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: inces_user_registration }
+    
+    inces_user.form.handler.registration:
+        class: INCES\ComedorBundle\Form\Handler\RegistrationFormHandler
+        arguments: ["@fos_user.registration.form", "@request", "@fos_user.user_manager", "@fos_user.mailer"]
+        scope: request
+        public: false

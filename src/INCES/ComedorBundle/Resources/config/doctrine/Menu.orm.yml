@@ -13,6 +13,18 @@ INCES\ComedorBundle\Entity\Menu:
      sopa:
         type: string
         length: 255
+     salado:
+        type: string
+        length: 255
+     jugo:
+        type: string
+        length: 255
+     ensalada:
+        type: string
+        length: 255
+     postre:
+        type: string
+        length: 255
      dia:
         type: datetime
    oneToMany:

@@ -48,82 +48,7 @@
         <!-- /nav -->
 
     </div> <!-- /header -->
-
-    <!-- Menu -->
-    <br />
-    <a href="http://apycom.com/" ></a>
-    <div id="menu">
-        <ul class="menu">
-            <li><a href="#" class="parent"><span>Usuarios</span></a>
-            <div><ul>
-                    <li><a href="#" class="parent"><span>Sub Item 1</span></a>
-                    <div><ul>
-                            <li><a href="#" class="parent"><span>Sub Item 1.1</span></a>
-                            <div><ul>
-                                    <li><a href="#"><span>Sub Item 1.1.1</span></a></li>
-                                    <li><a href="#"><span>Sub Item 1.1.2</span></a></li>
-                            </ul></div>
-                            </li>
-                            <li><a href="#"><span>Sub Item 1.2</span></a></li>
-                            <li><a href="#"><span>Sub Item 1.3</span></a></li>
-                            <li><a href="#"><span>Sub Item 1.4</span></a></li>
-                            <li><a href="#"><span>Sub Item 1.5</span></a></li>
-                            <li><a href="#"><span>Sub Item 1.6</span></a></li>
-                            <li><a href="#" class="parent"><span>Sub Item 1.7</span></a>
-                            <div><ul>
-                                    <li><a href="#"><span>Sub Item 1.7.1</span></a></li>
-                                    <li><a href="#"><span>Sub Item 1.7.2</span></a></li>
-                            </ul></div>
-                            </li>
-                    </ul></div>
-                    </li>
-                    <li><a href="#"><span>Sub Item 2</span></a></li>
-                    <li><a href="#"><span>Sub Item 3</span></a></li>
-            </ul></div>
-            </li>
-            <li><a href="#"><span>Personal Administrativo</span></a>
-            <div><ul>
-                    <li><a href="#" class="parent"><span>Sub Item 1</span></a>
-                    <div><ul>
-                            <li><a href="#"><span>Sub Item 1.1</span></a></li>
-                            <li><a href="#"><span>Sub Item 1.2</span></a></li>
-                    </ul></div>
-                    </li>
-                    <li><a href="#" class="parent"><span>Sub Item 2</span></a>
-                    <div><ul>
-                            <li><a href="#"><span>Sub Item 2.1</span></a></li>
-                            <li><a href="#"><span>Sub Item 2.2</span></a></li>
-                    </ul></div>
-                    </li>
-                    <li><a href="#"><span>Sub Item 3</span></a></li>
-                    <li><a href="#"><span>Sub Item 4</span></a></li>
-                    <li><a href="#"><span>Sub Item 5</span></a></li>
-                    <li><a href="#"><span>Sub Item 6</span></a></li>
-                    <li><a href="#"><span>Sub Item 7</span></a></li>
-            </ul></div>
-            </li>
-            <li><a href="#"><span>Tickets</span></a></li>
-            <li><a href="#"><span>Menu</span></a></li>
-            <li><a href="#"><span>Contabilidad</span></a></li>
-            <li class="last">
-                <a href="#">
-                    <span >
-                        <form action="#" method="get">
-                            &nbsp;<input type="text" size="10" name="" value="Search" />
-                            <img height="25" width="25" alt="image" src="{{ asset('design/search-submit.gif') }}" />
-                        </form>
-                        {#
-                        <form action="#" method="get">
-                            Search: <input type="text" size="10" name="" value="Search" />
-                        </form>
-                        <input type="image" src="{{ asset('design/search-submit.gif') }}" value="OK" />
-                        #}
-                    </span>
-                </a>
-            </li>
-        </ul>
-
-        {#
+    {#
         <!-- Search -->
         <div id="search" class="box">
             <form action="#" method="get">
@@ -133,19 +58,115 @@
                 </div>
             </form>
         </div> <!-- /search -->
-        #}
-    </div>
-    <!-- End Menu -->
+    #}
 
+    <!-- Menu -->
+    <br />
+    {% if is_granted("ROLE_ADMIN") %}
+        <div id="menu">
+            <ul class="menu">
+                <li><a href="{{ app.request.uriForPath('/#!/menu/facturar') }}"><span>Facturar</span></a></li>
+                <li><a href="{{ app.request.uriForPath('/#!/usuario') }}"><span>Usuarios</span></a>
+                <div>
+                    <ul>
+                        <li><a href="{{ app.request.uriForPath('/#!/usuario') }}" ><span>Acciones</span></a></li>
+                        <li><a href="#" class="parent"><span>Operación Masiva</span></a>
+                        <div>
+                            <ul>
+                                <li><a href="{{ app.request.uriForPath('/#!/usuario/cmasivo') }}"><span>Carga</span></a></li>
+                                <li><a href="{{ app.request.uriForPath('/#!/usuario/amasivo') }}"><span>Actualización</span></a></li>
+                            </ul>
+                        </div>
+                    </ul>
+                </div>
+                </li>
+                <li><a href="{{ app.request.uriForPath('/#!/padmin') }}"><span>Personal Administrativo</span></a>
+                    <div>
+                        <ul>
+                            <li><a href="{{ app.request.uriForPath('/#!/register') }}"><span>Acciones</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><a href="{{ app.request.uriForPath('/#!/contabilidad') }}"><span>Contabilidad</span></a></li>
+                <li><a href="{{ app.request.uriForPath('/#!/menu') }}"><span>Menu</span></a>
+                    <div>
+                        <ul>
+                            <li><a href="{{ app.request.uriForPath('/#!/menu') }}"><span>Acciones</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><a href="{{ app.request.uriForPath('/#!/tickets') }}"><span>Tickets</span></a>
+                    <div>
+                        <ul>
+                            <li><a href="{{ app.request.uriForPath('/#!/tickets') }}"><span>Acciones</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="last"><span>&nbsp;&nbsp;&nbsp;</span></li>
+            </ul>
+        </div>
+    {% elseif is_granted("ROLE_GERENTE") %}
+        <div id="menu">
+            <ul class="menu">
+                <li><a href="{{ app.request.uriForPath('/#!/menu/facturar') }}"><span>Facturar</span></a></li>
+                <li><a href="{{ app.request.uriForPath('/#!/menu') }}"><span>Menu</span></a>
+                    <div>
+                        <ul>
+                            <li><a href="{{ app.request.uriForPath('/#!/menu') }}"><span>Acciones</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><a href="{{ app.request.uriForPath('/#!/usuario') }}"><span>Usuarios</span></a>
+                <div>
+                    <ul>
+                        <li><a href="{{ app.request.uriForPath('/#!/usuario') }}" ><span>Acciones</span></a></li>
+                        <li><a href="#" class="parent"><span>Operación Masiva</span></a>
+                        <div>
+                            <ul>
+                                <li><a href="{{ app.request.uriForPath('/#!/usuario/cmasivo') }}"><span>Carga</span></a></li>
+                                <li><a href="{{ app.request.uriForPath('/#!/usuario/amasivo') }}"><span>Actualización</span></a></li>
+                            </ul>
+                        </div>
+                    </ul>
+                </div>
+                </li>
+                <li class="last"><span>&nbsp;&nbsp;&nbsp;</span></li>
+            </ul>
+        </div>
+    {% elseif is_granted("ROLE_OPERADOR") %}
+        <div id="menu">
+            <ul class="menu">
+                <li><a href="{{ app.request.uriForPath('/#!/menu/facturar') }}"><span>Facturar</span></a></li>
+                <li><a href="{{ app.request.uriForPath('/#!/menu') }}" class="parent"><span>Menu</span></a>
+                    <div>
+                        <ul>
+                            <li><a href="{{ app.request.uriForPath('/#!/menu') }}"><span>Acciones</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    {% else %}
+        <div id="menu">
+            <ul class="menu">
+                <li><a href="{{ app.request.uriForPath('/#!/menu') }}"><span>Ver Menu</span></a></li>
+                <li><a href="{{ app.request.uriForPath('/#!/usuario/search') }}""><span>Ver Usuario por Cédula</span></a>
+            </ul>
+        </div>
+    {% endif %}
+
+    <!-- End Menu -->
 
     <!-- Promo -->
     <div id="col-top"></div>
     <div id="col" class="box">
 
+        {#
         <div id="ribbon"></div> <!-- /ribbon (design/ribbon.gif) -->
+        #}
 
         <!-- Screenshot in browser (replace img/browser.gif) -->
-        <div id="col-browser"><a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a></div>
+        <div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}</div>
 
         <div id="col-text">
 
@@ -153,10 +174,7 @@
             {% block body %}{% endblock %}
             <div id="content"></div>
 
-            <p>Lorem ipsum dolor sit amet, <strong>consectetuer adipiscing</strong> elit. Nunc feugiat. In a massa. In feugiat pharetra lacus.
-            In non arcu nec libero pharetra rutrum. Curabitur hendrerit <a href="#">elementum diam</a>. Vestibulum mattistae sapien eu <a href="#">vehicula accumsan</a>,
-            erat quam porttitor orci, id ornare est eros et arcu. In odio. Morbi eu nisia et dolor dictum elementum. Vivamus commodo sodales felis.
-            Nulla gravida tristique metus.</p>
+            <p></p>
 
             <p id="btns">
                 <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
@@ -183,8 +201,7 @@
 
             <div class="col-text">
 
-                <p>Lorem ipsum dolor sit amet <a href="#">consectetuer</a> amit adipiscing elit. <strong>Nunc feugiat.</strong>
-                Inam massa est feugiat <a href="#">pharetra</a> lacus. In non arcu nec liberom pharetra rutrum est.</p>
+                <p></p>
 
                 <ul class="ul-01">
                     <li>Lorem ipsum dolor sit amet</li>
@@ -209,8 +226,7 @@
 
             <div class="col-text">
 
-                <p>Lorem ipsum dolor sit amet consectetuer amit adipiscing elit. <strong>Nunc feugiat.</strong>
-                Inam massa est feugiat <a href="#">pharetra</a> lacus. In non arcu nec liberom pharetra rutrum est.</p>
+                <p></p>
 
                 <ul class="ul-01">
                     <li>Lorem ipsum dolor sit amet</li>
@@ -235,8 +251,7 @@
 
             <div class="col-text">
 
-                <p>Lorem ipsum dolor sit amet consectetuer amit adipiscing elit. <strong>Nunc feugiat.</strong>
-                Inam massa est feugiat pharetra lacus. In non arcu nec liberom <a href="#">pharetra rutrum est</a>.</p>
+                <p></p>
 
                 <ul class="ul-01">
                     <li>Lorem ipsum dolor sit amet</li>
@@ -325,6 +340,8 @@
 <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
 {% endblock %}
+<a href="http://apycom.com/" ></a>
 </body>
 </html>

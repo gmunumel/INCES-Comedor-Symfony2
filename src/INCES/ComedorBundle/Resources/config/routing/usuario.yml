@@ -28,3 +28,13 @@ usuario_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "INCESComedorBundle:Usuario:delete" }
     requirements: { _method: post }
+
+usuario_search:
+    pattern:  /search
+    defaults: { _controller: "INCESComedorBundle:Usuario:search" }
+    requirements: { _method: get|post }
+
+usuario_search_ajax:
+    pattern:  /searcha
+    defaults: { _controller: "INCESComedorBundle:Usuario:searchAjax" }
+    requirements: { _method: get|post }

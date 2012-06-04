@@ -174,4 +174,54 @@ class Usuario
     {
         return $this->rol;
     }
+    /**
+     * @var string $image
+     */
+    private $image;
+
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+    /**
+     * @var string $cedula
+     */
+    private $cedula;
+
+
+    /**
+     * Set cedula
+     *
+     * @param string $cedula
+     */
+    public function setCedula($cedula)
+    {
+        $this->cedula = $cedula;
+    }
+
+    /**
+     * Get cedula
+     *
+     * @return string 
+     */
+    public function getCedula()
+    {
+        return $this->cedula;
+    }
 }

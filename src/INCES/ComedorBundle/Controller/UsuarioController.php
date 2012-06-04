@@ -3,11 +3,17 @@
 namespace INCES\ComedorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use INCES\ComedorBundle\Entity\Usuario;
 use INCES\ComedorBundle\Form\UsuarioType;
+use Symfony\Component\HttpFoundation\Response;
+use EWZ\Bundle\SearchBundle\Lucene\Document;
+use EWZ\Bundle\SearchBundle\Lucene\Field;
+use EWZ\Bundle\SearchBundle\Lucene\LuceneSearch;
+use Zend\Search\Search\Lucene\Search\Query\MultiTerm;
 
 /**
  * Usuario controller.
@@ -16,19 +22,75 @@ use INCES\ComedorBundle\Form\UsuarioType;
  */
 class UsuarioController extends Controller
 {
+
+    public function updateLuceneIndex($form)
+    {
+        $search = $this->get('ewz_search.lucene');
+        //$index = Menu::getLuceneIndex();
+
+        // remove existing entries
+        /*
+        foreach ($index->find('id:'.$this->getId()) as $hit)
+        {
+            $index->delete($hit->id);
+        }
+        */
+        //$query = new MultiTerm();
+
+        //$doc = new Zend_Search_Lucene_Document();
+        $doc = new Document();
+
+        // store job primary key to identify it in the search results
+        //print_r($form->getData()->getId());
+        //print_r($form->getData()->getDia()->format('d-m-Y'));
+        //print_r($form->getData()->getCedula());
+        $doc->addField(Field::keyword('key', $form->getData()->getId()));
+
+        // index job fields
+        $doc->addField(Field::text('cedula', $form->getData()->getCedula()));
+        //$doc->addField(Field::text('nombre', $form->getData()->getNombre()));
+        //$doc->addField(Field::text('apellido', $form->getData()->getApellido()));
+        //$doc->addField(Field::text('ncarnet', $form->getData()->getNcarnet()));
+        //$doc->addField(Field::text('correo', $form->getData()->getCorreo()));
+        //$doc->addField(Field::text('dia',  $form->getData()->getDia()->format('d-m-Y')));
+
+        // add job to the index
+        $search->addDocument($doc);
+        $search->updateIndex();
+        //$index->addDocument($doc);
+        //$index->commit();
+    }
     /**
      * Lists all Usuario entities.
      *
      * @Route("/", name="usuario")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($query = '')
     {
+        /*
         $em = $this->getDoctrine()->getEntityManager();
 
         $entities = $em->getRepository('INCESComedorBundle:Usuario')->findAll();
 
         return array('entities' => $entities);
+         */
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = $em->createQueryBuilder();
+            $dql->add('select', 'a')
+            ->add('from', 'INCESComedorBundle:Usuario a');
+        $qry = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qry,
+            $this->get('request')->query->get('page', 1),//page number
+            2//limit per page
+        );
+        return $this->render('INCESComedorBundle:Usuario:index.html.twig', array(
+             'pagination' => $pagination
+            ,'query' => $query
+        ));
     }
 
     /**
@@ -90,8 +152,11 @@ class UsuarioController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            // Update Index Lucene
+            $this->updateLuceneIndex($form);
+
             return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
-            
+
         }
 
         return array(
@@ -198,5 +263,129 @@ class UsuarioController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    public function _indexAction($query, $field = null, $attr = null){
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = $em->createQueryBuilder();
+        if (is_null($field))
+            if(!$query || $query == '*')
+                $dql->add('select', 'a')
+                ->add('from', 'INCESComedorBundle:Usuario a');
+            else
+                //$query = "(a.cedula LIKE '%17387134%' OR a.nombre LIKE '%17387134%' OR a.apellido LIKE '%17387134%' OR a.ncarnet LIKE '%17387134%' OR a.correo LIKE '%17387134%')";
+                //$conn = $this->get('database_connection');
+                $dql = "SELECT a FROM INCES\ComedorBundle\Entity\Usuario a WHERE " . $query;
+
+        elseif ($attr == '1')
+            $dql->add('select', 'a')
+            ->add('from', 'INCESComedorBundle:Usuario a')
+            ->add('orderBy', 'a.'.$field.' ASC');
+        else
+            $dql->add('select', 'a')
+            ->add('from', 'INCESComedorBundle:Usuario a')
+            ->add('orderBy', 'a.'.$field.' DESC');
+
+        $qry = $em->createQuery($dql);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qry,
+            $this->get('request')->query->get('page', 1),//page number
+            2//limit per page
+        );
+        return $pagination;
+    }
+
+    public function params($params){
+        $params = trim($params);
+        $explote = explode(" ", $params);
+        $res = "";
+
+        foreach($explote as $value){
+            $res .= " (a.cedula LIKE '%" . $value . "%'";
+            $res .= " OR a.nombre LIKE '%" . $value . "%'";
+            $res .= " OR a.apellido LIKE '%" . $value . "%'";
+            $res .= " OR a.ncarnet LIKE '%" . $value . "%'";
+            $res .= " OR a.correo LIKE '%" . $value . "%') AND";
+        }
+        $res = substr_replace($res ,"",-4);
+        return $res;
+    }
+
+    /*
+     *  Search by Cedula
+     */
+    public function searchAction(){
+
+        $request = $this->get('request');
+        $query   = $request->request->get('query');
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $entity = $em->getRepository('INCESComedorBundle:Usuario')->findBy(array('cedula'=>$query));
+
+
+        //if (!$entity) {
+        //    throw $this->createNotFoundException('Unable to find Usuario entity.');
+        //}
+
+        return $this->render('INCESComedorBundle:Usuario:search.html.twig', array(
+              'users' => $entity
+             ,'query' => $query
+        ));
+    }
+
+    /*
+     *  Search Ajax
+     */
+    public function searchAjaxAction(){
+        $request = $this->get('request');
+        $query   = $request->request->get('query');
+
+        if (!$query) {
+            $field      = $request->request->get('field');
+            $attr       = $request->request->get('attr');
+            $pagination = $this->_indexAction($query, $field, $attr);
+            return $this->render('INCESComedorBundle:Usuario:_index.html.twig', array(
+                'pagination' => $pagination
+                ,'query' => $query
+                ,'field' => $field
+                ,'attr'  => $attr
+            ));
+        }else{
+            if ($request->isXmlHttpRequest()){
+                if ('*' == $query){
+                    $query = '';
+                    $field = $request->request->get('field');
+                    $attr  = $request->request->get('attr');
+                    $pagination = $this->_indexAction($query, $field, $attr);
+                    return $this->render('INCESComedorBundle:Usuario:_index.html.twig', array(
+                        'pagination' => $pagination
+                        ,'query' => $query
+                        ,'field' => $field
+                        ,'attr'  => $attr
+                    ));
+                }
+                //$query = 'gabo';
+                $query = substr_replace($query ,"",-1);
+                $_query = $this->params($query);
+                $pagination = $this->_indexAction($_query);
+                //print_r($query);
+                //$search = $this->get('ewz_search.lucene');
+                //$pagination = $search->find($query);
+                //$pagination = $search->find($query);
+                //$term  = new \Zend\Search\Lucene\Index\Term($query);
+                //$query = new \Zend\Search\Lucene\Search\Query\Wildcard($term);
+                //$menus = array();
+                //$pagination = $search->find($query);
+                //$pagination = $query;
+                //$pagination = array();
+                //print_r($pagination);
+                return $this->render('INCESComedorBundle:Usuario:_list.html.twig', array(
+                    'pagination'  => $pagination
+                    ,'query'      => $query
+                ));
+            }
+        }
     }
 }

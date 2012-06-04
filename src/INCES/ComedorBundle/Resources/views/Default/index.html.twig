@@ -3,5 +3,10 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-<p>Index </p>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
 {% endblock %}

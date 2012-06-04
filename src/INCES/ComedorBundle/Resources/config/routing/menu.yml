@@ -33,3 +33,12 @@ menu_search:
     pattern:  /search
     defaults: { _controller: "INCESComedorBundle:Menu:search" }
     requirements: { _method: get|post }
+
+menu_today:
+    pattern:  /today
+    defaults: { _controller: "INCESComedorBundle:Menu:today" }
+
+menu_facturar:
+    pattern:  /facturar
+    defaults: { _controller: "INCESComedorBundle:Usuario:index" }
+    requirements: { _method: get|post }

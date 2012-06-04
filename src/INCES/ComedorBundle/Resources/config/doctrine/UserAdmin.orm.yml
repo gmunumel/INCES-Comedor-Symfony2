@@ -6,4 +6,16 @@ INCES\ComedorBundle\Entity\UserAdmin:
      id:
         type: integer
         generator: { strategy: AUTO }
-
+   fields:
+        nombre:
+            type: string
+            length: 255
+        apellido:
+            type: string
+            length: 255
+        cedula:
+            type: string
+            length: 9
+        ncarnet:
+            type: string
+            length: 9

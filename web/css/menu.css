@@ -133,7 +133,7 @@ div#menu ul.menu>li:hover>a span {
     color: #852a21;
 }
 div#menu li {  }
-div#menu li.last { background: none; }
+div#menu ul li.last { background: none; width: 30px }
 
 div#menu li.current a,
 div#menu li.current a span,

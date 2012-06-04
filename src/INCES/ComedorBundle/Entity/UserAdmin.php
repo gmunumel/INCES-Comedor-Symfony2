@@ -2,13 +2,11 @@
 
 namespace INCES\ComedorBundle\Entity;
 
-use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-//use Symfony\Component\Validator\Constraints as Assert;
+use FOS\UserBundle\Entity\User as BaseUser;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="UserAdmin")
+ * INCES\ComedorBundle\Entity\UserAdmin
  */
 class UserAdmin extends BaseUser
 {
@@ -19,11 +17,26 @@ class UserAdmin extends BaseUser
      */
     protected $id;
 
-    public function __construct()
-    {
-        parent::__construct();
-        // your own logic
-    }
+    /**
+     * @var string $nombre
+     */
+    private $nombre;
+
+    /**
+     * @var string $apellido
+     */
+    private $apellido;
+
+    /**
+     * @var string $cedula
+     */
+    private $cedula;
+
+    /**
+     * @var string $ncarnet
+     */
+    private $ncarnet;
+
 
     /**
      * Get id
@@ -35,4 +48,83 @@ class UserAdmin extends BaseUser
         return $this->id;
     }
 
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set apellido
+     *
+     * @param string $apellido
+     */
+    public function setApellido($apellido)
+    {
+        $this->apellido = $apellido;
+    }
+
+    /**
+     * Get apellido
+     *
+     * @return string
+     */
+    public function getApellido()
+    {
+        return $this->apellido;
+    }
+
+    /**
+     * Set cedula
+     *
+     * @param string $cedula
+     */
+    public function setCedula($cedula)
+    {
+        $this->cedula = $cedula;
+    }
+
+    /**
+     * Get cedula
+     *
+     * @return string
+     */
+    public function getCedula()
+    {
+        return $this->cedula;
+    }
+
+    /**
+     * Set ncarnet
+     *
+     * @param string $ncarnet
+     */
+    public function setNcarnet($ncarnet)
+    {
+        $this->ncarnet = $ncarnet;
+    }
+
+    /**
+     * Get ncarnet
+     *
+     * @return string
+     */
+    public function getNcarnet()
+    {
+        return $this->ncarnet;
+    }
 }

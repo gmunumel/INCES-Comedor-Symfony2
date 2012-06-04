@@ -12,6 +12,8 @@ class RolType extends AbstractType
         $builder
             ->add('nombre')
             ->add('monto')
+            ->add('horaComerStart')
+            ->add('horaComerEnd')
         ;
     }
 

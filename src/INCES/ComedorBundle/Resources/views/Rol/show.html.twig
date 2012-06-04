@@ -14,17 +14,25 @@
             <th>Monto</th>
             <td>{{ entity.monto }}</td>
         </tr>
+        <tr>
+            <th>Hora Comienzo</th>
+            <td>{{ entity.horaComerStart }}</td>
+        </tr>
+        <tr>
+            <th>Hora Finalización</th>
+            <td>{{ entity.horaComerEnd }}</td>
+        </tr>
     </tbody>
 </table>
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('rol') }}">
+        <a href="{{ app.request.uriForPath('/#!/rol') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('rol_edit', { 'id': entity.id }) }}">
+        <a href="{{ app.request.uriForPath('/#!/rol/') }}{{ entity.id }}/edit">
             Edit
         </a>
     </li>

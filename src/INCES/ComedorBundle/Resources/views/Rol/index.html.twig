@@ -3,25 +3,27 @@
 <table class="records_list">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Nombre</th>
             <th>Monto</th>
+            <th>Hora Comienzo</th>
+            <th>Hora Finalización</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('rol_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{{ entity.nombre }}</td>
             <td>{{ entity.monto }}</td>
+            <td>{{ entity.horaComerStart }}</td>
+            <td>{{ entity.horaComerEnd }}</td>
             <td>
                 <ul>
                     <li>
-                        <a href="{{ path('rol_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ app.request.uriForPath('/#!/rol/') }}{{ entity.id }}/show">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('rol_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ app.request.uriForPath('/#!/rol/') }}{{ entity.id }}/edit">edit</a>
                     </li>
                 </ul>
             </td>
@@ -32,7 +34,7 @@
 
 <ul>
     <li>
-        <a href="{{ path('rol_new') }}">
+        <a href="{{ app.request.uriForPath('/#!/rol/new') }}">
             Create a new entry
         </a>
     </li>

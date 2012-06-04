@@ -1,6 +1,6 @@
 INCESComedorBundle_homepage:
     pattern:  /
-    defaults: { _controller: INCESComedorBundle:Default:index }
+    defaults: { _controller: INCESComedorBundle:Default:index}
 
 INCESComedorBundle_menu:
     resource: "@INCESComedorBundle/Resources/config/routing/menu.yml"

@@ -4,28 +4,32 @@
 
 {% block body %}
 #}
-<h1>Menu edit</h1>
+
+<h1>Menu Modificar</h1>
+
 
 <form action="{{ path('menu_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
+	{{ form_widget(edit_form) }}
+	<p>
+	<button type="submit">Modificar</button>
+	</p>
 </form>
+
+<form action="{{ path('menu_delete', { 'id': entity.id }) }}" method="post">
+	{{ form_widget(delete_form) }}
+	<button type="submit">Borrar</button>
+</form>
+
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('menu') }}">
+        <a href="{{ app.request.uriForPath('/#!/menu') }}">
             Back to the list
         </a>
     </li>
-    <li>
-        <form action="{{ path('menu_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
 </ul>
+
+
 {#
 {% endblock %}
 #}

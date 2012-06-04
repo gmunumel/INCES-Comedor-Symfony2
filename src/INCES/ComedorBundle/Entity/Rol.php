@@ -78,4 +78,54 @@ class Rol
     public function __toString(){
         return $this->nombre;
     }
+    /**
+     * @var string $horaComerStart
+     */
+    private $horaComerStart;
+
+    /**
+     * @var string $horaComerEnd
+     */
+    private $horaComerEnd;
+
+
+    /**
+     * Set horaComerStart
+     *
+     * @param string $horaComerStart
+     */
+    public function setHoraComerStart($horaComerStart)
+    {
+        $this->horaComerStart = $horaComerStart;
+    }
+
+    /**
+     * Get horaComerStart
+     *
+     * @return string 
+     */
+    public function getHoraComerStart()
+    {
+        return $this->horaComerStart;
+    }
+
+    /**
+     * Set horaComerEnd
+     *
+     * @param string $horaComerEnd
+     */
+    public function setHoraComerEnd($horaComerEnd)
+    {
+        $this->horaComerEnd = $horaComerEnd;
+    }
+
+    /**
+     * Get horaComerEnd
+     *
+     * @return string 
+     */
+    public function getHoraComerEnd()
+    {
+        return $this->horaComerEnd;
+    }
 }

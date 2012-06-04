@@ -14,23 +14,27 @@
             <th>Apellido</th>
             <td>{{ entity.apellido }}</td>
         </tr>
-        {#
         <tr>
             <th>Cedula</th>
             <td>{{ entity.cedula }}</td>
         </tr>
-        #}
         <tr>
             <th>Ncarnet</th>
             <td>{{ entity.ncarnet }}</td>
         </tr>
+        {#
         <tr>
             <th>A_i</th>
             <td>{{ entity.ai }}</td>
         </tr>
+        #}
         <tr>
             <th>Correo</th>
             <td>{{ entity.correo }}</td>
+        </tr>
+        <tr>
+            <th>Imagen</th>
+            <td>{{ entity.image }}</td>
         </tr>
     </tbody>
 </table>
@@ -42,14 +46,14 @@
         </a>
     </li>
     <li>
-        <a href="{{ path('usuario_edit', { 'id': entity.id }) }}">
+        <a href="{{ app.request.uriForPath('/#!/usuario/') }}{{ entity.id }}/edit">
             Edit
         </a>
     </li>
     <li>
         <form action="{{ path('usuario_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <button type="submit">Borrar</button>
         </form>
     </li>
 </ul>

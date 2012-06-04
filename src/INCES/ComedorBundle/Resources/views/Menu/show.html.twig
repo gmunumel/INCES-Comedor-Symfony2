@@ -17,8 +17,20 @@
             <td>{{ entity.seco }}</td>
         </tr>
         <tr>
-            <th>Sopa</th>
-            <td>{{ entity.sopa }}</td>
+            <th>Salado</th>
+            <td>{{ entity.salado }}</td>
+        </tr>
+        <tr>
+            <th>Jugo</th>
+            <td>{{ entity.jugo }}</td>
+        </tr>
+        <tr>
+            <th>Ensalada</th>
+            <td>{{ entity.ensalada }}</td>
+        </tr>
+        <tr>
+            <th>Postre</th>
+            <td>{{ entity.postre }}</td>
         </tr>
         <tr>
             <th>Dia</th>
@@ -29,12 +41,12 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('menu') }}">
+        <a href="{{ app.request.uriForPath('/#!/menu') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('menu_edit', { 'id': entity.id }) }}">
+        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edit">
             Edit
         </a>
     </li>

@@ -15,12 +15,22 @@ INCES\ComedorBundle\Entity\Usuario:
         type: string
         length: 150
         nullable: false
+     cedula:
+        type: string
+        length: 9
+        nullable: false
      ncarnet:
-        type: integer
+        type: string
+        length: 9
         nullable: false
      a_i:
         type: boolean
+        nullable: true
      correo:
+         type: string
+         length: 255
+         nullable: true
+     image:
          type: string
          length: 255
          nullable: true
