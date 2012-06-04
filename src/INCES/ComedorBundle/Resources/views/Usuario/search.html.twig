@@ -1,0 +1,45 @@
+<h1>Usuario list</h1>
+
+<div class="search">
+    <form action="{{ path('usuario_search') }}" method="post">
+        <input type="text" name="query" value="{{query}}" id="search_keywords_usuario" />
+        <input type="submit" value="search" />
+        {#
+        <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
+        #}
+        <div class="help">
+            Enter some keywords (city, country, position, ...)
+        </div>
+    </form>
+</div>
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Cedula</th>
+            <th>Ncarnet</th>
+            {#
+            <th>A_i</th>
+            #}
+            <th>Correo</th>
+            <th>Imagen</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in users %}
+        <tr>
+            <td>{{ entity.nombre }}</td>
+            <td>{{ entity.apellido }}</td>
+            <td>{{ entity.cedula }}</td>
+            <td>{{ entity.ncarnet }}</td>
+            {#
+            <td>{{ entity.ai }}</td>
+            #}
+            <td>{{ entity.correo }}</td>
+            <td>{{ entity.image }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+

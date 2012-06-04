@@ -1,0 +1,98 @@
+{# src/INCES/ComedorBundle/Resources/views/Hello/index.html.twig #}
+
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h1>Menu list today</h1>
+    <table class="records_list">
+        <thead>
+            <tr>
+            {% if field is defined %}
+                {% if attr is defined %}
+                    {% if field == "seco" and attr == "1" %}
+                        <th><a class="filter" value="seco" asc="{{attr}}" href="{{ path('menu_search') }}">Seco /\</a></th>
+                    {% elseif field == "seco" and attr == "0" %}
+                        <th><a class="filter" value="seco" asc="{{attr}}" href="{{ path('menu_search') }}">Seco \/</a></th>
+                    {% else %}
+                        <th><a class="filter" value="seco" asc="1" href="{{ path('menu_search') }}">Seco</a></th>
+                    {% endif %}
+                    {% if field == "sopa" and attr == "1" %}
+                        <th><a class="filter" value="sopa" asc="{{attr}}" href="{{ path('menu_search') }}">Sopa /\</a></th>
+                    {% elseif field == "sopa" and attr == "0" %}
+                        <th><a class="filter" value="sopa" asc="{{attr}}" href="{{ path('menu_search') }}">Sopa \/</a></th>
+                    {% else %}
+                        <th><a class="filter" value="sopa" asc="1" href="{{ path('menu_search') }}">Sopa</a></th>
+                    {% endif %}
+                    {% if field == "salado" and attr == "1" %}
+                        <th><a class="filter" value="salado"  asc="{{attr}}" href="{{ path('menu_search') }}">Salado /\</a></th>
+                    {% elseif field == "salado" and attr == "0" %}
+                        <th><a class="filter" value="salado"  asc="{{attr}}" href="{{ path('menu_search') }}">Salado \/</a></th>
+                    {% else %}
+                        <th><a class="filter" value="salado"  asc="1" href="{{ path('menu_search') }}">Salado</a></th>
+                    {% endif %}
+                    {% if field == "jugo" and attr == "1" %}
+                        <th><a class="filter" value="jugo"  asc="{{attr}}" href="{{ path('menu_search') }}">Jugo /\</a></th>
+                    {% elseif field == "jugo" and attr == "0" %}
+                        <th><a class="filter" value="jugo"  asc="{{attr}}" href="{{ path('menu_search') }}">Jugo \/</a></th>
+                    {% else %}
+                        <th><a class="filter" value="jugo"  asc="1" href="{{ path('menu_search') }}">Jugo</a></th>
+                    {% endif %}
+                    {% if field == "ensalada" and attr == "1" %}
+                        <th><a class="filter" value="ensalada"  asc="{{attr}}" href="{{ path('menu_search') }}">Ensalada /\</a></th>
+                    {% elseif field == "ensalada" and attr == "0" %}
+                        <th><a class="filter" value="ensalada"  asc="{{attr}}" href="{{ path('menu_search') }}">Ensalada \/</a></th>
+                    {% else %}
+                        <th><a class="filter" value="ensalada"  asc="1" href="{{ path('menu_search') }}">Ensalada</a></th>
+                    {% endif %}
+                    {% if field == "postre" and attr == "1" %}
+                        <th><a class="filter" value="postre"  asc="{{attr}}" href="{{ path('menu_search') }}">Postre /\</a></th>
+                    {% elseif field == "postre" and attr == "0" %}
+                        <th><a class="filter" value="postre"  asc="{{attr}}" href="{{ path('menu_search') }}">Postre \/</a></th>
+                    {% else %}
+                        <th><a class="filter" value="postre"  asc="1" href="{{ path('menu_search') }}">Postre</a></th>
+                    {% endif %}
+                    {% if field == "dia" and attr == "1" %}
+                        <th><a class="filter" value="dia"  asc="{{attr}}" href="{{ path('menu_search') }}">Dia /\</a></th>
+                    {% elseif field == "dia" and attr == "0" %}
+                        <th><a class="filter" value="dia"  asc="{{attr}}" href="{{ path('menu_search') }}">Dia \/</a></th>
+                    {% else %}
+                        <th><a class="filter" value="dia"  asc="1" href="{{ path('menu_search') }}">Dia</a></th>
+                    {% endif %}
+                {% else %}
+                    <th><a class="filter" value="seco"     asc="1" href="{{ path('menu_search') }}">Seco</a></th>
+                    <th><a class="filter" value="sopa"     asc="1" href="{{ path('menu_search') }}">Sopa</a></th>
+                    <th><a class="filter" value="salado"   asc="1" href="{{ path('menu_search') }}">Salado</a></th>
+                    <th><a class="filter" value="jugo"     asc="1" href="{{ path('menu_search') }}">Jugo</a></th>
+                    <th><a class="filter" value="ensalada" asc="1" href="{{ path('menu_search') }}">Ensalada</a></th>
+                    <th><a class="filter" value="postre"   asc="1" href="{{ path('menu_search') }}">Postre</a></th>
+                    <th><a class="filter" value="dia"      asc="1" href="{{ path('menu_search') }}">Dia</a></th>
+                {% endif %}
+            {% else %}
+                <th><a class="filter" value="seco"     asc="1" href="{{ path('menu_search') }}">Seco</a></th>
+                <th><a class="filter" value="sopa"     asc="1" href="{{ path('menu_search') }}">Sopa</a></th>
+                <th><a class="filter" value="salado"   asc="1" href="{{ path('menu_search') }}">Salado</a></th>
+                <th><a class="filter" value="jugo"     asc="1" href="{{ path('menu_search') }}">Jugo</a></th>
+                <th><a class="filter" value="ensalada" asc="1" href="{{ path('menu_search') }}">Ensalada</a></th>
+                <th><a class="filter" value="postre"   asc="1" href="{{ path('menu_search') }}">Postre</a></th>
+                <th><a class="filter" value="dia"      asc="1" href="{{ path('menu_search') }}">Dia</a></th>
+            {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% if menusToday|length == 0 %}
+            <p>No hay resultados</p>
+            {% endif %}
+            {% for entity in menusToday %}
+            <tr>
+                <td>{{ entity.seco }}</td>
+                <td>{{ entity.sopa }}</td>
+                <td>{{ entity.salado }}</td>
+                <td>{{ entity.jugo }}</td>
+                <td>{{ entity.ensalada }}</td>
+                <td>{{ entity.postre }}</td>
+                <td>{% if entity.dia %}{{ entity.dia|date('d/m/Y') }}{% endif%}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
