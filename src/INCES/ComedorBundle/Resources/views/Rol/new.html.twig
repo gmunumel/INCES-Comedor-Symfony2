@@ -2,7 +2,7 @@
 
 <table>
 	<th>
-<form action="{{ app.request.uriForPath('/#!/rol/') }}{{ entity.id }}/create" method="post" {{ form_enctype(form) }}>
+<form action="{{ app.request.uriForPath('/rol/create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
         <button type="submit">Agregar</button>

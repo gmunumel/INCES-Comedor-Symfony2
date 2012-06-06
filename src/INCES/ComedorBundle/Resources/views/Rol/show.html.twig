@@ -1,3 +1,5 @@
+{% extends '::base.html.twig' %}
+{% block body %}
 <h1>Rol</h1>
 
 <table class="record_properties">
@@ -37,9 +39,10 @@
         </a>
     </li>
     <li>
-        <form action="{{ app.request.uriForPath('/#!/rol/') }}{{ entity.id }}/delete" method="post">
+        <form action="{{ app.request.uriForPath('/rol/') }}{{ entity.id }}/delete" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>
     </li>
 </ul>
+{% endblock %}

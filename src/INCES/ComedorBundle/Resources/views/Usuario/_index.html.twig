@@ -8,7 +8,7 @@
 
 <div id="usuarios">
     <div class="search">
-        <form action="{{ app.request.uriForPath('/#!/usuario/searcha') }}" method="get">
+        <form action="{{ app.request.uriForPath('/usuario/searcha') }}" method="get">
             <input type="text" name="query" value="{{query}}" id="search_keywords_usuario_dyn" />
             <input type="submit" value="search" style="display:none;"/>
             <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
@@ -139,6 +139,9 @@
         {{ pagination.render()|raw }}
     </div>
     {% endif %}
+    {#
     <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+    #}
     <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
+
 </div>

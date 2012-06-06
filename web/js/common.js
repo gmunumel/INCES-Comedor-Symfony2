@@ -9,6 +9,7 @@ function init() {
 
 function page_load($href) {
     //alert($href);
+    //alert(document.URL);
     if($href != undefined && $href.substring(0, 2) == '#!') {
         $str = document.URL;
         $str = $str.split("/#!");

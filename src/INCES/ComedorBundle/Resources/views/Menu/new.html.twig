@@ -7,7 +7,7 @@
 <h1>Agregar Menu</h1>
 <table>
 	<th>
-<form action="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/create" {{ form_enctype(form) }}>
+<form action="{{ app.request.uriForPath('/menu/create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
         <button type="submit">Agregar</button>

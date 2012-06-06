@@ -319,20 +319,33 @@ class UsuarioController extends Controller
     public function searchAction(){
 
         $request = $this->get('request');
-        $query   = $request->request->get('query');
+        $entity = "";
+        $query = "";
 
-        $em = $this->getDoctrine()->getEntityManager();
-        $entity = $em->getRepository('INCESComedorBundle:Usuario')->findBy(array('cedula'=>$query));
+        if ($request->getMethod() == 'POST') {
+            //$request = $this->get('request');
+            $query   = $request->request->get('query');
+
+            //print_r($query);
+            $em = $this->getDoctrine()->getEntityManager();
+            $entity = $em->getRepository('INCESComedorBundle:Usuario')->findBy(array('cedula'=>$query));
 
 
-        //if (!$entity) {
-        //    throw $this->createNotFoundException('Unable to find Usuario entity.');
-        //}
+            //if (!$entity) {
+            //    throw $this->createNotFoundException('Unable to find Usuario entity.');
+            //}
+
+            return $this->render('INCESComedorBundle:Usuario:search_show.html.twig', array(
+                  'users' => $entity
+                 ,'query' => $query
+            ));
+        }
 
         return $this->render('INCESComedorBundle:Usuario:search.html.twig', array(
               'users' => $entity
              ,'query' => $query
         ));
+
     }
 
     /*
