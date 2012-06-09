@@ -3,40 +3,71 @@
 namespace INCES\ComedorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * INCES\ComedorBundle\Entity\Menu
+ * @ORM\Entity
+ * @ORM\Table(name="Menu")
  */
 class Menu
 {
     /**
-     * @var integer $id
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string $seco
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $seco;
 
     /**
-     * @var string $sopa
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $sopa;
 
     /**
-     * @var datetime $dia
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $salado;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $jugo;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $ensalada;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     */
+    private $postre;
+
+    /**
+     * @ORM\Column(type="datetime")
      */
     private $dia;
 
     /**
-     * @var INCES\ComedorBundle\Entity\UsuarioMenu
-     */
+    * @ORM\OneToMany(targetEntity="UsuarioMenu", mappedBy="menu")
+    */
     private $usuario_menus;
 
     public function __construct()
     {
         $this->usuario_menus = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dia = new \DateTime('now');
     }
 
     /**
@@ -90,9 +121,89 @@ class Menu
     }
 
     /**
+     * Set salado
+     *
+     * @param string $salado
+     */
+    public function setSalado($salado)
+    {
+        $this->salado = $salado;
+    }
+
+    /**
+     * Get salado
+     *
+     * @return string
+     */
+    public function getSalado()
+    {
+        return $this->salado;
+    }
+
+    /**
+     * Set jugo
+     *
+     * @param string $jugo
+     */
+    public function setJugo($jugo)
+    {
+        $this->jugo = $jugo;
+    }
+
+    /**
+     * Get jugo
+     *
+     * @return string
+     */
+    public function getJugo()
+    {
+        return $this->jugo;
+    }
+
+    /**
+     * Set ensalada
+     *
+     * @param string $ensalada
+     */
+    public function setEnsalada($ensalada)
+    {
+        $this->ensalada = $ensalada;
+    }
+
+    /**
+     * Get ensalada
+     *
+     * @return string
+     */
+    public function getEnsalada()
+    {
+        return $this->ensalada;
+    }
+
+    /**
+     * Set postre
+     *
+     * @param string $postre
+     */
+    public function setPostre($postre)
+    {
+        $this->postre = $postre;
+    }
+
+    /**
+     * Get postre
+     *
+     * @return string
+     */
+    public function getPostre()
+    {
+        return $this->postre;
+    }
+
+    /**
      * Set dia
      *
-     * @param datetime $dia
+     * @param date $dia
      */
     public function setDia($dia)
     {
@@ -102,7 +213,7 @@ class Menu
     /**
      * Get dia
      *
-     * @return datetime
+     * @return date
      */
     public function getDia()
     {
@@ -127,106 +238,5 @@ class Menu
     public function getUsuarioMenus()
     {
         return $this->usuario_menus;
-    }
-
-    /**
-     * @var string $salado
-     */
-    private $salado;
-
-    /**
-     * @var string $jugo
-     */
-    private $jugo;
-
-    /**
-     * @var string $ensalada
-     */
-    private $ensalada;
-
-    /**
-     * @var string $postre
-     */
-    private $postre;
-
-
-    /**
-     * Set salado
-     *
-     * @param string $salado
-     */
-    public function setSalado($salado)
-    {
-        $this->salado = $salado;
-    }
-
-    /**
-     * Get salado
-     *
-     * @return string 
-     */
-    public function getSalado()
-    {
-        return $this->salado;
-    }
-
-    /**
-     * Set jugo
-     *
-     * @param string $jugo
-     */
-    public function setJugo($jugo)
-    {
-        $this->jugo = $jugo;
-    }
-
-    /**
-     * Get jugo
-     *
-     * @return string 
-     */
-    public function getJugo()
-    {
-        return $this->jugo;
-    }
-
-    /**
-     * Set ensalada
-     *
-     * @param string $ensalada
-     */
-    public function setEnsalada($ensalada)
-    {
-        $this->ensalada = $ensalada;
-    }
-
-    /**
-     * Get ensalada
-     *
-     * @return string 
-     */
-    public function getEnsalada()
-    {
-        return $this->ensalada;
-    }
-
-    /**
-     * Set postre
-     *
-     * @param string $postre
-     */
-    public function setPostre($postre)
-    {
-        $this->postre = $postre;
-    }
-
-    /**
-     * Get postre
-     *
-     * @return string 
-     */
-    public function getPostre()
-    {
-        return $this->postre;
     }
 }

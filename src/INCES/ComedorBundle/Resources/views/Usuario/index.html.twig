@@ -138,7 +138,7 @@
         #}
         {% if pagination|length != 0 %}
         <div class="navigation">
-            {{ pagination.render()|raw }}
+            {{pagination.render()|replace({'usuario': '#!/usuario'})|raw}}
         </div>
         {% endif %}
 

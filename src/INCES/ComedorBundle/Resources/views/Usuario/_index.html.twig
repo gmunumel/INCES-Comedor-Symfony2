@@ -8,7 +8,7 @@
 
 <div id="usuarios">
     <div class="search">
-        <form action="{{ app.request.uriForPath('/usuario/searcha') }}" method="get">
+        <form id="menu_form" action="{{ app.request.uriForPath('/usuario/searcha') }}" method="get">
             <input type="text" name="query" value="{{query}}" id="search_keywords_usuario_dyn" />
             <input type="submit" value="search" style="display:none;"/>
             <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
@@ -136,7 +136,7 @@
     #}
     {% if pagination|length != 0 %}
     <div class="navigation">
-        {{ pagination.render()|raw }}
+        {{pagination.render()|replace({'menu': '#!/menu'})|raw}}
     </div>
     {% endif %}
     {#

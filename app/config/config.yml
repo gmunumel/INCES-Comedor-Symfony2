@@ -87,6 +87,3 @@ knp_paginator:
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
 #    templating: ~ # enables view helper and twig
 
-ewz_search:
-    analyzer: Zend\Search\Lucene\Analysis\Analyzer\Common\TextNum\CaseInsensitive
-    path:     %kernel.root_dir%/cache/%kernel.environment%/lucene/index

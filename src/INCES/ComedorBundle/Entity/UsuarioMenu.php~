@@ -5,22 +5,32 @@ namespace INCES\ComedorBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * INCES\ComedorBundle\Entity\UsuarioMenu
+ * @ORM\Entity
+ * @ORM\Table(name="UsuarioMenu")
  */
 class UsuarioMenu
 {
     /**
-     * @var integer $id
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var INCES\ComedorBundle\Entity\Usuario
+     * @ORM\Column(type="date")
+     */
+    private $dia;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="usuario_menus")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
     private $usuario;
 
     /**
-     * @var INCES\ComedorBundle\Entity\Menu
+     * @ORM\ManyToOne(targetEntity="Menu", inversedBy="usuario_menus")
+     * @ORM\JoinColumn(name="menu_id", referencedColumnName="id")
      */
     private $menu;
 
@@ -28,11 +38,31 @@ class UsuarioMenu
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set dia
+     *
+     * @param date $dia
+     */
+    public function setDia($dia)
+    {
+        $this->dia = $dia;
+    }
+
+    /**
+     * Get dia
+     *
+     * @return date
+     */
+    public function getDia()
+    {
+        return $this->dia;
     }
 
     /**
@@ -48,7 +78,7 @@ class UsuarioMenu
     /**
      * Get usuario
      *
-     * @return INCES\ComedorBundle\Entity\Usuario 
+     * @return INCES\ComedorBundle\Entity\Usuario
      */
     public function getUsuario()
     {
@@ -68,35 +98,10 @@ class UsuarioMenu
     /**
      * Get menu
      *
-     * @return INCES\ComedorBundle\Entity\Menu 
+     * @return INCES\ComedorBundle\Entity\Menu
      */
     public function getMenu()
     {
         return $this->menu;
-    }
-    /**
-     * @var datetime $dia
-     */
-    private $dia;
-
-
-    /**
-     * Set dia
-     *
-     * @param datetime $dia
-     */
-    public function setDia($dia)
-    {
-        $this->dia = $dia;
-    }
-
-    /**
-     * Get dia
-     *
-     * @return datetime 
-     */
-    public function getDia()
-    {
-        return $this->dia;
     }
 }

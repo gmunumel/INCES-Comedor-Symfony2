@@ -18,6 +18,7 @@
     <link href="{{ asset('css/style.css') }}" media="screen,projection" type="text/css" rel="stylesheet" />
     <link href="{{ asset('css/print.css') }}" media="print" type="text/css" rel="stylesheet" />
     <link href="{{ asset('css/menu.css') }}" media="screen,projection" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/jquery-ui-1.8.21.custom.css') }}" media="screen,projection" type="text/css" rel="stylesheet" />
 {% endblock %}
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
 
@@ -339,10 +340,13 @@
 </div> <!-- /main -->
 
 {% block javascripts %}
+{#
 <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.validate.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
+#}
 {% endblock %}
 <a href="http://apycom.com/" ></a>
 </body>

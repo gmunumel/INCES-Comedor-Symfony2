@@ -6,7 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Entity\User as BaseUser;
 
 /**
- * INCES\ComedorBundle\Entity\UserAdmin
+ * @ORM\Entity
+ * @ORM\Table(name="UserAdmin")
  */
 class UserAdmin extends BaseUser
 {
@@ -18,25 +19,24 @@ class UserAdmin extends BaseUser
     protected $id;
 
     /**
-     * @var string $nombre
+     * @ORM\Column(type="string", length=255)
      */
     private $nombre;
 
     /**
-     * @var string $apellido
+     * @ORM\Column(type="string", length=255)
      */
     private $apellido;
 
     /**
-     * @var string $cedula
+     * @ORM\Column(type="string", length=255)
      */
     private $cedula;
 
     /**
-     * @var string $ncarnet
+     * @ORM\Column(type="string", length=255)
      */
     private $ncarnet;
-
 
     /**
      * Get id

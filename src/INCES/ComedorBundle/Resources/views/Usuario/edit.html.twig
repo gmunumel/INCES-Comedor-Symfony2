@@ -1,6 +1,6 @@
 <h1>Usuario edit</h1>
 
-<form action="{{ app.request.uriForPath('/usuario/') }}{{ entity.id }}/update" method="post" {{ form_enctype(edit_form) }}>
+<form class="usuario_form" action="{{ app.request.uriForPath('/usuario/') }}{{ entity.id }}/update" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}
     <p>
         <button type="submit">Modificar</button>
@@ -14,9 +14,10 @@
         </a>
     </li>
     <li>
-        <form action="{{ app.request.uriForPath('/usuario/') }}{{ entity.id }}/delete" method="post">
+        <form class="usuario_form" action="{{ app.request.uriForPath('/usuario/') }}{{ entity.id }}/delete" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Borrar</button>
         </form>
     </li>
 </ul>
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

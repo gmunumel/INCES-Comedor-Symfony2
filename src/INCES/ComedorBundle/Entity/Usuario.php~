@@ -5,50 +5,63 @@ namespace INCES\ComedorBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * INCES\ComedorBundle\Entity\Usuario
+ * @ORM\Entity
+ * @ORM\Table(name="Usuario")
  */
 class Usuario
 {
     /**
-     * @var integer $id
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string $nombre
+     * @ORM\Column(type="string", length=255)
      */
     private $nombre;
 
     /**
-     * @var string $apellido
+     * @ORM\Column(type="string", length=255)
      */
     private $apellido;
 
     /**
-     * @var integer $ncarnet
+     * @ORM\Column(type="string", length=255)
+     */
+    private $cedula;
+
+    /**
+     * @ORM\Column(type="string", length=255)
      */
     private $ncarnet;
 
     /**
-     * @var boolean $a_i
+     * @ORM\Column(type="boolean")
      */
     private $a_i;
 
     /**
-     * @var string $correo
+     * @ORM\Column(type="string", length=255)
      */
     private $correo;
 
     /**
-     * @var INCES\ComedorBundle\Entity\Rol
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Rol")
+     * @ORM\JoinColumn(name="rol_id", referencedColumnName="id")
      */
     private $rol;
-
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -68,7 +81,7 @@ class Usuario
     /**
      * Get nombre
      *
-     * @return string 
+     * @return string
      */
     public function getNombre()
     {
@@ -88,7 +101,7 @@ class Usuario
     /**
      * Get apellido
      *
-     * @return string 
+     * @return string
      */
     public function getApellido()
     {
@@ -96,9 +109,29 @@ class Usuario
     }
 
     /**
+     * Set cedula
+     *
+     * @param string $cedula
+     */
+    public function setCedula($cedula)
+    {
+        $this->cedula = $cedula;
+    }
+
+    /**
+     * Get cedula
+     *
+     * @return string
+     */
+    public function getCedula()
+    {
+        return $this->cedula;
+    }
+
+    /**
      * Set ncarnet
      *
-     * @param integer $ncarnet
+     * @param string $ncarnet
      */
     public function setNcarnet($ncarnet)
     {
@@ -108,7 +141,7 @@ class Usuario
     /**
      * Get ncarnet
      *
-     * @return integer 
+     * @return string
      */
     public function getNcarnet()
     {
@@ -128,7 +161,7 @@ class Usuario
     /**
      * Get a_i
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getAI()
     {
@@ -148,37 +181,12 @@ class Usuario
     /**
      * Get correo
      *
-     * @return string 
+     * @return string
      */
     public function getCorreo()
     {
         return $this->correo;
     }
-
-    /**
-     * Set rol
-     *
-     * @param INCES\ComedorBundle\Entity\Rol $rol
-     */
-    public function setRol(\INCES\ComedorBundle\Entity\Rol $rol)
-    {
-        $this->rol = $rol;
-    }
-
-    /**
-     * Get rol
-     *
-     * @return INCES\ComedorBundle\Entity\Rol 
-     */
-    public function getRol()
-    {
-        return $this->rol;
-    }
-    /**
-     * @var string $image
-     */
-    private $image;
-
 
     /**
      * Set image
@@ -193,35 +201,31 @@ class Usuario
     /**
      * Get image
      *
-     * @return string 
+     * @return string
      */
     public function getImage()
     {
         return $this->image;
     }
-    /**
-     * @var string $cedula
-     */
-    private $cedula;
 
 
     /**
-     * Set cedula
+     * Set rol
      *
-     * @param string $cedula
+     * @param INCES\ComedorBundle\Entity\Rol $rol
      */
-    public function setCedula($cedula)
+    public function setRol(\INCES\ComedorBundle\Entity\Rol $rol)
     {
-        $this->cedula = $cedula;
+        $this->rol = $rol;
     }
 
     /**
-     * Get cedula
+     * Get rol
      *
-     * @return string 
+     * @return INCES\ComedorBundle\Entity\Rol
      */
-    public function getCedula()
+    public function getRol()
     {
-        return $this->cedula;
+        return $this->rol;
     }
 }

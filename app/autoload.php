@@ -18,8 +18,6 @@ $loader->registerNamespaces(array(
     'FOS'              => __DIR__.'/../vendor/bundles',
     'Knp\\Component'   => __DIR__.'/../vendor/knp-components/src',
     'Knp'              => __DIR__.'/../vendor/bundles',
-    'Zend\\Search'     => __DIR__.'/../vendor/zend-search/',
-    'EWZ'              => __DIR__.'/../vendor/bundles',
 ));
 $loader->registerPrefixes(array(
     'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',

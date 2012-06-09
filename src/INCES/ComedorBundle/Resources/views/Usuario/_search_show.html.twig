@@ -1,8 +1,8 @@
-<h1>Usuario list Search</h1>
+<h1>Usuario list Seach_Show</h1>
 
 <div class="search">
     <form action="{{ app.request.uriForPath('/usuario/search') }}" method="post">
-        <input type="text" name="query" value="{{query}}" id="search_keywords_usuario" />
+        <input autocomplete="off" type="text" name="query" value="{{query}}" id="search_keywords_usuario" />
         <input type="submit" value="search" />
         {#
         <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
@@ -42,7 +42,4 @@
     {% endfor %}
     </tbody>
 </table>
-{#
-<script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
-#}
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

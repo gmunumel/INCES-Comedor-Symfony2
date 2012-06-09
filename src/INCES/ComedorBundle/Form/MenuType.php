@@ -16,8 +16,10 @@ class MenuType extends AbstractType
             ->add('jugo')
             ->add('ensalada')
             ->add('postre')
-            ->add('dia')
-        ;
+            ->add('dia', 'date', array(
+                'widget'        => 'single_text',
+                'format'        => 'dd/MM/yy',
+            ));
     }
 
     public function getName()

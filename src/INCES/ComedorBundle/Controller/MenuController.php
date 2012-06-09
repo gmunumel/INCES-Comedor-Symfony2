@@ -4,12 +4,10 @@ namespace INCES\ComedorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use EWZ\Bundle\SearchBundle\Lucene\Document;
-use EWZ\Bundle\SearchBundle\Lucene\Field;
-use Zend\Search\Search\Lucene\Search\Query\MultiTerm;
 use INCES\ComedorBundle\Entity\Menu;
 use INCES\ComedorBundle\Form\MenuType;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Menu controller.
@@ -17,41 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class MenuController extends Controller
 {
-
-    public function updateLuceneIndex($form)
-    {
-        $search = $this->get('ewz_search.lucene');
-        //$index = Menu::getLuceneIndex();
-
-        // remove existing entries
-        /*
-        foreach ($index->find('id:'.$this->getId()) as $hit)
-        {
-            $index->delete($hit->id);
-        }
-        */
-        //$query = new MultiTerm();
-
-        //$doc = new Zend_Search_Lucene_Document();
-        $doc = new Document();
-
-        // store job primary key to identify it in the search results
-        //print_r($form->getData()->getId());
-        //print_r($form->getData()->getDia()->format('d-m-Y'));
-        $doc->addField(Field::keyword('key', $form->getData()->getId()));
-
-        // index job fields
-        $doc->addField(Field::text('seco', $form->getData()->getSeco()));
-        $doc->addField(Field::text('sopa', $form->getData()->getSopa()));
-        //$doc->addField(Field::text('dia',  $form->getData()->getDia()->format('d-m-Y')));
-        $doc->addField(Field::text('dia',  $form->getData()->getDia()->format('dmY')));
-
-        // add job to the index
-        $search->addDocument($doc);
-        $search->updateIndex();
-        //$index->addDocument($doc);
-        //$index->commit();
-    }
 
     public function _indexAction($query, $field = null, $attr = null){
 
@@ -279,11 +242,8 @@ class MenuController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            // Update Index Lucene
-            $this->updateLuceneIndex($form);
-
-            return $this->redirect($this->generateUrl('menu_show', array('id' => $entity->getId())));
-
+            $route = $request->getBaseUrl();
+            return new Response($route.'/menu/'.$entity->getId().'/show');
         }
 
         return $this->render('INCESComedorBundle:Menu:new.html.twig', array(
@@ -341,7 +301,10 @@ class MenuController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('menu_edit', array('id' => $id)));
+            $route = $request->getBaseUrl();
+            return new Response($route.'/menu/');
+            //return new Response($route.'/menu/'.$entity->getId().'/show');
+            //return $this->redirect($this->generateUrl('menu_edit', array('id' => $id)));
         }
 
         return $this->render('INCESComedorBundle:Menu:edit.html.twig', array(
@@ -374,7 +337,9 @@ class MenuController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('menu'));
+        $route = $request->getBaseUrl();
+        return new Response($route.'/menu');
+        //return $this->redirect($this->generateUrl('menu'));
     }
 
     private function createDeleteForm($id)

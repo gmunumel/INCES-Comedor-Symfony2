@@ -9,7 +9,7 @@
 <div id="menus">
     <div class="search">
         <form action="{{ app.request.uriForPath('/menu/search') }}" method="get">
-            <input type="text" name="query" value="{{query}}" id="search_keywords" />
+            <input type="text" name="query" value="{{query}}" id="search_keywords_menu" />
             <input type="submit" value="search" style="display:none;"/>
             <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
             <div class="help">
@@ -112,11 +112,11 @@
                         {#
                         <a href="{{ path('menu_show', { 'id': entity.id }) }}">show</a>
                         #}
-                        <a href="{{ app.request.uriForPath('/menu/') }}{{ entity.id }}/show">show2</a>
+                        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/show">show2</a>
                         </li>
                         {% if is_granted("ROLE_USER") %}
                         <li>
-                        <a href="{{ app.request.uriForPath('/menu/') }}{{ entity.id }}/edit">edit2</a>
+                        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edit">edit2</a>
                         </li>
                         {% endif %}
                     </ul>
@@ -151,7 +151,7 @@
     #}
     {% if pagination|length != 0 %}
     <div class="navigation">
-        {{ pagination.render()|raw }}
+        {{pagination.render()|replace({'usuario': '#!/usuario'})|raw}}
     </div>
     {% endif %}
 

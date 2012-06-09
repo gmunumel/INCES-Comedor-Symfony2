@@ -4,9 +4,7 @@
 
 {% block body %}
 #}
-{% extends '::base.html.twig' %}
-{% block body %}
-<h1>Menu</h1>
+<h1>Menu Show</h1>
 
 <table class="record_properties">
     <tbody>
@@ -17,6 +15,10 @@
         <tr>
             <th>Seco</th>
             <td>{{ entity.seco }}</td>
+        </tr>
+        <tr>
+            <th>Sopa</th>
+            <td>{{ entity.sopa }}</td>
         </tr>
         <tr>
             <th>Salado</th>
@@ -36,7 +38,7 @@
         </tr>
         <tr>
             <th>Dia</th>
-            <td>{{ entity.dia|date('Y-m-d H:i:s') }}</td>
+            <td>{{ entity.dia|date('d/m/Y') }}</td>
         </tr>
     </tbody>
 </table>
@@ -62,4 +64,7 @@
 {#
 {% endblock %}
 #}
-{% endblock %}
+{#
+<script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
+#}
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

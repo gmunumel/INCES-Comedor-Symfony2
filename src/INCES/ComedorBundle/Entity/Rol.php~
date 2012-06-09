@@ -5,24 +5,37 @@ namespace INCES\ComedorBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * INCES\ComedorBundle\Entity\Rol
+ * @ORM\Entity
+ * @ORM\Table(name="Rol")
  */
 class Rol
 {
     /**
-     * @var integer $id
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string $nombre
+     * @ORM\Column(type="string", length=255)
      */
     private $nombre;
 
     /**
-     * @var integer $monto
+     * @ORM\Column(type="string", length=255)
      */
     private $monto;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $horaComerStart;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $horaComerEnd;
 
 
     /**
@@ -58,7 +71,7 @@ class Rol
     /**
      * Set monto
      *
-     * @param integer $monto
+     * @param string $monto
      */
     public function setMonto($monto)
     {
@@ -68,26 +81,12 @@ class Rol
     /**
      * Get monto
      *
-     * @return integer
+     * @return string
      */
     public function getMonto()
     {
         return $this->monto;
     }
-
-    public function __toString(){
-        return $this->nombre;
-    }
-    /**
-     * @var string $horaComerStart
-     */
-    private $horaComerStart;
-
-    /**
-     * @var string $horaComerEnd
-     */
-    private $horaComerEnd;
-
 
     /**
      * Set horaComerStart
@@ -102,7 +101,7 @@ class Rol
     /**
      * Get horaComerStart
      *
-     * @return string 
+     * @return string
      */
     public function getHoraComerStart()
     {
@@ -122,7 +121,7 @@ class Rol
     /**
      * Get horaComerEnd
      *
-     * @return string 
+     * @return string
      */
     public function getHoraComerEnd()
     {

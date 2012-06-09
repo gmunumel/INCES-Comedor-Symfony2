@@ -10,10 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use INCES\ComedorBundle\Entity\Usuario;
 use INCES\ComedorBundle\Form\UsuarioType;
 use Symfony\Component\HttpFoundation\Response;
-use EWZ\Bundle\SearchBundle\Lucene\Document;
-use EWZ\Bundle\SearchBundle\Lucene\Field;
-use EWZ\Bundle\SearchBundle\Lucene\LuceneSearch;
-use Zend\Search\Search\Lucene\Search\Query\MultiTerm;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Usuario controller.
@@ -22,44 +19,6 @@ use Zend\Search\Search\Lucene\Search\Query\MultiTerm;
  */
 class UsuarioController extends Controller
 {
-
-    public function updateLuceneIndex($form)
-    {
-        $search = $this->get('ewz_search.lucene');
-        //$index = Menu::getLuceneIndex();
-
-        // remove existing entries
-        /*
-        foreach ($index->find('id:'.$this->getId()) as $hit)
-        {
-            $index->delete($hit->id);
-        }
-        */
-        //$query = new MultiTerm();
-
-        //$doc = new Zend_Search_Lucene_Document();
-        $doc = new Document();
-
-        // store job primary key to identify it in the search results
-        //print_r($form->getData()->getId());
-        //print_r($form->getData()->getDia()->format('d-m-Y'));
-        //print_r($form->getData()->getCedula());
-        $doc->addField(Field::keyword('key', $form->getData()->getId()));
-
-        // index job fields
-        $doc->addField(Field::text('cedula', $form->getData()->getCedula()));
-        //$doc->addField(Field::text('nombre', $form->getData()->getNombre()));
-        //$doc->addField(Field::text('apellido', $form->getData()->getApellido()));
-        //$doc->addField(Field::text('ncarnet', $form->getData()->getNcarnet()));
-        //$doc->addField(Field::text('correo', $form->getData()->getCorreo()));
-        //$doc->addField(Field::text('dia',  $form->getData()->getDia()->format('d-m-Y')));
-
-        // add job to the index
-        $search->addDocument($doc);
-        $search->updateIndex();
-        //$index->addDocument($doc);
-        //$index->commit();
-    }
     /**
      * Lists all Usuario entities.
      *
@@ -152,11 +111,9 @@ class UsuarioController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            // Update Index Lucene
-            $this->updateLuceneIndex($form);
-
-            return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
-
+            //return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
+            $route = $request->getBaseUrl();
+            return new Response($route.'/usuario/'.$entity->getId().'/show');
         }
 
         return array(
@@ -219,7 +176,10 @@ class UsuarioController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('usuario_edit', array('id' => $id)));
+            //return $this->redirect($this->generateUrl('usuario_edit', array('id' => $id)));
+            $route = $request->getBaseUrl();
+            return new Response($route.'/usuario/');
+            //return new Response($route.'/usuario/'.$entity->getId().'/edit');
         }
 
         return array(
@@ -254,7 +214,9 @@ class UsuarioController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('usuario'));
+        $route = $request->getBaseUrl();
+        return new Response($route.'/usuario');
+        //return $this->redirect($this->generateUrl('usuario'));
     }
 
     private function createDeleteForm($id)
@@ -318,6 +280,7 @@ class UsuarioController extends Controller
      */
     public function searchAction(){
 
+        /*
         $request = $this->get('request');
         $entity = "";
         $query = "";
@@ -345,6 +308,29 @@ class UsuarioController extends Controller
               'users' => $entity
              ,'query' => $query
         ));
+        */
+        $em = $this->getDoctrine()->getEntityManager();
+        $request = $this->get('request');
+        $query   = $request->request->get('query');
+
+        if (!$query) {
+            $entity = $em->getRepository('INCESComedorBundle:Usuario')->findBy(array('cedula'=>$query));
+            return $this->render('INCESComedorBundle:Usuario:_search_show.html.twig', array(
+                 'query' => $query
+                ,'users' => $entity
+            ));
+        }else{
+            if ($request->isXmlHttpRequest()){
+                //if ('*' == $query){
+                    //$query = '';
+                    $entity = $em->getRepository('INCESComedorBundle:Usuario')->findBy(array('cedula'=>$query));
+                    return $this->render('INCESComedorBundle:Usuario:_search_show.html.twig', array(
+                         'query' => $query
+                        ,'users' => $entity
+                    ));
+                //}
+            }
+        }
 
     }
 
@@ -379,21 +365,9 @@ class UsuarioController extends Controller
                         ,'attr'  => $attr
                     ));
                 }
-                //$query = 'gabo';
                 $query = substr_replace($query ,"",-1);
                 $_query = $this->params($query);
                 $pagination = $this->_indexAction($_query);
-                //print_r($query);
-                //$search = $this->get('ewz_search.lucene');
-                //$pagination = $search->find($query);
-                //$pagination = $search->find($query);
-                //$term  = new \Zend\Search\Lucene\Index\Term($query);
-                //$query = new \Zend\Search\Lucene\Search\Query\Wildcard($term);
-                //$menus = array();
-                //$pagination = $search->find($query);
-                //$pagination = $query;
-                //$pagination = array();
-                //print_r($pagination);
                 return $this->render('INCESComedorBundle:Usuario:_list.html.twig', array(
                     'pagination'  => $pagination
                     ,'query'      => $query
