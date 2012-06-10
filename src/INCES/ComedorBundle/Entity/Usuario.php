@@ -48,7 +48,7 @@ class Usuario
     private $correo;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable="true")
      */
     private $image;
 

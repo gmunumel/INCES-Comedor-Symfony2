@@ -1,7 +1,5 @@
 $(document).ready(function()
 {
-    //$(':input').removeAttr('required');
-
     $('.menu_form').validate({
         rules: {
             'inces_comedorbundle_menutype[seco]'     : { required : true },
@@ -21,14 +19,18 @@ $(document).ready(function()
             'inces_comedorbundle_menutype[postre]'   : { required : 'Coloque el campo Postre' }
         }
     });
+    $('.usuario_form').submit(function(e) {
+        return true;
+    });
     $("#inces_comedorbundle_menutype_dia" ).datepicker({
         timeFormat: 'hh:mm:ss',
         dateFormat: 'dd/mm/yy',
         showButtonPanel: true
     });
-    $('form').submit(function(e) {
+    $('form:not(.usuario_form)').submit(function(e) {
 
         var url = $(this).attr("action");
+        alert(url);
 
         if ($(this).valid()){
             $.ajax({
@@ -81,6 +83,23 @@ $(document).ready(function()
         if ( key.which == 13 ) key.preventDefault();
     });
     $('#search_keywords_usuario_dyn').keyup(function(key){
+        if ( key.which == 13 ) key.preventDefault();
+        if (this.value.length >= 3 || this.value == '')
+        {
+            $('#loader').show();
+
+            //alert(this.value);
+            $('#content').load(
+                $(this).parents('form').attr('action'),
+                { query: this.value + '*'},
+                function() { $('#loader').hide(); }
+            );
+        }
+    });
+    $('#search_keywords_facturar').keypress(function(key){
+        if ( key.which == 13 ) key.preventDefault();
+    });
+    $('#search_keywords_facturar').keyup(function(key){
         if ( key.which == 13 ) key.preventDefault();
         if (this.value.length >= 3 || this.value == '')
         {

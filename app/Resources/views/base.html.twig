@@ -167,24 +167,8 @@
         #}
 
         <!-- Screenshot in browser (replace img/browser.gif) -->
-        <div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}</div>
-
-        <div id="col-text">
-
-            <h2 id="slogan"><span></span>Place for your slogan.</h2>
-
-            {% block body %}{% endblock %}
-
-            <div id="content"></div>
-
-            <p></p>
-
-            <p id="btns">
-                <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
-                <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
-            </p>
-
-        </div> <!-- /col-text -->
+        {% block body %}{% endblock %}
+        <div id="content"></div>
 
     </div> <!-- /col -->
     <div id="col-bottom"></div>
@@ -340,13 +324,15 @@
 </div> <!-- /main -->
 
 {% block javascripts %}
-{#
 <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.validate.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.core.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.widget.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker-es.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
-#}
 {% endblock %}
 <a href="http://apycom.com/" ></a>
 </body>

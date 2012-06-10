@@ -28,14 +28,24 @@ class Rol
     private $monto;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=2)
      */
     private $horaComerStart;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=2)
+     */
+    private $horaComerStartAMPM;
+
+    /**
+     * @ORM\Column(type="string", length=2)
      */
     private $horaComerEnd;
+
+    /**
+     * @ORM\Column(type="string", length=2)
+     */
+    private $horaComerEndAMPM;
 
 
     /**
@@ -130,5 +140,45 @@ class Rol
 
     public function __tostring(){
         return $this->nombre;
+    }
+
+    /**
+     * Set horaComerStartAMPM
+     *
+     * @param string $horaComerStartAMPM
+     */
+    public function setHoraComerStartAMPM($horaComerStartAMPM)
+    {
+        $this->horaComerStartAMPM = $horaComerStartAMPM;
+    }
+
+    /**
+     * Get horaComerStartAMPM
+     *
+     * @return string 
+     */
+    public function getHoraComerStartAMPM()
+    {
+        return $this->horaComerStartAMPM;
+    }
+
+    /**
+     * Set horaComerEndAMPM
+     *
+     * @param string $horaComerEndAMPM
+     */
+    public function setHoraComerEndAMPM($horaComerEndAMPM)
+    {
+        $this->horaComerEndAMPM = $horaComerEndAMPM;
+    }
+
+    /**
+     * Get horaComerEndAMPM
+     *
+     * @return string 
+     */
+    public function getHoraComerEndAMPM()
+    {
+        return $this->horaComerEndAMPM;
     }
 }

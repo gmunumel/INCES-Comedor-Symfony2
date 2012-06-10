@@ -5,153 +5,160 @@
 {#
 {% include 'INCESComedorBundle:Usuario:_index.html.twig' with {pagination: pagination} %}
 #}
-<div id="usuarios">
-    <div class="search">
-        <form action="{{ app.request.uriForPath('/usuario/searcha') }}" method="get">
-            <input type="text" name="query" value="{{query}}" id="search_keywords_usuario_dyn" />
-            <input type="submit" value="search" style="display:none;"/>
-            <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
-            <div class="help">
-                Enter some keywords (city, country, position, ...)
-            </div>
-        </form>
-    </div>
-    {#
+
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
+
+<div id="col-text">
+
+    <h2 id="slogan"><span></span>Place for your slogan.</h2>
     <div id="usuarios">
-        #}
-        <h1>Usuarios list view Usuario/index</h1>
-        <table class="records_list">
-            <thead>
-                <tr>
-                    {% if field is defined %}
-                    {% if attr is defined %}
-                    {% if field == "cedula" and attr == "1" %}
-                    <th><a class="filter_usuarios" value="cedula" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Cédula /\</a></th>
-                    {% elseif field == "cedula" and attr == "0" %}
-                    <th><a class="filter_usuarios" value="cedula" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Cédula \/</a></th>
-                    {% else %}
-                    <th><a class="filter_usuarios" value="cedula" asc="1" href="{{ path('usuario_search_ajax') }}">Cédula</a></th>
-                    {% endif %}
-                    {% if field == "nombre" and attr == "1" %}
-                    <th><a class="filter_usuarios" value="nombre" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Nombre /\</a></th>
-                    {% elseif field == "nombre" and attr == "0" %}
-                    <th><a class="filter_usuarios" value="nombre" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Apellido \/</a></th>
-                    {% else %}
-                    <th><a class="filter_usuarios" value="nombre" asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
-                    {% endif %}
-                    {% if field == "apellido" and attr == "1" %}
-                    <th><a class="filter_usuarios" value="apellido"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Apellido /\</a></th>
-                    {% elseif field == "apellido" and attr == "0" %}
-                    <th><a class="filter_usuarios" value="apellido"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Apellido \/</a></th>
-                    {% else %}
-                    <th><a class="filter_usuarios" value="apellido"  asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
-                    {% endif %}
-                    {% if field == "ncarnet" and attr == "1" %}
-                    <th><a class="filter_usuarios" value="ncarnet"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Número Carnet /\</a></th>
-                    {% elseif field == "ncarnet" and attr == "0" %}
-                    <th><a class="filter_usuarios" value="ncarnet"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Número Carnet \/</a></th>
-                    {% else %}
-                    <th><a class="filter_usuarios" value="ncarnet"  asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
-                    {% endif %}
-                    {% if field == "correo" and attr == "1" %}
-                    <th><a class="filter_usuarios" value="correo"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Correo /\</a></th>
-                    {% elseif field == "correo" and attr == "0" %}
-                    <th><a class="filter_usuarios" value="correo"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Correo \/</a></th>
-                    {% else %}
-                    <th><a class="filter_usuarios" value="correo"  asc="1" href="{{ path('usuario_search_ajax') }}">Correo</a></th>
-                    {% endif %}
-                    {% else %}
-                    <th><a class="filter_usuarios" value="cedula"     asc="1" href="{{ path('usuario_search_ajax') }}">Cédula</a></th>
-                    <th><a class="filter_usuarios" value="nombre"     asc="1" href="{{ path('usuario_search_ajax') }}">Nombre</a></th>
-                    <th><a class="filter_usuarios" value="apellido"   asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
-                    <th><a class="filter_usuarios" value="ncarnet"     asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
-                    <th><a class="filter_usuarios" value="correo" asc="1" href="{{ path('usuario_search_ajax') }}">Correo</a></th>
-                    <th>Imagen</th>
-                    {% endif %}
-                    {% else %}
-                    <th><a class="filter_usuarios" value="cedula"     asc="1" href="{{ path('usuario_search_ajax') }}">Cédula</a></th>
-                    <th><a class="filter_usuarios" value="nombre"     asc="1" href="{{ path('usuario_search_ajax') }}">Nombre</a></th>
-                    <th><a class="filter_usuarios" value="apellido"   asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
-                    <th><a class="filter_usuarios" value="ncarnet"     asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
-                    <th><a class="filter_usuarios" value="correo" asc="1" href="{{ path('usuario_search_ajax') }}">Correo</a></th>
-                    <th>Imagen</th>
-                    {% endif %}
-                </tr>
-            </thead>
-            <tbody>
-                {% if pagination|length == 0 %}
-                <p>No hay resultados</p>
-                {% endif %}
-                {#
-                <div id="menus">
-                    #}
-                    {% for entity in pagination %}
-                    <tr>
-                        <td>{{ entity.cedula }}</td>
-                        <td>{{ entity.nombre }}</td>
-                        <td>{{ entity.apellido }}</td>
-                        <td>{{ entity.ncarnet }}</td>
-                        <td>{{ entity.correo }}</td>
-                        <td>{{ entity.image }}</td>
-                        {#
-                        <td>
-                            <ul>
-                                <li>
-                                <a href="{{ path('menu_show', { 'id': entity.id }) }}">show</a>
-
-                                <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/show">show2</a>
-                                </li>
-                                {% if is_granted("ROLE_USER") %}
-                                <li>
-                                <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edit">edit2</a>
-                                </li>
-                                {% endif %}
-                            </ul>
-                        </td>
-                        #}
-                    </tr>
-                    {% endfor %}
-                    {#
+        <div class="search">
+            <form action="{{ app.request.uriForPath('/usuario/searcha') }}" method="get">
+                <input type="text" name="query" value="{{query}}" id="search_keywords_usuario_dyn" />
+                <input type="submit" value="search" style="display:none;"/>
+                <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
+                <div class="help">
+                    Enter some keywords (city, country, position, ...)
                 </div>
-                #}
-            </tbody>
-        </table>
-        {#
-        <ul>
-            <li>
-            <a href="{{ path('menu_new') }}">
-                Create a new entry
-            </a>
-            -->
-            <br />
-            <div class="navigation">
-                {{ pagination.render()|raw }}
-            </div>
-            <br />
-            {% if is_granted("ROLE_USER") %}
-            <a href="{{ app.request.uriForPath('/#!/menu/new') }}">
-                Create a new entry
-            </a>
-            {% endif %}
-            </li>
-        </ul>
-        #}
-        {% if pagination|length != 0 %}
-        <div class="navigation">
-            {{pagination.render()|replace({'usuario': '#!/usuario'})|raw}}
+            </form>
         </div>
-        {% endif %}
+        {#
+        <div id="usuarios">
+            #}
+            <h1>Usuarios list view Usuario/index</h1>
+            <table class="records_list">
+                <thead>
+                    <tr>
+                        {% if field is defined %}
+                        {% if attr is defined %}
+                        {% if field == "cedula" and attr == "1" %}
+                        <th><a class="filter_usuarios" value="cedula" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Cédula /\</a></th>
+                        {% elseif field == "cedula" and attr == "0" %}
+                        <th><a class="filter_usuarios" value="cedula" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Cédula \/</a></th>
+                        {% else %}
+                        <th><a class="filter_usuarios" value="cedula" asc="1" href="{{ path('usuario_search_ajax') }}">Cédula</a></th>
+                        {% endif %}
+                        {% if field == "nombre" and attr == "1" %}
+                        <th><a class="filter_usuarios" value="nombre" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Nombre /\</a></th>
+                        {% elseif field == "nombre" and attr == "0" %}
+                        <th><a class="filter_usuarios" value="nombre" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Nombre \/</a></th>
+                        {% else %}
+                        <th><a class="filter_usuarios" value="nombre" asc="1" href="{{ path('usuario_search_ajax') }}">Nombre</a></th>
+                        {% endif %}
+                        {% if field == "apellido" and attr == "1" %}
+                        <th><a class="filter_usuarios" value="apellido"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Apellido /\</a></th>
+                        {% elseif field == "apellido" and attr == "0" %}
+                        <th><a class="filter_usuarios" value="apellido"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Apellido \/</a></th>
+                        {% else %}
+                        <th><a class="filter_usuarios" value="apellido"  asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
+                        {% endif %}
+                        {% if field == "ncarnet" and attr == "1" %}
+                        <th><a class="filter_usuarios" value="ncarnet"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Número Carnet /\</a></th>
+                        {% elseif field == "ncarnet" and attr == "0" %}
+                        <th><a class="filter_usuarios" value="ncarnet"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Número Carnet \/</a></th>
+                        {% else %}
+                        <th><a class="filter_usuarios" value="ncarnet"  asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
+                        {% endif %}
+                        {% if field == "correo" and attr == "1" %}
+                        <th><a class="filter_usuarios" value="correo"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Correo /\</a></th>
+                        {% elseif field == "correo" and attr == "0" %}
+                        <th><a class="filter_usuarios" value="correo"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Correo \/</a></th>
+                        {% else %}
+                        <th><a class="filter_usuarios" value="correo"  asc="1" href="{{ path('usuario_search_ajax') }}">Correo</a></th>
+                        {% endif %}
+                        {% else %}
+                        <th><a class="filter_usuarios" value="cedula"     asc="1" href="{{ path('usuario_search_ajax') }}">Cédula</a></th>
+                        <th><a class="filter_usuarios" value="nombre"     asc="1" href="{{ path('usuario_search_ajax') }}">Nombre</a></th>
+                        <th><a class="filter_usuarios" value="apellido"   asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
+                        <th><a class="filter_usuarios" value="ncarnet"    asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
+                        <th><a class="filter_usuarios" value="correo"     asc="1" href="{{ path('usuario_search_ajax') }}">Correo</a></th>
+                        <th>Imagen</th>
+                        {% endif %}
+                        {% else %}
+                        <th><a class="filter_usuarios" value="cedula"     asc="1" href="{{ path('usuario_search_ajax') }}">Cédula</a></th>
+                        <th><a class="filter_usuarios" value="nombre"     asc="1" href="{{ path('usuario_search_ajax') }}">Nombre</a></th>
+                        <th><a class="filter_usuarios" value="apellido"   asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
+                        <th><a class="filter_usuarios" value="ncarnet"    asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
+                        <th><a class="filter_usuarios" value="correo"     asc="1" href="{{ path('usuario_search_ajax') }}">Correo</a></th>
+                        <th>Imagen</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if pagination|length == 0 %}
+                    <p>No hay resultados</p>
+                    {% endif %}
+                    {#
+                    <div id="menus">
+                        #}
+                        {% for entity in pagination %}
+                        <tr>
+                            <td>{{ entity.cedula }}</td>
+                            <td>{{ entity.nombre }}</td>
+                            <td>{{ entity.apellido }}</td>
+                            <td>{{ entity.ncarnet }}</td>
+                            <td>{{ entity.correo }}</td>
+                            <td>{{ entity.image }}</td>
+                            {#
+                            <td>
+                                <ul>
+                                    <li>
+                                    <a href="{{ path('menu_show', { 'id': entity.id }) }}">show</a>
 
-        {#
-        <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
-        #}
-        <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
-    </div>
-        {#
-        <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
-        #}
-        {#
-        {% include '::javascripts.html.twig' %}
-        #}
+                                    <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/show">show2</a>
+                                    </li>
+                                    {% if is_granted("ROLE_USER") %}
+                                    <li>
+                                    <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edit">edit2</a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </td>
+                            #}
+                        </tr>
+                        {% endfor %}
+                        {#
+                    </div>
+                    #}
+                </tbody>
+            </table>
+            {#
+            <ul>
+                <li>
+                <a href="{{ path('menu_new') }}">
+                    Create a new entry
+                </a>
+                -->
+                <br />
+                <div class="navigation">
+                    {{ pagination.render()|raw }}
+                </div>
+                <br />
+                {% if is_granted("ROLE_USER") %}
+                <a href="{{ app.request.uriForPath('/#!/menu/new') }}">
+                    Create a new entry
+                </a>
+                {% endif %}
+                </li>
+            </ul>
+            #}
+            {% if pagination|length != 0 %}
+            <div class="navigation">
+                {{pagination.render()|replace({'usuario': '#!/usuario'})|raw}}
+            </div>
+            {% endif %}
 
+            {#
+            <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
+            #}
+            <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
+        </div>
+
+        <p id="btns">
+        <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
+        <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
+        </p>
+
+    </div> <!-- /col-text -->

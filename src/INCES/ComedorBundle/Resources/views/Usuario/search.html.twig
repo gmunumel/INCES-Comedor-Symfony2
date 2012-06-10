@@ -1,47 +1,59 @@
-<h1>Usuario list Search</h1>
-
-<div class="search">
-    <form action="{{ app.request.uriForPath('/usuario/search') }}" method="post">
-        <input type="text" name="query" value="{{query}}" id="search_keywords_usuario" />
-        <input type="submit" value="search" />
-        {#
-        <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
-        #}
-        <div class="help">
-            Enter some keywords (city, country, position, ...)
-        </div>
-    </form>
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
 </div>
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Cedula</th>
-            <th>Ncarnet</th>
+
+<div id="col-text">
+
+    <h2 id="slogan"><span></span>Place for your slogan.</h2>
+    <h1>Usuario list Search</h1>
+
+    <div class="search">
+        <form action="{{ app.request.uriForPath('/usuario/search') }}" method="post">
+            <input type="text" name="query" value="{{query}}" id="search_keywords_usuario" />
+            <input type="submit" value="search" />
             {#
-            <th>A_i</th>
+            <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
             #}
-            <th>Correo</th>
-            <th>Imagen</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in users %}
-        <tr>
-            <td>{{ entity.nombre }}</td>
-            <td>{{ entity.apellido }}</td>
-            <td>{{ entity.cedula }}</td>
-            <td>{{ entity.ncarnet }}</td>
-            {#
-            <td>{{ entity.ai }}</td>
-            #}
-            <td>{{ entity.correo }}</td>
-            <td>{{ entity.image }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+            <div class="help">
+                Enter some keywords (city, country, position, ...)
+            </div>
+        </form>
+    </div>
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cedula</th>
+                <th>Ncarnet</th>
+                {#
+                <th>A_i</th>
+                #}
+                <th>Correo</th>
+                <th>Imagen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in users %}
+            <tr>
+                <td>{{ entity.nombre }}</td>
+                <td>{{ entity.apellido }}</td>
+                <td>{{ entity.cedula }}</td>
+                <td>{{ entity.ncarnet }}</td>
+                {#
+                <td>{{ entity.ai }}</td>
+                #}
+                <td>{{ entity.correo }}</td>
+                <td>{{ entity.image }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p id="btns">
+    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
+    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
+    </p>
+
+</div> <!-- /col-text -->
 {#
 <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
 #}

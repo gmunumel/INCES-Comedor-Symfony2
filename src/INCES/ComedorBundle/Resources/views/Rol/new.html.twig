@@ -1,19 +1,31 @@
-<h1>Agregar Rol</h1>
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
 
-<table>
-	<th>
-<form action="{{ app.request.uriForPath('/rol/create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Agregar</button>
-    </p>
-</form>
-	</th>
-</table>
-<ul class="record_actions">
-    <li>
+<div id="col-text">
+
+    <h2 id="slogan"><span></span>Place for your slogan.</h2>
+    <h1>Agregar Rol</h1>
+
+    <table>
+        <th>
+            <form action="{{ app.request.uriForPath('/rol/create') }}" method="post" {{ form_enctype(form) }}>
+                {{ form_widget(form) }}
+                <p>
+                <button type="submit">Agregar</button>
+                </p>
+            </form>
+        </th>
+    </table>
+    <ul class="record_actions">
+        <li>
         <a href="{{ app.request.uriForPath('/#!/rol') }}">
             Back to the list
         </a>
-    </li>
-</ul>
+        </li>
+    </ul>
+    <p id="btns">
+    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
+    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
+    </p>
+
+</div> <!-- /col-text -->

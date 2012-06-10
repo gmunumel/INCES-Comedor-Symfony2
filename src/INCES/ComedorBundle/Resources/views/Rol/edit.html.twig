@@ -1,22 +1,34 @@
-<h1>Rol edit</h1>
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
 
-<form action="{{ app.request.uriForPath('/rol/') }}{{ entity.id }}/update" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
+<div id="col-text">
+
+    <h2 id="slogan"><span></span>Place for your slogan.</h2>
+    <h1>Rol edit</h1>
+
+    <form action="{{ app.request.uriForPath('/rol/') }}{{ entity.id }}/update" method="post" {{ form_enctype(edit_form) }}>
+        {{ form_widget(edit_form) }}
+        <p>
         <button type="submit">Edit</button>
-    </p>
-</form>
+        </p>
+    </form>
 
-<ul class="record_actions">
-    <li>
+    <ul class="record_actions">
+        <li>
         <a href="{{ app.request.uriForPath('/#!/rol') }}">
             Back to the list
         </a>
-    </li>
-    <li>
+        </li>
+        <li>
         <form action="{{ app.request.uriForPath('/rol/') }}{{ entity.id }}/delete" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>
-    </li>
-</ul>
+        </li>
+    </ul>
+    <p id="btns">
+    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
+    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
+    </p>
+
+</div> <!-- /col-text -->

@@ -38,3 +38,12 @@ usuario_search_ajax:
     pattern:  /searcha
     defaults: { _controller: "INCESComedorBundle:Usuario:searchAjax" }
     requirements: { _method: get|post }
+
+usuario_search_ajax_facturar:
+    pattern:  /searchafact
+    defaults: { _controller: "INCESComedorBundle:Usuario:searchAjaxFacturar" }
+    requirements: { _method: get|post }
+
+usuario_show_facturar:
+    pattern:  /{id}/showfacturar
+    defaults: { _controller: "INCESComedorBundle:Usuario:showFacturar" }

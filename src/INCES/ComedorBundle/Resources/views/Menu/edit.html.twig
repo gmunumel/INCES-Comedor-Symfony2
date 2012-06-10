@@ -5,30 +5,42 @@
 {% block body %}
 #}
 
-<h1>Menu Modificar</h1>
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
 
-<form class="menu_form" action="{{ app.request.uriForPath('/menu/') }}{{ entity.id }}/update" method="post" {{ form_enctype(edit_form) }}>
-	{{ form_widget(edit_form) }}
-	<p>
-	<button type="submit">Modificar</button>
-	</p>
-</form>
+<div id="col-text">
 
-<form action="{{ app.request.uriForPath('/menu/') }}{{ entity.id }}/delete" method="post">
-	{{ form_widget(delete_form) }}
-	<button type="submit">Borrar</button>
-</form>
+    <h2 id="slogan"><span></span>Place for your slogan.</h2>
+    <h1>Menu Modificar</h1>
+
+    <form class="menu_form" action="{{ app.request.uriForPath('/menu/') }}{{ entity.id }}/update" method="post" {{ form_enctype(edit_form) }}>
+        {{ form_widget(edit_form) }}
+        <p>
+        <button type="submit">Modificar</button>
+        </p>
+    </form>
+
+    <form action="{{ app.request.uriForPath('/menu/') }}{{ entity.id }}/delete" method="post">
+        {{ form_widget(delete_form) }}
+        <button type="submit">Borrar</button>
+    </form>
 
 
-<ul class="record_actions">
-    <li>
+    <ul class="record_actions">
+        <li>
         <a href="{{ app.request.uriForPath('/#!/menu') }}">
             Back to the list
         </a>
-    </li>
-</ul>
-{#
-<script type="text/javascript" src="{{ asset('js/common.js') }}".js') }}"></script>
-#}
+        </li>
+    </ul>
+    {#
+    <script type="text/javascript" src="{{ asset('js/common.js') }}".js') }}"></script>
+    #}
+    <p id="btns">
+    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
+    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
+    </p>
+
+</div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
 

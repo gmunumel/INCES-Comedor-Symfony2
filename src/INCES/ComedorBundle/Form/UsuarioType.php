@@ -16,7 +16,9 @@ class UsuarioType extends AbstractType
             ->add('ncarnet')
             //->add('a_i')
             ->add('correo')
-            ->add('image')
+            ->add('image', 'file',
+                array('required' => false)
+            )
             ->add('rol')
         ;
     }

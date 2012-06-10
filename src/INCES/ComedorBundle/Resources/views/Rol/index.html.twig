@@ -1,41 +1,53 @@
-<h1>Rol list</h1>
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Monto</th>
-            <th>Hora Comienzo</th>
-            <th>Hora Finalización</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td>{{ entity.nombre }}</td>
-            <td>{{ entity.monto }}</td>
-            <td>{{ entity.horaComerStart }}</td>
-            <td>{{ entity.horaComerEnd }}</td>
-            <td>
-                <ul>
-                    <li>
+<div id="col-text">
+
+    <h2 id="slogan"><span></span>Place for your slogan.</h2>
+    <h1>Rol list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Monto</th>
+                <th>Hora Comienzo</th>
+                <th>Hora Finalización</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+            <tr>
+                <td>{{ entity.nombre }}</td>
+                <td>{{ entity.monto }}</td>
+                <td>{{ entity.horaComerStart }}</td>
+                <td>{{ entity.horaComerEnd }}</td>
+                <td>
+                    <ul>
+                        <li>
                         <a href="{{ app.request.uriForPath('/#!/rol/') }}{{ entity.id }}/show">show</a>
-                    </li>
-                    <li>
+                        </li>
+                        <li>
                         <a href="{{ app.request.uriForPath('/#!/rol/') }}{{ entity.id }}/edit">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-<ul>
-    <li>
+    <ul>
+        <li>
         <a href="{{ app.request.uriForPath('/#!/rol/new') }}">
             Create a new entry
         </a>
-    </li>
-</ul>
+        </li>
+    </ul>
+    <p id="btns">
+    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
+    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
+    </p>
+
+</div> <!-- /col-text -->

@@ -40,5 +40,4 @@ menu_today:
 
 menu_facturar:
     pattern:  /facturar
-    defaults: { _controller: "INCESComedorBundle:Usuario:index" }
-    requirements: { _method: get|post }
+    defaults: { _controller: "INCESComedorBundle:Usuario:indexFacturar" }

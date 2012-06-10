@@ -1,19 +1,33 @@
-<h1>Agregar Usuario</h1>
-<table>
-	<th>
-    <form class="usuario_form" action="{{ app.request.uriForPath('/usuario/create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Agregar</button>
-        </p>
-    </form>
-	</th>
-</table>
-<ul class="record_actions">
-    <li>
+{% extends '::base.html.twig' %}
+{% block body %}
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
+
+<div id="col-text">
+
+    <h2 id="slogan"><span></span>Place for your slogan.</h2>
+    <h1>Agregar Usuario</h1>
+    <table>
+        <th>
+            <form class="usuario_form" action="{{ app.request.uriForPath('/usuario/create') }}" method="post" {{ form_enctype(form) }}>
+                {{ form_widget(form) }}
+                <p>
+                <button type="submit">Agregar</button>
+                </p>
+            </form>
+        </th>
+    </table>
+    <ul class="record_actions">
+        <li>
         <a href="{{ app.request.uriForPath('/#!/usuario') }}">
             Regresar a la Lista
         </a>
-    </li>
-</ul>
-<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
+        </li>
+    </ul>
+    <p id="btns">
+    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
+    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
+    </p>
+
+</div> <!-- /col-text -->
+{% endblock %}

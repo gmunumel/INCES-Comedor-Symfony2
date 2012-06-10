@@ -1,11 +1,9 @@
-{% extends '::base.html.twig' %}
-{% block body %}
-<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
-</div>
+<div id="col-browser"><a href="#"><img src="{{ asset('img/uploaded/') }}{{entity.image|replace({'/tmp/':''})}}" width="255" height="177" alt="" /></a></div>
 
 <div id="col-text">
 
-    <h1>Usuario Show</h1>
+    <h2 id="slogan"><span></span>Place for your slogan.</h2>
+    <h1>Usuario Show Factura</h1>
 
     <table class="record_properties">
         <tbody>
@@ -47,22 +45,42 @@
     </table>
 
     <ul class="record_actions">
+        {% set hour = "now"|date("H") %}
+        {% if entity.rol.horaComerStartAMPM == "pm" %}
+        {% set hourStart = entity.rol.horaComerStart + 12 %}
+        {% set hourEnd = entity.rol.horaComerEnd + 12 %}
+        {% else %}
+        {% set hourStart = entity.rol.horaComerStart %}
+        {% set hourEnd = entity.rol.horaComerEnd %}
+        {% endif %}
+        {% if hour >= hourStart and hour <= hourEnd %}
         <li>
-        <a href="{{ app.request.uriForPath('/#!/usuario/') }}">
+        <a href="{{ app.request.uriForPath('/#!/menu/facturar/procesar') }}">
+            Facturar
+        </a>
+        </li>
+        {% endif %}
+        <li>
+        <a href="{{ app.request.uriForPath('/#!/menu/facturar') }}">
             Back to the list
         </a>
         </li>
+        {#
         <li>
         <a href="{{ app.request.uriForPath('/#!/usuario/') }}{{ entity.id }}/edit">
             Edit
         </a>
+
         </li>
+        #}
+        {#
         <li>
         <form action="{{ app.request.uriForPath('/usuario/') }}{{ entity.id }}/delete" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Borrar</button>
         </form>
         </li>
+        #}
     </ul>
 
     <p id="btns">
@@ -71,4 +89,4 @@
     </p>
 
 </div> <!-- /col-text -->
-{% endblock %}
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

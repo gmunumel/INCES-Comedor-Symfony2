@@ -25,6 +25,39 @@ class UsuarioController extends Controller
      * @Route("/", name="usuario")
      * @Template()
      */
+    public function indexFacturarAction($query = '')
+    {
+        /*
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entities = $em->getRepository('INCESComedorBundle:Usuario')->findAll();
+
+        return array('entities' => $entities);
+         */
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = $em->createQueryBuilder();
+            $dql->add('select', 'a')
+            ->add('from', 'INCESComedorBundle:Usuario a');
+        $qry = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qry,
+            $this->get('request')->query->get('page', 1),//page number
+            2//limit per page
+        );
+        return $this->render('INCESComedorBundle:Usuario:index_facturar.html.twig', array(
+             'pagination' => $pagination
+            ,'query' => $query
+        ));
+    }
+
+    /**
+     * Lists all Usuario entities.
+     *
+     * @Route("/", name="usuario")
+     * @Template()
+     */
     public function indexAction($query = '')
     {
         /*
@@ -76,28 +109,45 @@ class UsuarioController extends Controller
     }
 
     /**
+     * Finds and displays a Usuario entity.
+     *
+     */
+    public function showFacturarAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('INCESComedorBundle:Usuario')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Usuario entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('INCESComedorBundle:Usuario:show_facturar.html.twig', array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
      * Displays a form to create a new Usuario entity.
      *
-     * @Route("/new", name="usuario_new")
-     * @Template()
      */
     public function newAction()
     {
         $entity = new Usuario();
         $form   = $this->createForm(new UsuarioType(), $entity);
 
-        return array(
+        return $this->render('INCESComedorBundle:Usuario:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ));
     }
 
     /**
      * Creates a new Usuario entity.
      *
-     * @Route("/create", name="usuario_create")
-     * @Method("post")
-     * @Template("INCESComedorBundle:Usuario:new.html.twig")
      */
     public function createAction()
     {
@@ -111,15 +161,23 @@ class UsuarioController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            //return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
-            $route = $request->getBaseUrl();
-            return new Response($route.'/usuario/'.$entity->getId().'/show');
+            $dir = dirname(__FILE__).'/../../../../web/img/uploaded/';
+
+            try{
+                $file = $form->getData()->getImage()->move($dir);
+            }catch(\ErrorException $e){
+                continue;
+            }
+
+            return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
+            //$route = $request->getBaseUrl();
+            //return new Response($route.'/usuario/'.$entity->getId().'/show');
         }
 
-        return array(
+        return $this->render('INCESComedorBundle:Usuario:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ));
     }
 
     /**
@@ -233,21 +291,69 @@ class UsuarioController extends Controller
         $dql = $em->createQueryBuilder();
         if (is_null($field))
             if(!$query || $query == '*')
-                $dql->add('select', 'a')
-                ->add('from', 'INCESComedorBundle:Usuario a');
+                $dql->add('select', 'u')
+                ->add('from', 'INCESComedorBundle:Usuario u');
             else
-                //$query = "(a.cedula LIKE '%17387134%' OR a.nombre LIKE '%17387134%' OR a.apellido LIKE '%17387134%' OR a.ncarnet LIKE '%17387134%' OR a.correo LIKE '%17387134%')";
-                //$conn = $this->get('database_connection');
-                $dql = "SELECT a FROM INCES\ComedorBundle\Entity\Usuario a WHERE " . $query;
+                $dql = "SELECT u FROM INCES\ComedorBundle\Entity\Usuario u WHERE " . $query;
 
         elseif ($attr == '1')
-            $dql->add('select', 'a')
-            ->add('from', 'INCESComedorBundle:Usuario a')
-            ->add('orderBy', 'a.'.$field.' ASC');
+            $dql->add('select', 'u')
+            ->add('from', 'INCESComedorBundle:Usuario u')
+            ->add('orderBy', 'u.'.$field.' ASC');
         else
-            $dql->add('select', 'a')
-            ->add('from', 'INCESComedorBundle:Usuario a')
-            ->add('orderBy', 'a.'.$field.' DESC');
+            $dql->add('select', 'u')
+            ->add('from', 'INCESComedorBundle:Usuario u')
+            ->add('orderBy', 'u.'.$field.' DESC');
+
+        $qry = $em->createQuery($dql);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qry,
+            $this->get('request')->query->get('page', 1),//page number
+            2//limit per page
+        );
+        return $pagination;
+    }
+
+    public function _indexActionFacturar($query, $field = null, $attr = null){
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = $em->createQueryBuilder();
+        if (is_null($field))
+            if(!$query || $query == '*')
+                $dql->select('u', 'r')
+                    ->from('INCESComedorBundle:Usuario', 'u')
+                    ->from('INCESComedorBundle:Rol ', 'r')
+                    ->where('r.id = u.rol');
+            else
+                $dql = "SELECT u, r FROM INCES\ComedorBundle\Entity\Usuario u JOIN u.rol r WHERE " . $query;
+
+        elseif ($attr == '1')
+            if($field != 'rol')
+                $dql->select('u', 'r')
+                    ->from('INCESComedorBundle:Usuario', 'u')
+                    ->join('u.rol', 'r')
+                    ->where('r.id = u.rol')
+                    ->orderBy('u.'.$field, 'ASC');
+            else
+                $dql->select('u', 'r')
+                    ->from('INCESComedorBundle:Usuario', 'u')
+                    ->join('u.rol', 'r')
+                    ->where('r.id = u.rol')
+                    ->orderBy('r.nombre', 'ASC');
+        else
+            if($field != 'rol')
+                $dql->select('u', 'r')
+                    ->from('INCESComedorBundle:Usuario', 'u')
+                    ->join('u.rol', 'r')
+                    ->where('r.id = u.rol')
+                    ->orderBy('u.'.$field, 'DESC');
+            else
+                $dql->select('u', 'r')
+                    ->from('INCESComedorBundle:Usuario', 'u')
+                    ->join('u.rol', 'r')
+                    ->where('r.id = u.rol')
+                    ->orderBy('r.nombre', 'DESC');
 
         $qry = $em->createQuery($dql);
         $paginator  = $this->get('knp_paginator');
@@ -265,11 +371,28 @@ class UsuarioController extends Controller
         $res = "";
 
         foreach($explote as $value){
-            $res .= " (a.cedula LIKE '%" . $value . "%'";
-            $res .= " OR a.nombre LIKE '%" . $value . "%'";
-            $res .= " OR a.apellido LIKE '%" . $value . "%'";
-            $res .= " OR a.ncarnet LIKE '%" . $value . "%'";
-            $res .= " OR a.correo LIKE '%" . $value . "%') AND";
+            $res .= " (u.cedula like '%" . $value . "%'";
+            $res .= " or u.nombre like '%" . $value . "%'";
+            $res .= " or u.apellido like '%" . $value . "%'";
+            $res .= " or u.ncarnet like '%" . $value . "%'";
+            $res .= " or u.correo like '%" . $value . "%') AND";
+        }
+        $res = substr_replace($res ,"",-4);
+        return $res;
+    }
+
+    public function paramsFacturar($params){
+        $params = trim($params);
+        $explote = explode(" ", $params);
+        $res = "";
+
+        foreach($explote as $value){
+            $res .= " (u.cedula like '%" . $value . "%'";
+            $res .= " or u.nombre like '%" . $value . "%'";
+            $res .= " or u.apellido like '%" . $value . "%'";
+            $res .= " or u.ncarnet like '%" . $value . "%'";
+            $res .= " or u.correo like '%" . $value . "%'";
+            $res .= " or r.nombre like '%" . $value . "%') AND";
         }
         $res = substr_replace($res ,"",-4);
         return $res;
@@ -375,4 +498,47 @@ class UsuarioController extends Controller
             }
         }
     }
+
+    /*
+     *  Search Ajax Facturar
+     */
+    public function searchAjaxFacturarAction(){
+        $request = $this->get('request');
+        $query   = $request->request->get('query');
+
+        if (!$query) {
+            $field      = $request->request->get('field');
+            $attr       = $request->request->get('attr');
+            $pagination = $this->_indexActionFacturar($query, $field, $attr);
+            return $this->render('INCESComedorBundle:Usuario:_index_facturar.html.twig', array(
+                'pagination' => $pagination
+                ,'query' => $query
+                ,'field' => $field
+                ,'attr'  => $attr
+            ));
+        }else{
+            if ($request->isXmlHttpRequest()){
+                if ('*' == $query){
+                    $query = '';
+                    $field = $request->request->get('field');
+                    $attr  = $request->request->get('attr');
+                    $pagination = $this->_indexActionFacturar($query, $field, $attr);
+                    return $this->render('INCESComedorBundle:Usuario:_index_facturar.html.twig', array(
+                        'pagination' => $pagination
+                        ,'query' => $query
+                        ,'field' => $field
+                        ,'attr'  => $attr
+                    ));
+                }
+                $query = substr_replace($query ,"",-1);
+                $_query = $this->paramsFacturar($query);
+                $pagination = $this->_indexActionFacturar($_query);
+                return $this->render('INCESComedorBundle:Usuario:_list_facturar.html.twig', array(
+                    'pagination'  => $pagination
+                    ,'query'      => $query
+                ));
+            }
+        }
+    }
+
 }
