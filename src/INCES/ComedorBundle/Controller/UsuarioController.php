@@ -163,11 +163,8 @@ class UsuarioController extends Controller
 
             $dir = dirname(__FILE__).'/../../../../web/img/uploaded/';
 
-            try{
-                $file = $form->getData()->getImage()->move($dir);
-            }catch(\ErrorException $e){
-                continue;
-            }
+            if(!is_null($form->getData()->getImage()))
+                $form->getData()->getImage()->move($dir);
 
             return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
             //$route = $request->getBaseUrl();
