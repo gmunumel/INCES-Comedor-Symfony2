@@ -50,12 +50,12 @@ class Menu
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Blank()
+     * @Assert\NotBlank()
      */
     private $postre;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $dia;
 
@@ -67,6 +67,7 @@ class Menu
     public function __construct()
     {
         $this->usuario_menus = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dia = new \DateTime('now');
     }
 
     /**

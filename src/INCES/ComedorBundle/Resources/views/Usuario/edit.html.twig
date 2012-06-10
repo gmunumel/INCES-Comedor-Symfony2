@@ -1,3 +1,5 @@
+{% extends '::base.html.twig' %}
+{% block body %}
 <div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
 </div>
 
@@ -33,4 +35,13 @@
     </p>
 
 </div> <!-- /col-text -->
+<script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.validate.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.core.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.widget.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker-es.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
+{% endblock %}

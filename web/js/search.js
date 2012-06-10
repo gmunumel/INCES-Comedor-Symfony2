@@ -30,7 +30,7 @@ $(document).ready(function()
     $('form:not(.usuario_form)').submit(function(e) {
 
         var url = $(this).attr("action");
-        alert(url);
+        //alert(url);
 
         if ($(this).valid()){
             $.ajax({

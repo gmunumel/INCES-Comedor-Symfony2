@@ -38,7 +38,7 @@ class Usuario
     private $ncarnet;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable="true")
      */
     private $a_i;
 
@@ -48,7 +48,7 @@ class Usuario
     private $correo;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable="true")
      */
     private $image;
 

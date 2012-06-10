@@ -1,7 +1,9 @@
 /web/bundles/
+/web/img/uploaded/
 /app/bootstrap*
 /app/cache/*
 /app/logs/*
 /vendor/
 /app/config/parameters.ini
+src/INCES/ComedorBundle/Entity/*~
 *~

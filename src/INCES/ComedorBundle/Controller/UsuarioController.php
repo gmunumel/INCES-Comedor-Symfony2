@@ -36,8 +36,18 @@ class UsuarioController extends Controller
          */
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = $em->createQueryBuilder();
-            $dql->add('select', 'a')
-            ->add('from', 'INCESComedorBundle:Usuario a');
+        $dql->select('u', 'r')
+            ->from('INCESComedorBundle:Usuario', 'u')
+            ->join('u.rol', 'r')
+            ->where('r.id = u.rol');
+        /*
+        $dql->select('u', 'r')
+            ->from('INCESComedorBundle:Usuario', 'u')
+            ->from('INCESComedorBundle:Rol ', 'r')
+            ->where('r.id = u.rol');
+         */
+            //$dql->add('select', 'a')
+            //->add('from', 'INCESComedorBundle:Usuario a');
         $qry = $em->createQuery($dql);
 
         $paginator = $this->get('knp_paginator');
@@ -231,9 +241,14 @@ class UsuarioController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            //return $this->redirect($this->generateUrl('usuario_edit', array('id' => $id)));
-            $route = $request->getBaseUrl();
-            return new Response($route.'/usuario/');
+            $dir = dirname(__FILE__).'/../../../../web/img/uploaded/';
+
+            if(!is_null($editForm->getData()->getImage()))
+                $editForm->getData()->getImage()->move($dir);
+
+            return $this->redirect($this->generateUrl('usuario_show', array('id' => $id)));
+            //$route = $request->getBaseUrl();
+            //return new Response($route.'/usuario/');
             //return new Response($route.'/usuario/'.$entity->getId().'/edit');
         }
 
@@ -320,7 +335,7 @@ class UsuarioController extends Controller
             if(!$query || $query == '*')
                 $dql->select('u', 'r')
                     ->from('INCESComedorBundle:Usuario', 'u')
-                    ->from('INCESComedorBundle:Rol ', 'r')
+                    ->join('u.rol', 'r')
                     ->where('r.id = u.rol');
             else
                 $dql = "SELECT u, r FROM INCES\ComedorBundle\Entity\Usuario u JOIN u.rol r WHERE " . $query;
