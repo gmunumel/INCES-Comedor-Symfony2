@@ -243,7 +243,7 @@ class MenuController extends Controller
             $em->flush();
 
             $route = $request->getBaseUrl();
-            return new Response($route.'/menu/'.$entity->getId().'/show');
+            return new Response($route.'/#!/menu/'.$entity->getId().'/show');
         }
 
         return $this->render('INCESComedorBundle:Menu:new.html.twig', array(
@@ -302,8 +302,8 @@ class MenuController extends Controller
             $em->flush();
 
             $route = $request->getBaseUrl();
-            return new Response($route.'/menu/');
-            //return new Response($route.'/menu/'.$entity->getId().'/show');
+            //return new Response($route.'/#!/menu/');
+            return new Response($route.'/menu/'.$entity->getId().'/show');
             //return $this->redirect($this->generateUrl('menu_edit', array('id' => $id)));
         }
 
@@ -338,7 +338,7 @@ class MenuController extends Controller
         }
 
         $route = $request->getBaseUrl();
-        return new Response($route.'/menu');
+        return new Response($route.'/#!/menu');
         //return $this->redirect($this->generateUrl('menu'));
     }
 

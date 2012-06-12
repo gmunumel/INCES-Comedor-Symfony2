@@ -1,32 +1,88 @@
 $(document).ready(function()
 {
+    $.validator.addMethod(
+        "venezuelanDate",
+        function(value, element) {
+            // put your own logic here, this is just a (crappy) example
+            return value.match(/^\d\d?\/\d\d?\/\d\d$/);
+        },
+        "Por favor coloque una fecha en formato dd/mm/yy"
+    );
     $('.menu_form').validate({
         rules: {
-            'inces_comedorbundle_menutype[seco]'     : { required : true },
-            'inces_comedorbundle_menutype[sopa]'     : { required : true },
-            'inces_comedorbundle_menutype[salado]'   : { required : true },
-            'inces_comedorbundle_menutype[jugo]'     : { required : true },
-            'inces_comedorbundle_menutype[ensalada]' : { required : true },
-            'inces_comedorbundle_menutype[postre]'   : { required : true }
+            'inces_comedorbundle_menutype[seco]'     : { required       : true },
+            'inces_comedorbundle_menutype[sopa]'     : { required       : true },
+            'inces_comedorbundle_menutype[salado]'   : { required       : true },
+            'inces_comedorbundle_menutype[jugo]'     : { required       : true },
+            'inces_comedorbundle_menutype[ensalada]' : { required       : true },
+            'inces_comedorbundle_menutype[postre]'   : { required       : true },
+            'inces_comedorbundle_menutype[dia]'      : { venezuelanDate : true }
         },
         messages: {
-            'inces_comedorbundle_menutype[seco]'     : { required : 'Coloque el campo Seco' },
-            'inces_comedorbundle_menutype[sopa]'     : { required : 'Coloque el campo Sopa' },
-            'inces_comedorbundle_menutype[salado]'   : { required : 'Coloque el campo Salado' },
-            'inces_comedorbundle_menutype[jugo]'     : { required : 'Coloque el campo Jugo' },
-            'inces_comedorbundle_menutype[ensalada]' : { required : 'Coloque el campo Ensalada' },
-            'inces_comedorbundle_menutype[postre]'   : { required : 'Coloque el campo Postre' },
-            'inces_comedorbundle_menutype[postre]'   : { required : 'Coloque el campo Postre' }
+            'inces_comedorbundle_menutype[seco]'     : { required       : 'Coloque el campo Seco' },
+            'inces_comedorbundle_menutype[sopa]'     : { required       : 'Coloque el campo Sopa' },
+            'inces_comedorbundle_menutype[salado]'   : { required       : 'Coloque el campo Salado' },
+            'inces_comedorbundle_menutype[jugo]'     : { required       : 'Coloque el campo Jugo' },
+            'inces_comedorbundle_menutype[ensalada]' : { required       : 'Coloque el campo Ensalada' },
+            'inces_comedorbundle_menutype[postre]'   : { required       : 'Coloque el campo Postre' },
+            'inces_comedorbundle_menutype[dia]'      : { venezuelanDate : 'Por favor coloque una fecha en formato dd/mm/yy' }
         }
     });
-    $('.usuario_form').submit(function(e) {
-        return true;
+    /* TODO LIST */
+    $('.usuario_form').validate({
+        rules: {
+            'inces_comedorbundle_usuariotype[seco]'     : { required       : true },
+            'inces_comedorbundle_usuariotype[dia]'      : { venezuelanDate : true }
+        },
+        messages: {
+            'inces_comedorbundle_usuariotype[seco]'     : { required       : 'Coloque el campo Seco' },
+            'inces_comedorbundle_usuariotype[dia]'      : { venezuelanDate : 'Por favor coloque una fecha en formato dd/mm/yy' }
+        }
     });
+    $('.rol_form').validate({
+        rules: {
+            'inces_comedorbundle_roltype[seco]'     : { required       : true },
+            'inces_comedorbundle_roltype[dia]'      : { venezuelanDate : true }
+        },
+        messages: {
+            'inces_comedorbundle_roltype[seco]'     : { required       : 'Coloque el campo Seco' },
+            'inces_comedorbundle_roltype[dia]'      : { venezuelanDate : 'Por favor coloque una fecha en formato dd/mm/yy' }
+        }
+    });
+    /* END TODO LIST */
+
     $("#inces_comedorbundle_menutype_dia" ).datepicker({
         timeFormat: 'hh:mm:ss',
         dateFormat: 'dd/mm/yy',
         showButtonPanel: true
     });
+    $('button[type=submit]:not(.delete_form_btn)').on('click', function(e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+        if (form.valid()){
+            $("form:first").ajaxForm({
+                //target: '#content',
+                success: function(msg) {
+                    //$('#content').click(msg);
+                    //$(window).attr("location",msg);
+                    window.location.href = msg;
+                }
+            }).submit();
+        }
+    });
+    $('.delete_form_btn').on('click', function(e) {
+        e.preventDefault();
+        //var url = $(this).attr("action");
+        $("form").ajaxForm({
+            //target: '#content',
+            success: function(msg) {
+                //$('#content').click(msg);
+                //$(window).attr("location",msg);
+                window.location.href = msg;
+            }
+        }).submit();
+    });
+    /*
     $('form:not(.usuario_form)').submit(function(e) {
 
         var url = $(this).attr("action");
@@ -47,6 +103,7 @@ $(document).ready(function()
 
         return false;
     });
+    */
     //$('.search input[type="submit"]').hide();
     $('#search_keywords_menu').keypress(function(key){
         if ( key.which == 13 ) key.preventDefault();

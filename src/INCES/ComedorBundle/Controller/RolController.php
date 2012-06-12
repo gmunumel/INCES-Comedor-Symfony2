@@ -2,9 +2,9 @@
 
 namespace INCES\ComedorBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use INCES\ComedorBundle\Entity\Rol;
 use INCES\ComedorBundle\Form\RolType;
@@ -90,8 +90,10 @@ class RolController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('rol_show', array('id' => $entity->getId())));
-            
+            //return $this->redirect($this->generateUrl('rol_show', array('id' => $entity->getId())));
+            $route = $request->getBaseUrl();
+            return new Response($route.'/#!/rol/'.$entity->getId().'/show');
+
         }
 
         return array(

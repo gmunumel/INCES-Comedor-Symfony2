@@ -15,15 +15,12 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Usuario controller.
  *
- * @Route("/usuario")
  */
 class UsuarioController extends Controller
 {
     /**
      * Lists all Usuario entities.
      *
-     * @Route("/", name="usuario")
-     * @Template()
      */
     public function indexFacturarAction($query = '')
     {
@@ -65,8 +62,6 @@ class UsuarioController extends Controller
     /**
      * Lists all Usuario entities.
      *
-     * @Route("/", name="usuario")
-     * @Template()
      */
     public function indexAction($query = '')
     {
@@ -98,8 +93,6 @@ class UsuarioController extends Controller
     /**
      * Finds and displays a Usuario entity.
      *
-     * @Route("/{id}/show", name="usuario_show")
-     * @Template()
      */
     public function showAction($id)
     {
@@ -113,9 +106,10 @@ class UsuarioController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return $this->render('INCESComedorBundle:Usuario:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -176,9 +170,9 @@ class UsuarioController extends Controller
             if(!is_null($form->getData()->getImage()))
                 $form->getData()->getImage()->move($dir);
 
-            return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
-            //$route = $request->getBaseUrl();
-            //return new Response($route.'/usuario/'.$entity->getId().'/show');
+            //return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
+            $route = $request->getBaseUrl();
+            return new Response($route.'/#!/usuario/'.$entity->getId().'/show');
         }
 
         return $this->render('INCESComedorBundle:Usuario:new.html.twig', array(
@@ -190,8 +184,6 @@ class UsuarioController extends Controller
     /**
      * Displays a form to edit an existing Usuario entity.
      *
-     * @Route("/{id}/edit", name="usuario_edit")
-     * @Template()
      */
     public function editAction($id)
     {
@@ -206,19 +198,16 @@ class UsuarioController extends Controller
         $editForm = $this->createForm(new UsuarioType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return $this->render('INCESComedorBundle:Usuario:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
      * Edits an existing Usuario entity.
      *
-     * @Route("/{id}/update", name="usuario_update")
-     * @Method("post")
-     * @Template("INCESComedorBundle:Usuario:edit.html.twig")
      */
     public function updateAction($id)
     {
@@ -246,24 +235,22 @@ class UsuarioController extends Controller
             if(!is_null($editForm->getData()->getImage()))
                 $editForm->getData()->getImage()->move($dir);
 
-            return $this->redirect($this->generateUrl('usuario_show', array('id' => $id)));
-            //$route = $request->getBaseUrl();
+            //return $this->redirect($this->generateUrl('usuario_show', array('id' => $id)));
+            $route = $request->getBaseUrl();
             //return new Response($route.'/usuario/');
-            //return new Response($route.'/usuario/'.$entity->getId().'/edit');
+            return new Response($route.'/#!/usuario/'.$entity->getId().'/show');
         }
 
-        return array(
+        return $this->render("INCESComedorBundle:Usuario:edit.html.twig", array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
      * Deletes a Usuario entity.
      *
-     * @Route("/{id}/delete", name="usuario_delete")
-     * @Method("post")
      */
     public function deleteAction($id)
     {
@@ -285,7 +272,7 @@ class UsuarioController extends Controller
         }
 
         $route = $request->getBaseUrl();
-        return new Response($route.'/usuario');
+        return new Response($route.'/#!/usuario');
         //return $this->redirect($this->generateUrl('usuario'));
     }
 
