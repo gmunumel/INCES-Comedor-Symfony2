@@ -55,9 +55,48 @@
         {% endif %}
         {% if hour >= hourStart and hour <= hourEnd %}
         <li>
-        <a href="{{ app.request.uriForPath('/#!/menu/facturar/procesar') }}">
-            Facturar
-        </a>
+            <form action="{{ app.request.uriForPath('/menu/facturar/procesar') }}" method="post">
+                <input type="hidden" id="usuario" name="usuario" value="{{entity.id}}">
+                <input type="hidden" id="dia" name="dia" value="{{"now"|date("Y-m-d")}}">
+                <table class="records_list">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Seco</th>
+                            <th>Sopa</th>
+                            <th>Salado</th>
+                            <th>Jugo</th>
+                            <th>Ensalada</th>
+                            <th>Postre</th>
+                            <th>Día</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if menus|length == 0 %}
+                        <p>No hay resultados</p>
+                        {% endif %}
+                        {% for entity in menus %}
+                        <tr>
+                            <td><input type="radio" name="menus" value="{{entity.id}}" /></td>
+                            <td>{{ entity.seco }}</td>
+                            <td>{{ entity.sopa }}</td>
+                            <td>{{ entity.salado }}</td>
+                            <td>{{ entity.jugo }}</td>
+                            <td>{{ entity.ensalada }}</td>
+                            <td>{{ entity.postre }}</td>
+                            <td>{% if entity.dia %}{{ entity.dia|date('d/m/Y') }}{% endif%}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <button type="submit">Facturar</button>
+            </form>
+            {#
+            <a href="{{ app.request.uriForPath('/#!/menu/facturar/procesar') }}">
+                Facturar
+            </a>
+            #}
         </li>
         {% endif %}
         <li>

@@ -228,4 +228,7 @@ class Usuario
     {
         return $this->rol;
     }
+    public function __tostring(){
+        return $this->nombre. " " . $this->apellido;
+    }
 }

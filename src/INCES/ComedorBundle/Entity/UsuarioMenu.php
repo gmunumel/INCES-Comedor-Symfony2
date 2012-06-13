@@ -34,7 +34,10 @@ class UsuarioMenu
      */
     private $menu;
 
-
+    public function __construct()
+    {
+        $this->dia = new \DateTime('now');
+    }
     /**
      * Get id
      *

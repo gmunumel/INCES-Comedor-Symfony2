@@ -239,4 +239,7 @@ class Menu
     {
         return $this->usuario_menus;
     }
+    public function __toString(){
+        return $this->seco;
+    }
 }

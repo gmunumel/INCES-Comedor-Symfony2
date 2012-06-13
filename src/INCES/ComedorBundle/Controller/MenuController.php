@@ -5,7 +5,9 @@ namespace INCES\ComedorBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use INCES\ComedorBundle\Entity\Menu;
+use INCES\ComedorBundle\Entity\UsuarioMenu;
 use INCES\ComedorBundle\Form\MenuType;
+use INCES\ComedorBundle\Form\UsuarioMenuType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -303,7 +305,7 @@ class MenuController extends Controller
 
             $route = $request->getBaseUrl();
             //return new Response($route.'/#!/menu/');
-            return new Response($route.'/menu/'.$entity->getId().'/show');
+            return new Response($route.'/#!/menu/'.$entity->getId().'/show');
             //return $this->redirect($this->generateUrl('menu_edit', array('id' => $id)));
         }
 
@@ -398,5 +400,28 @@ class MenuController extends Controller
         $res = str_replace("/","", $param);
         $res = str_replace("-","", $param);
         return $res;
+    }
+
+    /**
+     * Creates a new Facturar Procesar entity.
+     *
+     */
+    public function facturarProcesarAction()
+    {
+        $request = $this->get('request');
+        $usuario = $_POST["usuario"];
+        $dia     = $_POST["dia"];
+        $menu    = $_POST["menus"];
+        $conn    = $this->get('database_connection');
+
+        $conn->insert('UsuarioMenu',
+            array('usuario_id' => $usuario
+                 ,'dia'        => $dia
+                 ,'menu_id'    => $menu
+            )
+        );
+
+        $route = $request->getBaseUrl();
+        return new Response($route.'/#!/menu/facturar');
     }
 }

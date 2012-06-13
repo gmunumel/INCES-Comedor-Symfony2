@@ -41,3 +41,7 @@ menu_today:
 menu_facturar:
     pattern:  /facturar
     defaults: { _controller: "INCESComedorBundle:Usuario:indexFacturar" }
+
+menu_facturar_procesar:
+    pattern:  /facturar/procesar
+    defaults: { _controller: "INCESComedorBundle:Menu:facturarProcesar" }

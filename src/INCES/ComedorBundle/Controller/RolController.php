@@ -4,6 +4,7 @@ namespace INCES\ComedorBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use INCES\ComedorBundle\Entity\Rol;
@@ -12,15 +13,12 @@ use INCES\ComedorBundle\Form\RolType;
 /**
  * Rol controller.
  *
- * @Route("/rol")
  */
 class RolController extends Controller
 {
     /**
      * Lists all Rol entities.
      *
-     * @Route("/", name="rol")
-     * @Template()
      */
     public function indexAction()
     {
@@ -28,14 +26,15 @@ class RolController extends Controller
 
         $entities = $em->getRepository('INCESComedorBundle:Rol')->findAll();
 
-        return array('entities' => $entities);
+        //return array('entities' => $entities);
+        return $this->render('INCESComedorBundle:Rol:index.html.twig', array(
+             'entities' => $entities
+        ));
     }
 
     /**
      * Finds and displays a Rol entity.
      *
-     * @Route("/{id}/show", name="rol_show")
-     * @Template()
      */
     public function showAction($id)
     {
@@ -49,34 +48,30 @@ class RolController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return $this->render('INCESComedorBundle:Rol:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
      * Displays a form to create a new Rol entity.
      *
-     * @Route("/new", name="rol_new")
-     * @Template()
      */
     public function newAction()
     {
         $entity = new Rol();
         $form   = $this->createForm(new RolType(), $entity);
 
-        return array(
+        return $this->render('INCESComedorBundle:Rol:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ));
     }
 
     /**
      * Creates a new Rol entity.
      *
-     * @Route("/create", name="rol_create")
-     * @Method("post")
-     * @Template("INCESComedorBundle:Rol:new.html.twig")
      */
     public function createAction()
     {
@@ -93,20 +88,17 @@ class RolController extends Controller
             //return $this->redirect($this->generateUrl('rol_show', array('id' => $entity->getId())));
             $route = $request->getBaseUrl();
             return new Response($route.'/#!/rol/'.$entity->getId().'/show');
-
         }
 
-        return array(
+        return $this->render('INCESComedorBundle:Rol:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView()
-        );
+        ));
     }
 
     /**
      * Displays a form to edit an existing Rol entity.
      *
-     * @Route("/{id}/edit", name="rol_edit")
-     * @Template()
      */
     public function editAction($id)
     {
@@ -121,19 +113,16 @@ class RolController extends Controller
         $editForm = $this->createForm(new RolType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return $this->render('INCESComedorBundle:Rol:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
      * Edits an existing Rol entity.
      *
-     * @Route("/{id}/update", name="rol_update")
-     * @Method("post")
-     * @Template("INCESComedorBundle:Rol:edit.html.twig")
      */
     public function updateAction($id)
     {
@@ -156,21 +145,21 @@ class RolController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('rol_edit', array('id' => $id)));
+            //return $this->redirect($this->generateUrl('rol_edit', array('id' => $id)));
+            $route = $request->getBaseUrl();
+            return new Response($route.'/#!/rol/'.$entity->getId().'/show');
         }
 
-        return array(
+        return $this->render('INCESComedorBundle:Rol:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
      * Deletes a Rol entity.
      *
-     * @Route("/{id}/delete", name="rol_delete")
-     * @Method("post")
      */
     public function deleteAction($id)
     {
@@ -191,7 +180,9 @@ class RolController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('rol'));
+        $route = $request->getBaseUrl();
+        return new Response($route.'/#!/rol');
+        //return $this->redirect($this->generateUrl('rol'));
     }
 
     private function createDeleteForm($id)

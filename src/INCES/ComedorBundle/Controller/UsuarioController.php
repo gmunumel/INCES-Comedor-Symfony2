@@ -128,8 +128,19 @@ class UsuarioController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
+        // Buscando menus del dia
+        $now = new \DateTime;
+        $menus = $em->createQueryBuilder();
+        $menus->add('select', 'm')
+            ->add('from', 'INCESComedorBundle:Menu m')
+            ->add('where', "m.dia = '".$now->format("Y-m-d 00:00:00")."'");
+
+        $qry   = $em->createQuery($menus);
+        $menus = $qry->getResult();
+
         return $this->render('INCESComedorBundle:Usuario:show_facturar.html.twig', array(
             'entity'      => $entity,
+            'menus'       => $menus,
             'delete_form' => $deleteForm->createView(),
         ));
     }
