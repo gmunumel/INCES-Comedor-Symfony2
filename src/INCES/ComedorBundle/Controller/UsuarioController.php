@@ -619,6 +619,7 @@ class UsuarioController extends Controller
         if ($request->getMethod() == 'POST') {
             //$request = $this->get('request');
             $query   = $request->request->get('query');
+            $query = substr_replace($query ,"",-1);
 
             //print_r($query);
             $em = $this->getDoctrine()->getEntityManager();
@@ -643,6 +644,7 @@ class UsuarioController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->get('request');
         $query   = $request->request->get('query');
+        $query = substr_replace($query ,"",-1);
 
         if (!$query) {
             $entity = $em->getRepository('INCESComedorBundle:Usuario')->findBy(array('cedula'=>$query));
