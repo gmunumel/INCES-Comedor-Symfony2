@@ -12,66 +12,110 @@ use INCES\ComedorBundle\Form\UsuarioType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
+
 /**
  * Usuario controller.
  *
  */
 class UsuarioController extends Controller
 {
-    /**
-     * Lists all Usuario entities.
-     *
-     */
-    public function indexFacturarAction($query = '')
-    {
-        /*
-        $em = $this->getDoctrine()->getEntityManager();
+    public function menuToday(){
 
-        $entities = $em->getRepository('INCESComedorBundle:Usuario')->findAll();
-
-        return array('entities' => $entities);
-         */
         $em = $this->get('doctrine.orm.entity_manager');
-        $dql = $em->createQueryBuilder();
-        $dql->select('u', 'r')
-            ->from('INCESComedorBundle:Usuario', 'u')
-            ->join('u.rol', 'r')
-            ->where('r.id = u.rol');
-        /*
-        $dql->select('u', 'r')
-            ->from('INCESComedorBundle:Usuario', 'u')
-            ->from('INCESComedorBundle:Rol ', 'r')
-            ->where('r.id = u.rol');
-         */
-            //$dql->add('select', 'a')
-            //->add('from', 'INCESComedorBundle:Usuario a');
-        $qry = $em->createQuery($dql);
+        $emConfig = $em->getConfiguration();
+        $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
+        $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
+        $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
 
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $qry,
-            $this->get('request')->query->get('page', 1),//page number
-            2//limit per page
-        );
-        return $this->render('INCESComedorBundle:Usuario:index_facturar.html.twig', array(
-             'pagination' => $pagination
-            ,'query' => $query
-        ));
+        // Buscando las personas que ya comieron hoy
+        $now = new \DateTime('now');
+        $dql = $em->createQueryBuilder();
+        $dql->select('m')
+            ->from('INCESComedorBundle:Menu','m')
+            ->where("YEAR(m.dia) = '".$now->format("Y")."'")
+            ->andWhere("MONTH(m.dia) = '".$now->format("m")."'")
+            ->andWhere("DAY(m.dia) = '".$now->format("d")."'");
+        $qry = $em->createQuery($dql);
+        $userMenuTd = $qry->getResult();
+
+        return $userMenuTd;
+
+    }
+    public function lncToday(){
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $emConfig = $em->getConfiguration();
+        $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
+        $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
+        $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
+
+        // Buscando las personas que ya comieron hoy
+        $now = new \DateTime('now');
+        $dql = $em->createQueryBuilder();
+        $dql->select('um')
+            ->from('INCESComedorBundle:UsuarioMenu','um')
+            ->where("YEAR(um.dia) = '".$now->format("Y")."'")
+            ->andWhere("MONTH(um.dia) = '".$now->format("m")."'")
+            ->andWhere("DAY(um.dia) = '".$now->format("d")."'");
+        $qry = $em->createQuery($dql);
+        $userLncTd = $qry->getResult();
+
+        return $userLncTd;
     }
 
     /**
      * Lists all Usuario entities.
      *
      */
+    /*
+    public function indexFacturarAction($query = '')
+    {
+        //$em = $this->getDoctrine()->getEntityManager();
+
+        //$entities = $em->getRepository('INCESComedorBundle:Usuario')->findAll();
+
+        //return array('entities' => $entities);
+        //
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        // Buscando los usuarios
+        $dql = $em->createQueryBuilder();
+        $dql->select('u')
+            ->from('INCESComedorBundle:Usuario', 'u')
+            ->join('u.rol', 'r');
+
+        $qry = $em->createQuery($dql);
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qry,
+            $this->get('request')->query->get('page', 1),//page number
+            2//limit per page
+        );
+
+        // Buscando las personas que ya comieron hoy
+        $userLncTd = $this->lncToday();
+
+        return $this->render('INCESComedorBundle:Usuario:index_facturar.html.twig', array(
+             'pagination' => $pagination
+            ,'query'      => $query
+            ,'userLncTd'  => $userLncTd
+        ));
+    }
+     */
+
+    /**
+     * Lists all Usuario entities.
+     *
+     */
+    /*
     public function indexAction($query = '')
     {
-        /*
-        $em = $this->getDoctrine()->getEntityManager();
+        //$em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('INCESComedorBundle:Usuario')->findAll();
+        //$entities = $em->getRepository('INCESComedorBundle:Usuario')->findAll();
 
-        return array('entities' => $entities);
-         */
+        //return array('entities' => $entities);
+
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = $em->createQueryBuilder();
             $dql->add('select', 'a')
@@ -89,6 +133,7 @@ class UsuarioController extends Controller
             ,'query' => $query
         ));
     }
+     */
 
     /**
      * Finds and displays a Usuario entity.
@@ -119,14 +164,81 @@ class UsuarioController extends Controller
     public function showFacturarAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
+        $emConfig = $em->getConfiguration();
+        $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
+        $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
+        $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
 
         $entity = $em->getRepository('INCESComedorBundle:Usuario')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Usuario entity.');
         }
-
         $deleteForm = $this->createDeleteForm($id);
+
+        //Verificar si se encuentra dentro del horario
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = $em->createQueryBuilder();
+        $dql->select('u, r')
+            ->from('INCESComedorBundle:Usuario', 'u')
+            ->join('u.rol', 'r')
+            ->where('u.id = '. $id);
+        $qry    = $em->createQuery($dql);
+        $entity = $qry->getResult();
+        $entity = $entity[0];
+
+        $now = new \DateTime('now');
+        $hour = $now->format('H');
+        if ($entity->getRol()->getHoraComerStartAMPM() == "pm"){
+            $hourStart = $entity->getRol()->getHoraComerStart() + 12;
+            $hourEnd = $entity->getRol()->getHoraComerEnd() + 12;
+        }elseif ($entity->getRol()->getHoraComerStartAMPM() == "pm" and $entity->getRol()->getHoraComerEndAMPM() == "am"){
+            $hourStart = $entity->getRol()->getHoraComerStart() + 12;
+            $hourEnd = $entity->getRol()->getHoraComerEnd();
+        }elseif ($entity->getRol()->getHoraComerStartAMPM() == "am" and $entity->getRol()->getHoraComerEndAMPM() == "pm"){
+            $hourStart = $entity->getRol()->getHoraComerStart();
+            $hourEnd = $entity->getRol()->getHoraComerEnd() + 12;
+        }else{
+            $hourStart = $entity->getRol()->getHoraComerStart();
+            $hourEnd = $entity->getRol()->getHoraComerEnd();
+        }
+        if ($hour < $hourStart || $hour > $hourEnd)
+            return new Response(
+                "<p> ".
+                    "<span class='ui-icon ui-icon-alert' style='float:left; margin:0 7px 20px 0;'></span> ".
+                    "El usuario <b>".ucfirst($entity->getNombre())." ".ucfirst($entity->getApellido())."</b> tiene el rol <b>".strtoupper($entity->getRol()->getNombre())."</b>. <br /><br /> ".
+                    "El <b>".strtoupper($entity->getRol()->getNombre())."</b> puede hacer uso del servicio del comedor desde <b>".$entity->getRol()->getHoraComerStart()." ".$entity->getRol()->getHoraComerStartAMPM()."</b> hasta <b>".$entity->getRol()->getHoraComerEnd()." ".$entity->getRol()->getHoraComerEndAMPM()."</b>." .
+                "</p>"
+            );
+        //Verificar si ya ha comido esa persona ese mismo dia
+        $now = new \DateTime('now');
+        $dql = $em->createQuery('SELECT um, COUNT(um.id) FROM INCES\ComedorBundle\Entity\UsuarioMenu um WHERE um.usuario = :id and YEAR(um.dia) = :year and MONTH(um.dia) = :month and DAY(um.dia) = :day');
+        $dql->setParameter('id', $id);
+        $dql->setParameter('year', $now->format("Y"));
+        $dql->setParameter('month', $now->format("m"));
+        $dql->setParameter('day', $now->format("d"));
+        $count = $dql->getSingleScalarResult();
+        if($count > 0){
+            $_entity   = $dql->getResult();
+            $_entity   = $_entity[0];
+            $lcnHora   = $_entity->getDia()->format("H");
+            $lcnMinuto = $_entity->getDia()->format("i");
+            $ampm      = "am";
+            if($lncHora > 12){
+               $lncHora = $lncHora - 12;
+               $ampm = "pm";
+            }
+            if($lncHora == 12) $ampm = "pm";
+            if($lncHora == 24) $ampm = "am";
+            return new Response(
+                "<p> ".
+                    "<span class='ui-icon ui-icon-alert' style='float:left; margin:0 7px 20px 0;'></span> ".
+                    "El usuario <b>".ucfirst($entity->getNombre())." ".ucfirst($entity->getApellido())."</b> ya almorzó a la hora <b>".$lncHora.":".$lncMinuto." ".$ampm."</b>. <br /><br /> ".
+                    "<a href='{{app.request.uriForPath("/#!/usuario/searchalnc")}}' alt='últimos almuerzos'>Ver últimos usuarios que almorzaron.</a>"
+                "</p>"
+            );
+        }
+
 
         // Buscando menus del dia
         $now = new \DateTime;
@@ -325,42 +437,61 @@ class UsuarioController extends Controller
         return $pagination;
     }
 
-    public function _indexActionFacturar($query, $field = null, $attr = null){
+    public function _indexFacturarAction($query, $field = null, $attr = null){
 
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = $em->createQueryBuilder();
+        $isnotquery = false;
         if (is_null($field))
             if(!$query || $query == '*')
-                $dql->select('u', 'r')
+                $dql->select('u')
+                    ->from('INCESComedorBundle:Usuario', 'u')
+                    //->from('INCESComedorBundle:Rol', 'r')
+                    //->from('INCESComedorBundle:UsuarioMenu', 'um');
+                    ->join('u.rol', 'r');
+                    //->where('r.id = u.rol')
+                /*
+                $dql->select('u')
                     ->from('INCESComedorBundle:Usuario', 'u')
                     ->join('u.rol', 'r')
                     ->where('r.id = u.rol');
+                */
             else
-                $dql = "SELECT u, r FROM INCES\ComedorBundle\Entity\Usuario u JOIN u.rol r WHERE " . $query;
+                //$isnotquery = true;
+                /* TODO LIST arreglar esto */
+                $dql = "SELECT u FROM INCES\ComedorBundle\Entity\Usuario u JOIN u.rol r WHERE " . $query;
 
         elseif ($attr == '1')
             if($field != 'rol')
-                $dql->select('u', 'r')
+                $dql->select('u')
                     ->from('INCESComedorBundle:Usuario', 'u')
+                    //->from('INCESComedorBundle:Rol', 'r')
+                    //->from('INCESComedorBundle:UsuarioMenu', 'um')
                     ->join('u.rol', 'r')
                     ->where('r.id = u.rol')
                     ->orderBy('u.'.$field, 'ASC');
             else
-                $dql->select('u', 'r')
+                $dql->select('u')
                     ->from('INCESComedorBundle:Usuario', 'u')
+                    //->from('INCESComedorBundle:Rol', 'r')
+                    //->from('INCESComedorBundle:UsuarioMenu', 'um')
                     ->join('u.rol', 'r')
                     ->where('r.id = u.rol')
                     ->orderBy('r.nombre', 'ASC');
         else
             if($field != 'rol')
-                $dql->select('u', 'r')
+                $dql->select('u')
                     ->from('INCESComedorBundle:Usuario', 'u')
+                    //->from('INCESComedorBundle:Rol', 'r')
+                    //->from('INCESComedorBundle:UsuarioMenu', 'um')
                     ->join('u.rol', 'r')
                     ->where('r.id = u.rol')
                     ->orderBy('u.'.$field, 'DESC');
             else
-                $dql->select('u', 'r')
+                $dql->select('u')
                     ->from('INCESComedorBundle:Usuario', 'u')
+                    //->from('INCESComedorBundle:Rol', 'r')
+                    //->from('INCESComedorBundle:UsuarioMenu', 'um')
                     ->join('u.rol', 'r')
                     ->where('r.id = u.rol')
                     ->orderBy('r.nombre', 'DESC');
@@ -375,6 +506,56 @@ class UsuarioController extends Controller
         return $pagination;
     }
 
+    public function _indexLunchAction($query, $field = null, $attr = null){
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $emConfig = $em->getConfiguration();
+        $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
+        $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
+        $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
+
+        $dql = $em->createQueryBuilder();
+        $isnotquery = false;
+        if (is_null($field))
+            if(!$query || $query == '*')
+                $dql->select('um')
+                    ->from('INCESComedorBundle:UsuarioMenu', 'um')
+                    ->join('um.usuario', 'u');
+            else
+                $dql = "SELECT um FROM INCES\ComedorBundle\Entity\UsuarioMenu um JOIN um.usuario u WHERE " . $query;
+
+        elseif ($attr == '1')
+            if($field != 'cedula' && $field != 'nombre' && $field != 'apellido')
+                $dql->select('um')
+                    ->from('INCESComedorBundle:UsuarioMenu', 'um')
+                    ->join('um.usuario', 'u')
+                    ->orderBy('um.'.$field, 'ASC');
+            else
+                $dql->select('um')
+                    ->from('INCESComedorBundle:UsuarioMenu', 'um')
+                    ->join('um.usuario', 'u')
+                    ->orderBy('u.'.$field, 'ASC');
+        else
+            if($field != 'cedula' && $field != 'nombre' && $field != 'apellido')
+                $dql->select('um')
+                    ->from('INCESComedorBundle:UsuarioMenu', 'um')
+                    ->join('um.usuario', 'u')
+                    ->orderBy('um.'.$field, 'DESC');
+            else
+                $dql->select('um')
+                    ->from('INCESComedorBundle:UsuarioMenu', 'um')
+                    ->join('um.usuario', 'u')
+                    ->orderBy('u.'.$field, 'DESC');
+
+        $qry = $em->createQuery($dql);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qry,
+            $this->get('request')->query->get('page', 1),//page number
+            2//limit per page
+        );
+        return $pagination;
+    }
     public function params($params){
         $params = trim($params);
         $explote = explode(" ", $params);
@@ -403,6 +584,23 @@ class UsuarioController extends Controller
             $res .= " or u.ncarnet like '%" . $value . "%'";
             $res .= " or u.correo like '%" . $value . "%'";
             $res .= " or r.nombre like '%" . $value . "%') AND";
+        }
+        $res = substr_replace($res ,"",-4);
+        return $res;
+    }
+
+    public function paramsLunch($params){
+        $params = trim($params);
+        $explote = explode(" ", $params);
+        $res = "";
+
+        foreach($explote as $value){
+            $res .= " (u.cedula like '%" . $value . "%'";
+            $res .= " or u.nombre like '%" . $value . "%'";
+            $res .= " or u.apellido like '%" . $value . "%'";
+            $res .= " or YEAR(um.dia) like '%" . $value . "%'";
+            $res .= " or MONTH(um.dia) like '%" . $value . "%'";
+            $res .= " or DAY(um.dia) like '%" . $value . "%') AND";
         }
         $res = substr_replace($res ,"",-4);
         return $res;
@@ -519,12 +717,16 @@ class UsuarioController extends Controller
         if (!$query) {
             $field      = $request->request->get('field');
             $attr       = $request->request->get('attr');
-            $pagination = $this->_indexActionFacturar($query, $field, $attr);
+            $pagination = $this->_indexFacturarAction($query, $field, $attr);
+
+            // Buscando las personas que ya comieron hoy
+            $userLncTd = $this->lncToday();
             return $this->render('INCESComedorBundle:Usuario:_index_facturar.html.twig', array(
-                'pagination' => $pagination
-                ,'query' => $query
-                ,'field' => $field
-                ,'attr'  => $attr
+                'pagination'  => $pagination
+                ,'query'      => $query
+                ,'field'      => $field
+                ,'attr'       => $attr
+                ,'userLncTd'  => $userLncTd
             ));
         }else{
             if ($request->isXmlHttpRequest()){
@@ -532,23 +734,84 @@ class UsuarioController extends Controller
                     $query = '';
                     $field = $request->request->get('field');
                     $attr  = $request->request->get('attr');
-                    $pagination = $this->_indexActionFacturar($query, $field, $attr);
+                    $pagination = $this->_indexFacturarAction($query, $field, $attr);
+
+                    // Buscando las personas que ya comieron hoy
+                    $userLncTd = $this->lncToday();
                     return $this->render('INCESComedorBundle:Usuario:_index_facturar.html.twig', array(
-                        'pagination' => $pagination
-                        ,'query' => $query
-                        ,'field' => $field
-                        ,'attr'  => $attr
+                        'pagination'  => $pagination
+                        ,'query'      => $query
+                        ,'field'      => $field
+                        ,'attr'       => $attr
+                        ,'userLncTd'  => $userLncTd
                     ));
                 }
                 $query = substr_replace($query ,"",-1);
                 $_query = $this->paramsFacturar($query);
-                $pagination = $this->_indexActionFacturar($_query);
+                $pagination = $this->_indexFacturarAction($_query);
+
+                // Buscando las personas que ya comieron hoy
+                $userLncTd = $this->lncToday();
                 return $this->render('INCESComedorBundle:Usuario:_list_facturar.html.twig', array(
                     'pagination'  => $pagination
                     ,'query'      => $query
+                    ,'userLncTd'  => $userLncTd
                 ));
             }
         }
     }
 
+    /*
+     *  Search Ajax Lunch
+     */
+    public function searchAjaxLunchAction(){
+        $request = $this->get('request');
+        $query   = $request->request->get('query');
+
+        if (!$query) {
+            $field      = $request->request->get('field');
+            $attr       = $request->request->get('attr');
+            $pagination = $this->_indexLunchAction($query, $field, $attr);
+
+            // Buscando las personas que ya comieron hoy
+            $userMenuTd = $this->menuToday();
+            return $this->render('INCESComedorBundle:Usuario:_index_lunch.html.twig', array(
+                'pagination'   => $pagination
+                ,'query'       => $query
+                ,'field'       => $field
+                ,'attr'        => $attr
+                ,'userMenuTd'  => $userMenuTd
+            ));
+        }else{
+            if ($request->isXmlHttpRequest()){
+                if ('*' == $query){
+                    $query = '';
+                    $field = $request->request->get('field');
+                    $attr  = $request->request->get('attr');
+                    $pagination = $this->_indexLunchAction($query, $field, $attr);
+
+                    // Buscando las personas que ya comieron hoy
+                    $userMenuTd = $this->menuToday();
+                    return $this->render('INCESComedorBundle:Usuario:_index_lunch.html.twig', array(
+                        'pagination'   => $pagination
+                        ,'query'       => $query
+                        ,'field'       => $field
+                        ,'attr'        => $attr
+                        ,'userMenuTd'  => $userMenuTd
+                    ));
+                }
+                $query = substr_replace($query ,"",-1);
+                $_query = $this->paramsLunch($query);
+                $pagination = $this->_indexLunchAction($_query);
+
+                // Buscando las personas que ya comieron hoy
+                $userMenuTd = $this->menuToday();
+                return $this->render('INCESComedorBundle:Usuario:_list_lunch.html.twig', array(
+                    'pagination'   => $pagination
+                    ,'query'       => $query
+                    ,'userMenuTd'  => $userMenuTd
+                ));
+            }
+        }
+    }
 }

@@ -12,10 +12,10 @@
 <div id="col-text">
 
     <h2 id="slogan"><span></span>Place for your slogan.</h2>
-    <div id="usuarios">
+    <div id="filter">
         <div class="search">
             <form action="{{ app.request.uriForPath('/usuario/searcha') }}" method="get">
-                <input type="text" name="query" value="{{query}}" id="search_keywords_usuario_dyn" />
+                <input autocomplete="off" type="text" name="query" value="{{query}}" id="search_keywords" />
                 <input type="submit" value="search" style="display:none;"/>
                 <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
                 <div class="help">
@@ -30,54 +30,54 @@
                     {% if field is defined %}
                     {% if attr is defined %}
                     {% if field == "cedula" and attr == "1" %}
-                    <th><a class="filter_usuarios" value="cedula" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Cédula /\</a></th>
+                    <th><a class="filter" value="cedula" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Cédula /\</a></th>
                     {% elseif field == "cedula" and attr == "0" %}
-                    <th><a class="filter_usuarios" value="cedula" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Cédula \/</a></th>
+                    <th><a class="filter" value="cedula" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Cédula \/</a></th>
                     {% else %}
-                    <th><a class="filter_usuarios" value="cedula" asc="1" href="{{ path('usuario_search_ajax') }}">Cédula</a></th>
+                    <th><a class="filter" value="cedula" asc="1" href="{{ path('usuario_search_ajax') }}">Cédula</a></th>
                     {% endif %}
                     {% if field == "nombre" and attr == "1" %}
-                    <th><a class="filter_usuarios" value="nombre" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Nombre /\</a></th>
+                    <th><a class="filter" value="nombre" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Nombre /\</a></th>
                     {% elseif field == "nombre" and attr == "0" %}
-                    <th><a class="filter_usuarios" value="nombre" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Nombre \/</a></th>
+                    <th><a class="filter" value="nombre" asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Nombre \/</a></th>
                     {% else %}
-                    <th><a class="filter_usuarios" value="nombre" asc="1" href="{{ path('usuario_search_ajax') }}">Nombre</a></th>
+                    <th><a class="filter" value="nombre" asc="1" href="{{ path('usuario_search_ajax') }}">Nombre</a></th>
                     {% endif %}
                     {% if field == "apellido" and attr == "1" %}
-                    <th><a class="filter_usuarios" value="apellido"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Apellido /\</a></th>
+                    <th><a class="filter" value="apellido"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Apellido /\</a></th>
                     {% elseif field == "apellido" and attr == "0" %}
-                    <th><a class="filter_usuarios" value="apellido"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Apellido \/</a></th>
+                    <th><a class="filter" value="apellido"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Apellido \/</a></th>
                     {% else %}
-                    <th><a class="filter_usuarios" value="apellido"  asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
+                    <th><a class="filter" value="apellido"  asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
                     {% endif %}
                     {% if field == "ncarnet" and attr == "1" %}
-                    <th><a class="filter_usuarios" value="ncarnet"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Número Carnet /\</a></th>
+                    <th><a class="filter" value="ncarnet"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Número Carnet /\</a></th>
                     {% elseif field == "ncarnet" and attr == "0" %}
-                    <th><a class="filter_usuarios" value="ncarnet"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Número Carnet \/</a></th>
+                    <th><a class="filter" value="ncarnet"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Número Carnet \/</a></th>
                     {% else %}
-                    <th><a class="filter_usuarios" value="ncarnet"  asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
+                    <th><a class="filter" value="ncarnet"  asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
                     {% endif %}
                     {% if field == "correo" and attr == "1" %}
-                    <th><a class="filter_usuarios" value="correo"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Correo /\</a></th>
+                    <th><a class="filter" value="correo"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Correo /\</a></th>
                     {% elseif field == "correo" and attr == "0" %}
-                    <th><a class="filter_usuarios" value="correo"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Correo \/</a></th>
+                    <th><a class="filter" value="correo"  asc="{{attr}}" href="{{ path('usuario_search_ajax') }}">Correo \/</a></th>
                     {% else %}
-                    <th><a class="filter_usuarios" value="correo"  asc="1" href="{{ path('usuario_search_ajax') }}">Correo</a></th>
+                    <th><a class="filter" value="correo"  asc="1" href="{{ path('usuario_search_ajax') }}">Correo</a></th>
                     {% endif %}
                     {% else %}
-                    <th><a class="filter_usuarios" value="cedula"     asc="1" href="{{ path('usuario_search_ajax') }}">Cédula</a></th>
-                    <th><a class="filter_usuarios" value="nombre"     asc="1" href="{{ path('usuario_search_ajax') }}">Nombre</a></th>
-                    <th><a class="filter_usuarios" value="apellido"   asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
-                    <th><a class="filter_usuarios" value="ncarnet"     asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
-                    <th><a class="filter_usuarios" value="correo" asc="1" href="{{ path('usuario_search_ajax') }}">Correo</a></th>
+                    <th><a class="filter" value="cedula"     asc="1" href="{{ path('usuario_search_ajax') }}">Cédula</a></th>
+                    <th><a class="filter" value="nombre"     asc="1" href="{{ path('usuario_search_ajax') }}">Nombre</a></th>
+                    <th><a class="filter" value="apellido"   asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
+                    <th><a class="filter" value="ncarnet"     asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
+                    <th><a class="filter" value="correo" asc="1" href="{{ path('usuario_search_ajax') }}">Correo</a></th>
                     <th>Imagen</th>
                     {% endif %}
                     {% else %}
-                    <th><a class="filter_usuarios" value="cedula"     asc="1" href="{{ path('usuario_search_ajax') }}">Cédula</a></th>
-                    <th><a class="filter_usuarios" value="nombre"     asc="1" href="{{ path('usuario_search_ajax') }}">Nombre</a></th>
-                    <th><a class="filter_usuarios" value="apellido"   asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
-                    <th><a class="filter_usuarios" value="ncarnet"     asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
-                    <th><a class="filter_usuarios" value="correo" asc="1" href="{{ path('usuario_search_ajax') }}">Correo</a></th>
+                    <th><a class="filter" value="cedula"     asc="1" href="{{ path('usuario_search_ajax') }}">Cédula</a></th>
+                    <th><a class="filter" value="nombre"     asc="1" href="{{ path('usuario_search_ajax') }}">Nombre</a></th>
+                    <th><a class="filter" value="apellido"   asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
+                    <th><a class="filter" value="ncarnet"     asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
+                    <th><a class="filter" value="correo" asc="1" href="{{ path('usuario_search_ajax') }}">Correo</a></th>
                     <th>Imagen</th>
                     {% endif %}
                 </tr>

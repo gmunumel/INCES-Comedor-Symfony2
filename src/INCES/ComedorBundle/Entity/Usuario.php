@@ -58,6 +58,11 @@ class Usuario
      */
     private $rol;
 
+   /**
+    * @ORM\OneToMany(targetEntity="UsuarioMenu", mappedBy="usuario")
+    */
+    private $usuario_menus;
+
     /**
      * Get id
      *
@@ -230,5 +235,29 @@ class Usuario
     }
     public function __tostring(){
         return $this->nombre. " " . $this->apellido;
+    }
+    public function __construct()
+    {
+        $this->usuario_menus = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add usuario_menus
+     *
+     * @param INCES\ComedorBundle\Entity\UsuarioMenu $usuarioMenus
+     */
+    public function addUsuarioMenu(\INCES\ComedorBundle\Entity\UsuarioMenu $usuarioMenus)
+    {
+        $this->usuario_menus[] = $usuarioMenus;
+    }
+
+    /**
+     * Get usuario_menus
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getUsuarioMenus()
+    {
+        return $this->usuario_menus;
     }
 }

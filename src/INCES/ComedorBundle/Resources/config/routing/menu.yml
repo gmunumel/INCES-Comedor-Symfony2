@@ -1,6 +1,8 @@
 menu:
     pattern:  /
-    defaults: { _controller: "INCESComedorBundle:Menu:index" }
+    defaults: { _controller: "INCESComedorBundle:Menu:search" }
+    requirements: { _method: get|post }
+    #defaults: { _controller: "INCESComedorBundle:Menu:index" }
 
 menu_show:
     pattern:  /{id}/show
@@ -40,7 +42,9 @@ menu_today:
 
 menu_facturar:
     pattern:  /facturar
-    defaults: { _controller: "INCESComedorBundle:Usuario:indexFacturar" }
+    #defaults: { _controller: "INCESComedorBundle:Usuario:indexFacturar" }
+    defaults: { _controller: "INCESComedorBundle:Usuario:searchAjaxFacturar" }
+    requirements: { _method: get|post }
 
 menu_facturar_procesar:
     pattern:  /facturar/procesar

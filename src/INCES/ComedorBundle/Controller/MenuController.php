@@ -409,17 +409,27 @@ class MenuController extends Controller
     public function facturarProcesarAction()
     {
         $request = $this->get('request');
-        $usuario = $_POST["usuario"];
-        $dia     = $_POST["dia"];
-        $menu    = $_POST["menus"];
         $conn    = $this->get('database_connection');
 
-        $conn->insert('UsuarioMenu',
-            array('usuario_id' => $usuario
-                 ,'dia'        => $dia
-                 ,'menu_id'    => $menu
-            )
-        );
+        $usuario = $_POST["usuario"];
+        $dia     = new \DateTime('now');
+        $dia     = $dia->format('Y-m-d H:i:s');
+
+        if(!isset($_POST["menus"]))
+            $conn->insert('UsuarioMenu',
+                array('usuario_id' => $usuario
+                     ,'dia'        => $dia
+                )
+            );
+        else{
+            $menu    = $_POST["menus"];
+            $conn->insert('UsuarioMenu',
+                array('usuario_id' => $usuario
+                     ,'dia'        => $dia
+                     ,'menu_id'    => $menu
+                )
+            );
+        }
 
         $route = $request->getBaseUrl();
         return new Response($route.'/#!/menu/facturar');

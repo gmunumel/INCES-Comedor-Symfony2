@@ -1,0 +1,7 @@
+ticket:
+    pattern:  /
+    defaults: { _controller: "INCESComedorBundle:Ticket:index" }
+
+ticket_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "INCESComedorBundle:Ticket:show" }

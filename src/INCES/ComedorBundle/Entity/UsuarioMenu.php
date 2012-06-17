@@ -18,7 +18,7 @@ class UsuarioMenu
     private $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $dia;
 
@@ -106,5 +106,8 @@ class UsuarioMenu
     public function getMenu()
     {
         return $this->menu;
+    }
+    public function  __toString(){
+        return $this->dia->format("d/m/Y");
     }
 }

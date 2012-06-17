@@ -82,33 +82,10 @@ $(document).ready(function()
             }
         }).submit();
     });
-    /*
-    $('form:not(.usuario_form)').submit(function(e) {
-
-        var url = $(this).attr("action");
-        //alert(url);
-
-        if ($(this).valid()){
-            $.ajax({
-                type: "POST",
-                url: url, // Or your url generator like Routing.generate('discussion_create')
-                data: $(this).serialize(),
-                dataType: "html",
-                success: function(msg){
-                    //alert(msg);
-                    $('#content').load(msg);
-                }
-            });
-        }
-
-        return false;
-    });
-    */
-    //$('.search input[type="submit"]').hide();
-    $('#search_keywords_menu').keypress(function(key){
+    $('#search_keywords').keypress(function(key){
         if ( key.which == 13 ) key.preventDefault();
     });
-    $('#search_keywords_menu').keyup(function(key){
+    $('#search_keywords').keyup(function(key){
         if ( key.which == 13 ) key.preventDefault();
         if (this.value.length >= 3 || this.value == '')
         {
@@ -121,56 +98,7 @@ $(document).ready(function()
             );
         }
     });
-    //$('#search_keywords_usuario').focus();
-    $('#search_keywords_usuario').keyup(function(key)
-    {
-        if (this.value.length >= 3 || this.value == '')
-        {
-            $('#loader').show();
-
-            //alert(this.value);
-            $('#content').load(
-                $(this).parents('form').attr('action'),
-                { query: this.value},
-                function() { $('#loader').hide(); }
-            );
-        }
-    });
-    $('#search_keywords_usuario_dyn').keypress(function(key){
-        if ( key.which == 13 ) key.preventDefault();
-    });
-    $('#search_keywords_usuario_dyn').keyup(function(key){
-        if ( key.which == 13 ) key.preventDefault();
-        if (this.value.length >= 3 || this.value == '')
-        {
-            $('#loader').show();
-
-            //alert(this.value);
-            $('#content').load(
-                $(this).parents('form').attr('action'),
-                { query: this.value + '*'},
-                function() { $('#loader').hide(); }
-            );
-        }
-    });
-    $('#search_keywords_facturar').keypress(function(key){
-        if ( key.which == 13 ) key.preventDefault();
-    });
-    $('#search_keywords_facturar').keyup(function(key){
-        if ( key.which == 13 ) key.preventDefault();
-        if (this.value.length >= 3 || this.value == '')
-        {
-            $('#loader').show();
-
-            //alert(this.value);
-            $('#content').load(
-                $(this).parents('form').attr('action'),
-                { query: this.value + '*'},
-                function() { $('#loader').hide(); }
-            );
-        }
-    });
-    $(".filter_menus").click(function(event) {
+    $(".filter").click(function(event) {
         event.preventDefault();
         var field = $(this).attr('value');
         var attr  = $(this).attr('asc');
@@ -179,23 +107,58 @@ $(document).ready(function()
             attr = '0';
         else
             attr = '1';
-        $('#menus').load(
+        $('#content').load(
             url,
             { field: field, attr: attr }
         );
     });
-    $(".filter_usuarios").click(function(event) {
-        event.preventDefault();
-        var field = $(this).attr('value');
-        var attr  = $(this).attr('asc');
-        var url   = $(this).attr('href');
-        if (attr == '1')
-            attr = '0';
-        else
-            attr = '1';
-        $('#usuarios').load(
-            url,
-            { field: field, attr: attr }
-        );
-    });
+
+    // a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+        $( "#dialog:ui-dialog" ).dialog( "destroy" );
+
+        $( "#dialog" ).dialog({
+            autoOpen: false,
+            resizable: false,
+            height:250,
+            width:500,
+            modal: true,
+            //title: 'Notificaciones',
+            /*
+            open: function(){
+            var url = $(this).attr("value");
+            $.ajax({
+            url: url,
+            data: $(this).serialize(),
+            dataType: "html",
+            success: function(data) {
+            //$( "#dialog" ).html( data );
+            $( "#dialog" ).dialog( "open" );
+            }
+            });
+            //$(this).load('dialogContact.htm');
+            //$(this).dialog("open");
+            return true;
+            },
+            */
+            buttons: {
+                Ok: function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
+        $( ".opener" ).on('click', function(event) {
+            var url = $(this).attr("value");
+            $.ajax({
+                url: url,
+                success: function(msg) {
+                    //alert(msg);
+                    $( "#dialog" ).html( msg );
+                    $( "#dialog" ).dialog( "open" );
+                }
+            });
+            event.preventDefault();
+            event.stopPropagation();
+            //$( "#dialog" ).dialog( "open" );
+            //return false;
+        });
 });

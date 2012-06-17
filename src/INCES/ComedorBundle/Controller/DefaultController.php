@@ -8,7 +8,6 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $ar = "kdsk";
         return $this->render('INCESComedorBundle:Default:index.html.twig');
     }
 }

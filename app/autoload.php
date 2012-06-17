@@ -18,10 +18,11 @@ $loader->registerNamespaces(array(
     'FOS'              => __DIR__.'/../vendor/bundles',
     'Knp\\Component'   => __DIR__.'/../vendor/knp-components/src',
     'Knp'              => __DIR__.'/../vendor/bundles',
+    'Knp\\Snappy'      => __DIR__.'/../vendor/snappy/src',
 ));
 $loader->registerPrefixes(array(
-    'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',
-    'Twig_'            => __DIR__.'/../vendor/twig/lib',
+    'Twig_Extensions_'     => __DIR__.'/../vendor/twig-extensions/lib',
+    'Twig_'                => __DIR__.'/../vendor/twig/lib',
 ));
 
 // intl
@@ -46,4 +47,7 @@ AnnotationRegistry::registerFile(__DIR__.'/../vendor/doctrine/lib/Doctrine/ORM/M
 // the lazy loading of the init file (which is expensive)
 require_once __DIR__.'/../vendor/swiftmailer/lib/classes/Swift.php';
 Swift::registerAutoload(__DIR__.'/../vendor/swiftmailer/lib/swift_init.php');
+
+$classLoader = new \Doctrine\Common\ClassLoader('DoctrineExtensions', __DIR__.'/../vendor/doctrine-extensions/lib');
+$classLoader->register();
 

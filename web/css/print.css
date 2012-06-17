@@ -18,6 +18,7 @@ table {width:100%; border-collapse:collapse; border-spacing:0; border-top:0.5pt 
 th, td {border-bottom:0.5pt solid #000;}
 blockquote {page-break-inside:avoid}
 ul, ol, dl {page-break-before:avoid}
+img {}
 
 #main {width:100%;}
 #header {border-bottom:0.5pt solid #000;}

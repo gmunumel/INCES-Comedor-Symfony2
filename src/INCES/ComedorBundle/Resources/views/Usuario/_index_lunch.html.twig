@@ -1,0 +1,168 @@
+{#
+<?php include_partial('job/list', array('jobs' => $jobs)) ?>
+#}
+
+{#
+{% include 'INCESComedorBundle:Usuario:_index.html.twig' with {pagination: pagination} %}
+#}
+
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
+
+<div id="col-text">
+
+    <h2 id="slogan"><span></span>Place for your slogan.</h2>
+    <div id="filter">
+        <div class="search">
+            <form action="{{ app.request.uriForPath('/usuario/searchalnc') }}" method="get">
+                <input autocomplete="off" type="text" name="query" value="{{query}}" id="search_keywords" />
+                <input type="submit" value="search" style="display:none;"/>
+                <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
+                <div class="help">
+                    Enter some keywords (city, country, position, ...)
+                </div>
+            </form>
+        </div>
+        <h1>Usuarios list view Usuario/_index Lunch</h1>
+        <table class="records_list">
+            <thead>
+                <tr>
+                    {% if field is defined %}
+                    {% if attr is defined %}
+                    {% if field == "dia" and attr == "1" %}
+                    <th><a class="filter" value="dia" asc="{{attr}}" href="{{ path('usuario_search_ajax_lunch') }}">Fecha /\</a></th>
+                    {% elseif field == "dia" and attr == "0" %}
+                    <th><a class="filter" value="dia" asc="{{attr}}" href="{{ path('usuario_search_ajax_lunch') }}">Fecha \/</a></th>
+                    {% else %}
+                    <th><a class="filter" value="dia" asc="1" href="{{ path('usuario_search_ajax_lunch') }}">Fecha</a></th>
+                    {% endif %}
+                    {% if field == "cedula" and attr == "1" %}
+                    <th><a class="filter" value="cedula" asc="{{attr}}" href="{{ path('usuario_search_ajax_lunch') }}">Cédula /\</a></th>
+                    {% elseif field == "cedula" and attr == "0" %}
+                    <th><a class="filter" value="cedula" asc="{{attr}}" href="{{ path('usuario_search_ajax_lunch') }}">Cédula \/</a></th>
+                    {% else %}
+                    <th><a class="filter" value="cedula" asc="1" href="{{ path('usuario_search_ajax_lunch') }}">Cédula</a></th>
+                    {% endif %}
+                    {% if field == "nombre" and attr == "1" %}
+                    <th><a class="filter" value="nombre" asc="{{attr}}" href="{{ path('usuario_search_ajax_lunch') }}">Nombre /\</a></th>
+                    {% elseif field == "nombre" and attr == "0" %}
+                    <th><a class="filter" value="nombre" asc="{{attr}}" href="{{ path('usuario_search_ajax_lunch') }}">Nombre \/</a></th>
+                    {% else %}
+                    <th><a class="filter" value="nombre" asc="1" href="{{ path('usuario_search_ajax_lunch') }}">Nombre</a></th>
+                    {% endif %}
+                    {% if field == "apellido" and attr == "1" %}
+                    <th><a class="filter" value="apellido"  asc="{{attr}}" href="{{ path('usuario_search_ajax_lunch') }}">Apellido /\</a></th>
+                    {% elseif field == "apellido" and attr == "0" %}
+                    <th><a class="filter" value="apellido"  asc="{{attr}}" href="{{ path('usuario_search_ajax_lunch') }}">Apellido \/</a></th>
+                    {% else %}
+                    <th><a class="filter" value="apellido"  asc="1" href="{{ path('usuario_search_ajax_lunch') }}">Apellido</a></th>
+                    {% endif %}
+                    {% else %}
+                    <th><a class="filter" value="dia"        asc="1" href="{{ path('usuario_search_ajax_lunch') }}">Fecha</a></th>
+                    <th><a class="filter" value="cedula"     asc="1" href="{{ path('usuario_search_ajax_lunch') }}">Cédula</a></th>
+                    <th><a class="filter" value="nombre"     asc="1" href="{{ path('usuario_search_ajax_lunch') }}">Nombre</a></th>
+                    <th><a class="filter" value="apellido"   asc="1" href="{{ path('usuario_search_ajax_lunch') }}">Apellido</a></th>
+                    {% endif %}
+                    {% else %}
+                    <th><a class="filter" value="dia"        asc="1" href="{{ path('usuario_search_ajax_lunch') }}">Fecha</a></th>
+                    <th><a class="filter" value="cedula"     asc="1" href="{{ path('usuario_search_ajax_lunch') }}">Cédula</a></th>
+                    <th><a class="filter" value="nombre"     asc="1" href="{{ path('usuario_search_ajax_lunch') }}">Nombre</a></th>
+                    <th><a class="filter" value="apellido"   asc="1" href="{{ path('usuario_search_ajax_lunch') }}">Apellido</a></th>
+                    {% endif %}
+                    <th>Menu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if pagination|length == 0 %}
+                <p>No hay resultados</p>
+                {% endif %}
+                {#
+                <div id="usuarios">
+                    #}
+                    <div id="dialog" title="No se puede procesar">
+                        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+                    </div>
+                    {% for entity in pagination %}
+                    <tr>
+                        <td>{{ entity.dia|date("d-m-Y H:i:s") }}</td>
+                        <td>{{ entity.usuario.cedula }}</td>
+                        <td>{{ entity.usuario.nombre }}</td>
+                        <td>{{ entity.usuario.apellido }}</td>
+                        {% set _menuTd = false %}
+                        {% for menuTd in userMenuTd %}
+                            {% if menuTd.id == entity.menu.id %}
+                                {% set _menuTd = true %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if _menuTd %}
+                        <td>{{ entity.menu.seco }}</td>
+                        {% else %}
+                        <td>Información no disponible.</td>
+                        {% endif %}
+                        {#
+                        <td>
+                            <ul>
+                                <li>
+                                <a href="{{ path('menu_show', { 'id': entity.id }) }}">show</a>
+
+                                <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/show">show2</a>
+                                </li>
+                                {% if is_granted("ROLE_USER") %}
+                                <li>
+                                <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edit">edit2</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </td>
+                        #}
+                    </tr>
+                    {% endfor %}
+                    {#
+                </div>
+                #}
+            </tbody>
+        </table>
+        {#
+        <ul>
+            <li>
+            <a href="{{ path('menu_new') }}">
+                Create a new entry
+            </a>
+            -->
+            <br />
+            <div class="navigation">
+                {{ pagination.render()|raw }}
+            </div>
+            <br />
+            {% if is_granted("ROLE_USER") %}
+            <a href="{{ app.request.uriForPath('/#!/menu/new') }}">
+                Create a new entry
+            </a>
+            {% endif %}
+            </li>
+        </ul>
+        #}
+        {% if pagination|length != 0 %}
+        <div class="navigation">
+            {{pagination.render()|replace({'usuario': '#!/menu', 'searchafact': 'facturar'})|raw}}
+        </div>
+        {% endif %}
+
+        {#
+        <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.validate.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.ui.core.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.ui.widget.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker-es.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>
+        #}
+        <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
+    </div>
+    <p id="btns">
+    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
+    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
+    </p>
+
+</div> <!-- /col-text -->

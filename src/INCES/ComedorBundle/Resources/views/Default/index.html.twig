@@ -3,15 +3,22 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+<a href="{{ app.request.uriForPath('/ticket/2/show') }}">Ticket</a>
 {% endblock %}
 {% block javascripts %}
 <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.bgiframe-2.1.2.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.form.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.validate.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.ui.core.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.ui.widget.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker-es.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.mouse.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.button.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.draggable.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.position.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.dialog.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
