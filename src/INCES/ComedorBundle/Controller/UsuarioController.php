@@ -218,11 +218,20 @@ class UsuarioController extends Controller
         $dql->setParameter('month', $now->format("m"));
         $dql->setParameter('day', $now->format("d"));
         $count = $dql->getSingleScalarResult();
+
+        /* TODO Optimizar estos 2 querys
+        *  Arreglar al URL
+        */
         if($count > 0){
+            $dql = $em->createQuery('SELECT um FROM INCES\ComedorBundle\Entity\UsuarioMenu um WHERE um.usuario = :id and YEAR(um.dia) = :year and MONTH(um.dia) = :month and DAY(um.dia) = :day');
+            $dql->setParameter('id', $id);
+            $dql->setParameter('year', $now->format("Y"));
+            $dql->setParameter('month', $now->format("m"));
+            $dql->setParameter('day', $now->format("d"));
             $_entity   = $dql->getResult();
             $_entity   = $_entity[0];
-            $lcnHora   = $_entity->getDia()->format("H");
-            $lcnMinuto = $_entity->getDia()->format("i");
+            $lncHora   = $_entity->getDia()->format("H");
+            $lncMinuto = $_entity->getDia()->format("i");
             $ampm      = "am";
             if($lncHora > 12){
                $lncHora = $lncHora - 12;
@@ -230,11 +239,12 @@ class UsuarioController extends Controller
             }
             if($lncHora == 12) $ampm = "pm";
             if($lncHora == 24) $ampm = "am";
+            //return new Response("hola");
             return new Response(
                 "<p> ".
                     "<span class='ui-icon ui-icon-alert' style='float:left; margin:0 7px 20px 0;'></span> ".
-                    "El usuario <b>".ucfirst($entity->getNombre())." ".ucfirst($entity->getApellido())."</b> ya almorzó a la hora <b>".$lncHora.":".$lncMinuto." ".$ampm."</b>. <br /><br /> ".
-                    "<a href='{{app.request.uriForPath("/#!/usuario/searchalnc")}}' alt='últimos almuerzos'>Ver últimos usuarios que almorzaron.</a>"
+                    "El usuario <b>".ucfirst($entity->getNombre())." ".ucfirst($entity->getApellido())."</b> ya almorzó a la hora <b>".strval($lncHora).":".strval($lncMinuto)." ".$ampm."</b>. <br /><br /> ".
+                    "<a href=\"{{app.request.uriForPath(\'/#!/usuario/searchalnc\')}}\" alt=\"ultimos almuerzos\">Ver últimos usuarios que almorzaron.</a>".
                 "</p>"
             );
         }

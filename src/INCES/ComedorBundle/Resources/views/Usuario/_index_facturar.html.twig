@@ -170,7 +170,7 @@
         #}
         {% if pagination|length != 0 %}
         <div class="navigation">
-            {{pagination.render()|replace({'usuario': '#!/menu', 'searchafact': 'facturar'})|raw}}
+            {{pagination.render()|replace({'menu': '#!/menu', 'searchafact': 'facturar'})|raw}}
         </div>
         {% endif %}
 
