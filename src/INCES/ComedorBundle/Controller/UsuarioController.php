@@ -212,7 +212,7 @@ class UsuarioController extends Controller
             );
         //Verificar si ya ha comido esa persona ese mismo dia
         $now = new \DateTime('now');
-        $dql = $em->createQuery('SELECT um, COUNT(um.id) FROM INCES\ComedorBundle\Entity\UsuarioMenu um WHERE um.usuario = :id and YEAR(um.dia) = :year and MONTH(um.dia) = :month and DAY(um.dia) = :day');
+        $dql = $em->createQuery('SELECT COUNT(um.id) FROM INCES\ComedorBundle\Entity\UsuarioMenu um WHERE um.usuario = :id and YEAR(um.dia) = :year and MONTH(um.dia) = :month and DAY(um.dia) = :day');
         $dql->setParameter('id', $id);
         $dql->setParameter('year', $now->format("Y"));
         $dql->setParameter('month', $now->format("m"));
