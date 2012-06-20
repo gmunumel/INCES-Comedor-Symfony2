@@ -3,7 +3,7 @@
 #}
 
 {#
-{% include 'INCESComedorBundle:Usuario:index.html.twig' with {pagination: pagination} %}
+{% include 'INCESComedorBundle:Usuario:_index.html.twig' with {pagination: pagination} %}
 #}
 
 <div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
@@ -14,7 +14,7 @@
     <h2 id="slogan"><span></span>Place for your slogan.</h2>
     <div id="filter">
         <div class="search">
-            <form action="{{ app.request.uriForPath('/usuario/searchafact') }}" method="get">
+            <form action="{{ app.request.uriForPath('/menu/searchafact') }}" method="get">
                 <input autocomplete="off" type="text" name="query" value="{{query}}" id="search_keywords" />
                 <input type="submit" value="search" style="display:none;"/>
                 <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
@@ -23,8 +23,7 @@
                 </div>
             </form>
         </div>
-        <h1>Usuario list _list Facturar Hola</h1>
-
+        <h1>Usuarios list view Usuario/_index Facturar</h1>
         <table class="records_list">
             <thead>
                 <tr>
@@ -32,65 +31,63 @@
                     {% if field is defined %}
                     {% if attr is defined %}
                     {% if field == "cedula" and attr == "1" %}
-                    <th><a class="filter" value="cedula" asc="{{attr}}" href="{{ path('usuario_search_ajax_facturar') }}">Cédula /\</a></th>
+                    <th><a class="filter" value="cedula" asc="{{attr}}" href="{{ path('menu_search_ajax_facturar') }}">Cédula /\</a></th>
                     {% elseif field == "cedula" and attr == "0" %}
-                    <th><a class="filter" value="cedula" asc="{{attr}}" href="{{ path('usuario_search_ajax_facturar') }}">Cédula \/</a></th>
+                    <th><a class="filter" value="cedula" asc="{{attr}}" href="{{ path('menu_search_ajax_facturar') }}">Cédula \/</a></th>
                     {% else %}
-                    <th><a class="filter" value="cedula" asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Cédula</a></th>
+                    <th><a class="filter" value="cedula" asc="1" href="{{ path('menu_search_ajax_facturar') }}">Cédula</a></th>
                     {% endif %}
                     {% if field == "nombre" and attr == "1" %}
-                    <th><a class="filter" value="nombre" asc="{{attr}}" href="{{ path('usuario_search_ajax_facturar') }}">Nombre /\</a></th>
+                    <th><a class="filter" value="nombre" asc="{{attr}}" href="{{ path('menu_search_ajax_facturar') }}">Nombre /\</a></th>
                     {% elseif field == "nombre" and attr == "0" %}
-                    <th><a class="filter" value="nombre" asc="{{attr}}" href="{{ path('usuario_search_ajax_facturar') }}">Nombre \/</a></th>
+                    <th><a class="filter" value="nombre" asc="{{attr}}" href="{{ path('menu_search_ajax_facturar') }}">Nombre \/</a></th>
                     {% else %}
-                    <th><a class="filter" value="nombre" asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Nombre</a></th>
+                    <th><a class="filter" value="nombre" asc="1" href="{{ path('menu_search_ajax_facturar') }}">Nombre</a></th>
                     {% endif %}
                     {% if field == "apellido" and attr == "1" %}
-                    <th><a class="filter" value="apellido"  asc="{{attr}}" href="{{ path('usuario_search_ajax_facturar') }}">Apellido /\</a></th>
+                    <th><a class="filter" value="apellido"  asc="{{attr}}" href="{{ path('menu_search_ajax_facturar') }}">Apellido /\</a></th>
                     {% elseif field == "apellido" and attr == "0" %}
-                    <th><a class="filter" value="apellido"  asc="{{attr}}" href="{{ path('usuario_search_ajax_facturar') }}">Apellido \/</a></th>
+                    <th><a class="filter" value="apellido"  asc="{{attr}}" href="{{ path('menu_search_ajax_facturar') }}">Apellido \/</a></th>
                     {% else %}
-                    <th><a class="filter" value="apellido"  asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Apellido</a></th>
+                    <th><a class="filter" value="apellido"  asc="1" href="{{ path('menu_search_ajax_facturar') }}">Apellido</a></th>
                     {% endif %}
                     {% if field == "ncarnet" and attr == "1" %}
-                    <th><a class="filter" value="ncarnet"  asc="{{attr}}" href="{{ path('usuario_search_ajax_facturar') }}">Número Carnet /\</a></th>
+                    <th><a class="filter" value="ncarnet"  asc="{{attr}}" href="{{ path('menu_search_ajax_facturar') }}">Número Carnet /\</a></th>
                     {% elseif field == "ncarnet" and attr == "0" %}
-                    <th><a class="filter" value="ncarnet"  asc="{{attr}}" href="{{ path('usuario_search_ajax_facturar') }}">Número Carnet \/</a></th>
+                    <th><a class="filter" value="ncarnet"  asc="{{attr}}" href="{{ path('menu_search_ajax_facturar') }}">Número Carnet \/</a></th>
                     {% else %}
-                    <th><a class="filter" value="ncarnet"  asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Número Carnet</a></th>
+                    <th><a class="filter" value="ncarnet"  asc="1" href="{{ path('menu_search_ajax_facturar') }}">Número Carnet</a></th>
                     {% endif %}
                     {% if field == "rol" and attr == "1" %}
-                    <th><a class="filter" value="rol"  asc="{{attr}}" href="{{ path('usuario_search_ajax_facturar') }}">Rol /\</a></th>
+                    <th><a class="filter" value="rol"  asc="{{attr}}" href="{{ path('menu_search_ajax_facturar') }}">Rol /\</a></th>
                     {% elseif field == "rol" and attr == "0" %}
-                    <th><a class="filter" value="rol"  asc="{{attr}}" href="{{ path('usuario_search_ajax_facturar') }}">Rol \/</a></th>
+                    <th><a class="filter" value="rol"  asc="{{attr}}" href="{{ path('menu_search_ajax_facturar') }}">Rol \/</a></th>
                     {% else %}
-                    <th><a class="filter" value="rol"  asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Rol</a></th>
+                    <th><a class="filter" value="rol"  asc="1" href="{{ path('menu_search_ajax_facturar') }}">Rol</a></th>
                     {% endif %}
                     {% else %}
-                    <th><a class="filter" value="cedula"     asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Cédula</a></th>
-                    <th><a class="filter" value="nombre"     asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Nombre</a></th>
-                    <th><a class="filter" value="apellido"   asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Apellido</a></th>
-                    <th><a class="filter" value="ncarnet"    asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Número Carnet</a></th>
-                    <th><a class="filter" value="rol"     asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Rol</a></th>
+                    <th><a class="filter" value="cedula"     asc="1" href="{{ path('menu_search_ajax_facturar') }}">Cédula</a></th>
+                    <th><a class="filter" value="nombre"     asc="1" href="{{ path('menu_search_ajax_facturar') }}">Nombre</a></th>
+                    <th><a class="filter" value="apellido"   asc="1" href="{{ path('menu_search_ajax_facturar') }}">Apellido</a></th>
+                    <th><a class="filter" value="ncarnet"    asc="1" href="{{ path('menu_search_ajax_facturar') }}">Número Carnet</a></th>
+                    <th><a class="filter" value="rol"        asc="1" href="{{ path('menu_search_ajax_facturar') }}">Rol</a></th>
                     {% endif %}
                     {% else %}
-                    <th><a class="filter" value="cedula"     asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Cédula</a></th>
-                    <th><a class="filter" value="nombre"     asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Nombre</a></th>
-                    <th><a class="filter" value="apellido"   asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Apellido</a></th>
-                    <th><a class="filter" value="ncarnet"    asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Número Carnet</a></th>
-                    <th><a class="filter" value="rol"        asc="1" href="{{ path('usuario_search_ajax_facturar') }}">Rol</a></th>
+                    <th><a class="filter" value="cedula"     asc="1" href="{{ path('menu_search_ajax_facturar') }}">Cédula</a></th>
+                    <th><a class="filter" value="nombre"     asc="1" href="{{ path('menu_search_ajax_facturar') }}">Nombre</a></th>
+                    <th><a class="filter" value="apellido"   asc="1" href="{{ path('menu_search_ajax_facturar') }}">Apellido</a></th>
+                    <th><a class="filter" value="ncarnet"    asc="1" href="{{ path('menu_search_ajax_facturar') }}">Número Carnet</a></th>
+                    <th><a class="filter" value="rol"        asc="1" href="{{ path('menu_search_ajax_facturar') }}">Rol</a></th>
                     {% endif %}
                     <th>Imagen</th>
                 </tr>
             </thead>
             <tbody>
-
                 {% if pagination|length == 0 %}
                 <p>No hay resultados</p>
                 {% endif %}
                 {#
                 <div id="usuarios">
-                    {{pagination}}
                     #}
                     <div id="dialog" title="No se puede procesar">
                         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
@@ -118,9 +115,9 @@
                             {% endif %}
                         {% endfor %}
                         {% if hour >= hourStart and hour <= hourEnd and not _lncTd %}
-                        <td><a href="{{ app.request.uriForPath('/#!/usuario/') }}{{ entity.id }}/showfacturar">Sí :)</a></td>
+                        <td><a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/showfacturar">Sí :)</a></td>
                         {% else %}
-                        <td><a class="opener" href="" value="{{ app.request.uriForPath('/usuario/') }}{{ entity.id }}/showfacturar">No! :(</a></td>
+                        <td><a class="opener" href="" value="{{ app.request.uriForPath('/menu/') }}{{ entity.id }}/showfacturar">No! :(</a></td>
                         {% endif %}
                         <td>{{ entity.cedula }}</td>
                         <td>{{ entity.nombre }}</td>
@@ -153,34 +150,27 @@
         </table>
         {#
         <ul>
-
             <li>
-
             <a href="{{ path('menu_new') }}">
                 Create a new entry
             </a>
             -->
             <br />
-
             <div class="navigation">
                 {{ pagination.render()|raw }}
             </div>
-
-
             <br />
             {% if is_granted("ROLE_USER") %}
             <a href="{{ app.request.uriForPath('/#!/menu/new') }}">
                 Create a new entry
             </a>
             {% endif %}
-
             </li>
-
         </ul>
         #}
         {% if pagination|length != 0 %}
         <div class="navigation">
-            {{pagination.render()|replace({'usuario': '#!/menu', 'searchafact': 'facturar'})|raw}}
+            {{pagination.render()|replace({'menu': '#!/menu', 'searchafact': 'facturar'})|raw}}
         </div>
         {% endif %}
 
@@ -196,7 +186,6 @@
         #}
         <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
     </div>
-
     <p id="btns">
     <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
     <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>

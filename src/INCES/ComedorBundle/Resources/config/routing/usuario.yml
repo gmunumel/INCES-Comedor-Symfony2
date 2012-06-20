@@ -40,15 +40,6 @@ usuario_search_ajax:
     defaults: { _controller: "INCESComedorBundle:Usuario:searchAjax" }
     requirements: { _method: get|post }
 
-usuario_search_ajax_facturar:
-    pattern:  /searchafact
-    defaults: { _controller: "INCESComedorBundle:Usuario:searchAjaxFacturar" }
-    requirements: { _method: get|post }
-
-usuario_show_facturar:
-    pattern:  /{id}/showfacturar
-    defaults: { _controller: "INCESComedorBundle:Usuario:showFacturar" }
-
 usuario_search_ajax_lunch:
     pattern:  /searchalnc
     defaults: { _controller: "INCESComedorBundle:Usuario:searchAjaxLunch" }

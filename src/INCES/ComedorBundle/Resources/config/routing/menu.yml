@@ -43,9 +43,19 @@ menu_today:
 menu_facturar:
     pattern:  /facturar
     #defaults: { _controller: "INCESComedorBundle:Usuario:indexFacturar" }
-    defaults: { _controller: "INCESComedorBundle:Usuario:searchAjaxFacturar" }
+    defaults: { _controller: "INCESComedorBundle:Menu:searchAjaxFacturar" }
+    requirements: { _method: get|post }
+
+menu_search_ajax_facturar:
+    pattern:  /searchafact
+    #defaults: { _controller: "INCESComedorBundle:Usuario:indexFacturar" }
+    defaults: { _controller: "INCESComedorBundle:Menu:searchAjaxFacturar" }
     requirements: { _method: get|post }
 
 menu_facturar_procesar:
     pattern:  /facturar/procesar
     defaults: { _controller: "INCESComedorBundle:Menu:facturarProcesar" }
+
+menu_show_facturar:
+    pattern:  /{id}/showfacturar
+    defaults: { _controller: "INCESComedorBundle:Menu:showFacturar" }
