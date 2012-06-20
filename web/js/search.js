@@ -123,23 +123,11 @@ $(document).ready(function()
             width:500,
             modal: true,
             //title: 'Notificaciones',
-            /*
             open: function(){
-            var url = $(this).attr("value");
-            $.ajax({
-            url: url,
-            data: $(this).serialize(),
-            dataType: "html",
-            success: function(data) {
-            //$( "#dialog" ).html( data );
-            $( "#dialog" ).dialog( "open" );
-            }
-            });
-            //$(this).load('dialogContact.htm');
-            //$(this).dialog("open");
-            return true;
+                jQuery('#closer').bind('click',function(){
+                    jQuery('#dialog').dialog('close');
+                })
             },
-            */
             buttons: {
                 Ok: function() {
                     $( this ).dialog( "close" );

@@ -163,6 +163,8 @@ class UsuarioController extends Controller
      */
     public function showFacturarAction($id)
     {
+        $request = $this->getRequest();
+
         $em = $this->getDoctrine()->getEntityManager();
         $emConfig = $em->getConfiguration();
         $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
@@ -239,12 +241,12 @@ class UsuarioController extends Controller
             }
             if($lncHora == 12) $ampm = "pm";
             if($lncHora == 24) $ampm = "am";
-            //return new Response("hola");
+            $path = $request->getBaseUrl().'/#!/usuario/searchalnc';
             return new Response(
                 "<p> ".
                     "<span class='ui-icon ui-icon-alert' style='float:left; margin:0 7px 20px 0;'></span> ".
                     "El usuario <b>".ucfirst($entity->getNombre())." ".ucfirst($entity->getApellido())."</b> ya almorzó a la hora <b>".strval($lncHora).":".strval($lncMinuto)." ".$ampm."</b>. <br /><br /> ".
-                    "<a href=\"{{app.request.uriForPath(\'/#!/usuario/searchalnc\')}}\" alt=\"ultimos almuerzos\">Ver últimos usuarios que almorzaron.</a>".
+                    "<a id='closer' href='".$path."' alt='ultimos almuerzos'>Ver últimos usuarios que almorzaron.</a>".
                 "</p>"
             );
         }
@@ -468,7 +470,6 @@ class UsuarioController extends Controller
                 */
             else
                 //$isnotquery = true;
-                /* TODO LIST arreglar esto */
                 $dql = "SELECT u FROM INCES\ComedorBundle\Entity\Usuario u JOIN u.rol r WHERE " . $query;
 
         elseif ($attr == '1')
