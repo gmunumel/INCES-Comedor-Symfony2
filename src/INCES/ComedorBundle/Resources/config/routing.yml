@@ -18,6 +18,10 @@ INCESComedorBundle_ticket:
     resource: "@INCESComedorBundle/Resources/config/routing/ticket.yml"
     prefix:   /ticket
 
+INCESComedorBundle_usuariomenu:
+    resource: "@INCESComedorBundle/Resources/config/routing/usuariomenu.yml"
+    prefix:   /usuariomenu
+
 INCESComedorBundle_admin_user:
     resource: "@INCESComedorBundle/Resources/config/routing/userAdmin.yml"
     prefix:   /

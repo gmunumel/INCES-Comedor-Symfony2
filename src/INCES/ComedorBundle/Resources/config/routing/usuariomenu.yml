@@ -1,0 +1,37 @@
+usuariomenu:
+    pattern:  /
+    #defaults: { _controller: "INCESComedorBundle:UsuarioMenu:index" }
+    defaults: { _controller: "INCESComedorBundle:UsuarioMenu:searchAjax" }
+    requirements: { _method: get|post }
+
+usuariomenu_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "INCESComedorBundle:UsuarioMenu:show" }
+
+usuariomenu_new:
+    pattern:  /new
+    defaults: { _controller: "INCESComedorBundle:UsuarioMenu:new" }
+
+usuariomenu_create:
+    pattern:  /create
+    defaults: { _controller: "INCESComedorBundle:UsuarioMenu:create" }
+    requirements: { _method: post }
+
+usuariomenu_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "INCESComedorBundle:UsuarioMenu:edit" }
+
+usuariomenu_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "INCESComedorBundle:UsuarioMenu:update" }
+    requirements: { _method: post }
+
+usuariomenu_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "INCESComedorBundle:UsuarioMenu:delete" }
+    requirements: { _method: post }
+
+usuariomenu_search_ajax:
+    pattern:  /searcha
+    defaults: { _controller: "INCESComedorBundle:UsuarioMenu:searchAjax" }
+    requirements: { _method: get|post }

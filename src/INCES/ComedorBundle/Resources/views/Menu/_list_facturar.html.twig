@@ -23,7 +23,7 @@
                 </div>
             </form>
         </div>
-        <h1>Usuario list _list Facturar Hola</h1>
+        <h1>Menu list _list Facturar Hola</h1>
 
         <table class="records_list">
             <thead>
@@ -110,6 +110,9 @@
                         {% else %}
                             {% set hourStart = entity.rol.horaComerStart %}
                             {% set hourEnd = entity.rol.horaComerEnd %}
+                        {% endif %}
+                        {% if entity.rol.horaComerEndAMPM == "am" and entity.rol.horaComerEnd == 12 %}
+                            {% set hourEnd = 24 %}
                         {% endif %}
                         {% set _lncTd = false %}
                         {% for lncTd in userLncTd %}

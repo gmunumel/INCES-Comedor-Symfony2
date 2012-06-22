@@ -327,6 +327,34 @@ class UsuarioController extends Controller
         return $pagination;
     }
 
+
+    /*
+     * Debe ser de la forma *\/*\/* - 20/01/2002
+     */
+    public function setDate($val){
+        $res = "";
+        $params = trim($val);
+        $explote = explode("/", $params);
+
+        if(count($explote) != 3) return $res;
+        if(!is_numeric($explote[0]))
+            if($explote[0] != "*")
+                return $res;
+        if(!is_numeric($explote[1]))
+            if($explote[1] != "*")
+                return $res;
+        if(!is_numeric($explote[2]))
+            if($explote[2] != "*")
+                return $res;
+        if($explote[0] != '*')
+            $res .= " (DAY(um.dia) = " . $explote[0] . ") AND";
+        if($explote[1] != '*')
+            $res .= " (MONTH(um.dia) = " . $explote[1] . ") AND";
+        if($explote[2] != '*')
+            $res .= " (YEAR(um.dia) = " . $explote[2] . ") AND";
+        return $res;
+    }
+
     public function params($params){
         $params = trim($params);
         $explote = explode(" ", $params);
@@ -349,14 +377,18 @@ class UsuarioController extends Controller
         $res = "";
 
         foreach($explote as $value){
-            $res .= " (u.cedula like '%" . $value . "%'";
-            $res .= " or u.nombre like '%" . $value . "%'";
-            $res .= " or u.apellido like '%" . $value . "%'";
-            $res .= " or YEAR(um.dia) like '%" . $value . "%'";
-            $res .= " or MONTH(um.dia) like '%" . $value . "%'";
-            $res .= " or DAY(um.dia) like '%" . $value . "%') AND";
+            $res .= $this->setDate($value);
+            if($res == ""){
+                $res .= " (u.cedula like '%" . $value . "%'";
+                $res .= " or u.nombre like '%" . $value . "%'";
+                $res .= " or u.apellido like '%" . $value . "%') AND";
+            }
+            //$res .= " or YEAR(um.dia) like '%" . $value . "%'";
+            //$res .= " or MONTH(um.dia) like '%" . $value . "%'";
+            //$res .= " or DAY(um.dia) like '%" . $value . "%') AND";
         }
-        $res = substr_replace($res ,"",-4);
+        if(strlen($res) > 3)
+            $res = substr_replace($res ,"",-4);
         return $res;
     }
 
@@ -427,6 +459,8 @@ class UsuarioController extends Controller
     public function searchAjaxAction(){
         $request = $this->get('request');
         $query   = $request->request->get('query');
+        if(is_null($query))
+            $query   = $request->query->get('query')."*";
 
         if (!$query) {
             $field      = $request->request->get('field');
@@ -469,6 +503,8 @@ class UsuarioController extends Controller
     public function searchAjaxLunchAction(){
         $request = $this->get('request');
         $query   = $request->request->get('query');
+        if(is_null($query))
+            $query   = $request->query->get('query')."*";
 
         if (!$query) {
             $field      = $request->request->get('field');

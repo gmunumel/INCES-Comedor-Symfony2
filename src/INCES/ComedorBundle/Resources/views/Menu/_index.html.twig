@@ -157,7 +157,7 @@
         #}
         {% if pagination|length != 0 %}
         <div class="navigation">
-            {{pagination.render()|replace({'usuario': '#!/usuario'})|raw}}
+            {{pagination.render()|replace({'menu': '#!\/menu'})|raw}}
         </div>
         {% endif %}
 

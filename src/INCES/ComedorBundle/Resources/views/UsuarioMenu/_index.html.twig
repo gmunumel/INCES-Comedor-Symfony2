@@ -1,0 +1,86 @@
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
+
+<div id="col-text">
+
+    <h2 id="slogan"><span></span>Place for your slogan.</h2>
+    <div id="filter">
+        <div class="search">
+            <form action="{{ app.request.uriForPath('/usuariomenu/searcha') }}" method="get">
+                <input autocomplete="off" type="text" name="query" value="{{query}}" id="search_keywords" />
+                <input type="submit" value="search" style="display:none;"/>
+                <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
+                <div class="help">
+                    Enter some keywords (city, country, position, ...)
+                </div>
+            </form>
+        </div>
+        <h1>UsuarioMenu _index</h1>
+
+        <table class="records_list">
+            <thead>
+                <tr>
+                    {% if field is defined %}
+                        {% if attr is defined %}
+                            {% if field == "dia" and attr == "1" %}
+                                <th><a class="filter" value="dia" asc="{{attr}}" href="{{ path('usuariomenu_search_ajax') }}">Fecha /\</a></th>
+                            {% elseif field == "dia" and attr == "0" %}
+                                <th><a class="filter" value="dia" asc="{{attr}}" href="{{ path('usuariomenu_search_ajax') }}">Fecha \/</a></th>
+                            {% else %}
+                                <th><a class="filter" value="dia" asc="1" href="{{ path('usuariomenu_search_ajax') }}">Fecha</a></th>
+                            {% endif %}
+                        {% else %}
+                            <th><a class="filter" value="dia"         asc="1" href="{{ path('usuariomenu_search_ajax') }}">Fecha</a></th>
+                        {% endif %}
+                    {% else %}
+                        <th><a class="filter" value="dia"         asc="1" href="{{ path('usuariomenu_search_ajax') }}">Fecha</a></th>
+                    {% endif %}
+                    <th>Usuario</th>
+                    <th>Menu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if pagination|length == 0 %}
+                    <p>No hay resultados</p>
+                {% endif %}
+                {% for entity in pagination %}
+                <tr>
+                    <td>{% if entity.dia %}{{ entity.dia|date('d-m-Y H:i:s') }}{% endif %}</td>
+                    <td>{{ entity.usuario }}</td>
+                    <td>{{ entity.menu }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                            <a href="{{ app.request.uriForPath('/#!/usuariomenu/') }}{{ entity.id }}/show">show</a>
+                            </li>
+                            <li>
+                            <a href="{{ app.request.uriForPath('/#!/usuariomenu/') }}{{ entity.id }}/edit">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if pagination|length != 0 %}
+        <div class="navigation">
+            {{pagination.render()|replace({'usuariomenu': '#!/usuariomenu'})|raw}}
+        </div>
+        {% endif %}
+        <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
+        {#
+        <ul>
+            <li>
+            <a href="{{ app.request.uriForPath('/#!/usuariomenu/new') }}">
+                Create a new entry
+            </a>
+            </li>
+        </ul>
+        #}
+        <p id="btns">
+        <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
+        <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
+        </p>
+
+    </div> <!-- /col-text -->
