@@ -137,6 +137,11 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% if pagination|length != 0 %}
+        <div class="navigation">
+            {{pagination.render()|replace({'menu': '#!\/menu'})|raw}}
+        </div>
+        {% endif %}
         {#
         <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
         #}

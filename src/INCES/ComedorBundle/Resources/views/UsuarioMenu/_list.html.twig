@@ -47,16 +47,13 @@
                 <tr>
                     <td>{% if entity.dia %}{{ entity.dia|date('d-m-Y H:i:s') }}{% endif %}</td>
                     <td>{{ entity.usuario }}</td>
-                    <td>{{ entity.menu }}</td>
+                    {% if entity.menu != ""  %}
+                        <td>{{ entity.menu }}</td>
+                    {% else %}
+                        <td>No hay información disponible.</td>
+                    {% endif %}
                     <td>
-                        <ul>
-                            <li>
-                            <a href="{{ app.request.uriForPath('/#!/usuariomenu/') }}{{ entity.id }}/show">show</a>
-                            </li>
-                            <li>
-                            <a href="{{ app.request.uriForPath('/#!/usuariomenu/') }}{{ entity.id }}/edit">edit</a>
-                            </li>
-                        </ul>
+                        <a href="{{ app.request.uriForPath('/#!/usuariomenu/') }}{{ entity.id }}/show">show</a>
                     </td>
                 </tr>
                 {% endfor %}

@@ -22,6 +22,11 @@ class MenuController extends Controller
     public function _indexAction($query, $field = null, $attr = null){
 
         $em = $this->get('doctrine.orm.entity_manager');
+        $emConfig = $em->getConfiguration();
+        $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
+        $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
+        $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
+
         $dql = $em->createQueryBuilder();
         if (is_null($field))
             if(!$query || $query == '*')
@@ -48,26 +53,61 @@ class MenuController extends Controller
         return $pagination;
     }
 
+    /*
+     * Debe ser de la forma *\/*\/* - 20/01/2002
+     */
+    public function setDate($val){
+        $res = "";
+        $params = trim($val);
+        $explote = explode("/", $params);
+
+        if(count($explote) != 3) return $res;
+        if(!is_numeric($explote[0]))
+            if($explote[0] != "*")
+                return $res;
+        if(!is_numeric($explote[1]))
+            if($explote[1] != "*")
+                return $res;
+        if(!is_numeric($explote[2]))
+            if($explote[2] != "*")
+                return $res;
+        if($explote[0] != '*')
+            $res .= " (DAY(a.dia) = " . $explote[0] . ") AND";
+        if($explote[1] != '*')
+            $res .= " (MONTH(a.dia) = " . $explote[1] . ") AND";
+        if($explote[2] != '*')
+            $res .= " (YEAR(a.dia) = " . $explote[2] . ") AND";
+        return $res;
+    }
+
     public function params($params){
         $params = trim($params);
         $explote = explode(" ", $params);
         $res = "";
+        $ret = "";
 
         foreach($explote as $value){
+            $ret = $this->setDate($value);
+            $res .= $ret;
+            if($ret == ""){
+                $res .= " (a.seco LIKE '%" . $value . "%'";
+                $res .= " OR a.sopa LIKE '%" . $value . "%'";
+                $res .= " OR a.salado LIKE '%" . $value . "%'";
+                $res .= " OR a.jugo LIKE '%" . $value . "%'";
+                $res .= " OR a.ensalada LIKE '%" . $value . "%'";
+                $res .= " OR a.postre LIKE '%" . $value . "%' ) AND";
+            }
+            /*
             $res .= " (a.seco LIKE '%" . $value . "%'";
             $res .= " OR a.sopa LIKE '%" . $value . "%'";
             $res .= " OR a.salado LIKE '%" . $value . "%'";
             $res .= " OR a.jugo LIKE '%" . $value . "%'";
             $res .= " OR a.ensalada LIKE '%" . $value . "%'";
             $res .= " OR a.postre LIKE '%" . $value . "%' ) AND";
-            /*
-            $res .= " OR a.postre LIKE '%" . $value . "%'";
-            $res .= " OR YEAR(a.dia)  = " . $value;
-            $res .= " OR MONTH(a.dia) = " . $value;
-            $res .= " OR DAY(a.dia)   = " . $value . " ) AND";
-             */
+            */
         }
-        $res = substr_replace($res ,"",-4);
+        if(strlen($res) > 3)
+            $res = substr_replace($res ,"",-4);
         return $res;
     }
 
@@ -77,6 +117,8 @@ class MenuController extends Controller
     public function searchAction(){
         $request = $this->get('request');
         $query   = $request->request->get('query');
+        if(is_null($query))
+            $query   = $request->query->get('query')."*";
 
         if (!$query) {
             $field      = $request->request->get('field');
@@ -91,7 +133,6 @@ class MenuController extends Controller
         }else{
             if ($request->isXmlHttpRequest()){
                 if ('*' == $query){
-                    print_r("*");
                     $query = '';
                     $field = $request->request->get('field');
                     $attr  = $request->request->get('attr');
@@ -104,6 +145,8 @@ class MenuController extends Controller
                     ));
                 }
 
+                $query = htmlspecialchars(urldecode($query));
+                print_r($query);
                 $query = substr_replace($query ,"",-1);
                 $_query = $this->params($query);
                 $pagination = $this->_indexAction($_query);

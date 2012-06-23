@@ -14,7 +14,19 @@
             </tr>
             <tr>
                 <th>Dia</th>
-                <td>{{ entity.dia|date('Y-m-d H:i:s') }}</td>
+                <td>{{ entity.dia|date('d-m-Y H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Usuario</th>
+                <td>{{ entity.usuario }}</td>
+            </tr>
+            <tr>
+                <th>Menu</th>
+                {% if entity.menu != ""  %}
+                    <td>{{ entity.menu }}</td>
+                {% else %}
+                    <td>No hay información disponible.</td>
+                {% endif %}
             </tr>
         </tbody>
     </table>
@@ -25,11 +37,13 @@
             Back to the list
         </a>
         </li>
+        {#
         <li>
         <a href="{{ app.request.uriForPath('/#!/usuariomenu/') }}{{ entity.id }}/edit">
             Edit
         </a>
         </li>
+        #}
         <li>
         <form action="{{ app.request.uriForPath('/usuariomenu/') }}{{ entity.id }}/delete" method="post">
             {{ form_widget(delete_form) }}
@@ -43,3 +57,4 @@
     </p>
 
 </div> <!-- /col-text -->
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

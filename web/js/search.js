@@ -102,9 +102,13 @@ $(document).ready(function()
                 $('#loader').show();
 
                 $('#content').load(
-                    $('#search_keywords').parents('form').attr('action'),
+                    $('#search_keywords').parents('form').attr('action') + "?page=1&query=" + encodeURI(val),
+                    //$('#search_keywords').parents('form').attr('action'),
                     { query: val + '*' },
-                    function() { $('#loader').hide(); }
+                    function() {
+                        $('#loader').hide();
+                        //window.location.href = $('#search_keywords').parents('form').attr('action') + "?page=1&query=" + val;
+                    }
                 );
             }
 
@@ -162,26 +166,26 @@ $(document).ready(function()
         //$( "#dialog" ).dialog( "open" );
         //return false;
     });
+    /*
+    var _url = $('div.pagination a').attr('href');
+    var _query = $('#search_keywords').val();
+    if(_url.indexOf("query") == -1 && _query != "")
+        $('div.pagination a').attr('href', _url + '&query=' + _query);
+        */
 
+    /*
     $('div.pagination a').click(function(event) {
         //alert("hola");
-        event.preventDefault();
-        var val = $('#search_keywords').val();
-        var url = $('div.pagination a').attr('href');
-        if(url.indexOf("query") == -1)
-            url = url + '&query=' + val;
-        window.location.href = url;
-        //alert(url);
-        //alert(val);
-        //alert($('#search_keywords').parents('form').attr('action'));
-        /*
-        $('#content').load(
-            //$('#search_keywords').parents('form').attr('action'),
-            url,
-            { query: val + '*' }
-        );
-        */
         //event.preventDefault();
-        //event.stopPropagation();
+        var query = $('#search_keywords').val();
+        var url = $('div.pagination a').attr('href');
+        if(url.indexOf("query") == -1 && query != ""){
+            //event.preventDefault();
+            event.preventDefault();
+            url = url + '&query=' + query;
+            window.location.href = url;
+        }
     });
+    */
+
 });

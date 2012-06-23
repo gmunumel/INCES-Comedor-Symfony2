@@ -123,6 +123,11 @@
                 #}
             </tbody>
         </table>
+        {% if is_granted("ROLE_USER") %}
+        <a href="{{ app.request.uriForPath('/#!/usuario/new') }}">
+            Create a new entry
+        </a>
+        {% endif %}
         {#
         <ul>
 
