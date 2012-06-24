@@ -1,0 +1,36 @@
+<p>
+{% if from == "" or to == "" %}
+    Cantidad de personas totales es <b>{{cantidadTotal}}</b>
+{% else %}
+    Cantidad de personas desde <b>{{from|date('d/m/Y')}}</b> al <b>{{to|date('d/m/Y')}}</b> es <b>{{cantidadTotal}}</b>
+{% endif %}
+<br />
+Monto ganado: <b>{{montoTotal}}</b>
+</p>
+{% for key, len in roles %}
+    {% if len > 0 %}
+        <p>{{ key }}</p>
+        <table class="records_list">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Usuario</th>
+                    <th>Menu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if pagination|length == 0 %}
+                    <p>No hay resultados</p>
+                {% endif %}
+                {% for entity in pagination if entity.usuario.rol.nombre == key %}
+                    <tr>
+                        <td>{% if entity.dia %}{{ entity.dia|date('d/m/Y') }}{% endif%}</td>
+                        <td>{{ entity.usuario.nombre }}</td>
+                        <td>hola</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endfor %}
+

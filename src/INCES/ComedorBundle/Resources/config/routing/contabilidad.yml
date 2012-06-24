@@ -1,0 +1,10 @@
+contabilidad:
+    pattern:  /
+    defaults: { _controller: "INCESComedorBundle:Contabilidad:index" }
+    #requirements: { _method: get|post }
+    #defaults: { _controller: "INCESComedorBundle:Menu:index" }
+
+contabilidad_reporte_ingresos:
+    pattern:  /reporteingresos
+    defaults: { _controller: "INCESComedorBundle:Contabilidad:reporteIngresos" }
+    requirements: { _method: get|post }

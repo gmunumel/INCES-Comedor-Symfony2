@@ -57,7 +57,26 @@ $(document).ready(function()
         dateFormat: 'dd/mm/yy',
         showButtonPanel: true
     });
-    $('button[type=submit]:not(.delete_form_btn)').on('click', function(e) {
+    $( "#inces_comedorbundle_contabilidadtype_from" ).datepicker({
+        defaultDate: "+1w",
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        numberOfMonths: 3,
+        onSelect: function( selectedDate ) {
+            $( "#inces_comedorbundle_contabilidadtype_to" ).datepicker( "option", "minDate", selectedDate );
+        }
+    });
+    $( "#inces_comedorbundle_contabilidadtype_to" ).datepicker({
+        defaultDate: "+1w",
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        numberOfMonths: 3,
+        onSelect: function( selectedDate ) {
+            $( "#inces_comedorbundle_contabilidadtype_from" ).datepicker( "option", "maxDate", selectedDate );
+        }
+    });
+
+    $('button[type=submit]:not(.delete_form_btn, .reporte_ingresos_form_btn)').on('click', function(e) {
         e.preventDefault();
         var form = $(this).closest('form');
         if (form.valid()){
@@ -71,6 +90,31 @@ $(document).ready(function()
             }).submit();
         }
     });
+
+    $('.reporte_ingresos_form_btn').on('click', function(e) {
+        e.preventDefault();
+        var url = $('.reporte_ingresos_form_btn').parents('form').attr('action');
+        var form = $(this).closest('form');
+        if (form.valid()){
+            //var url = $(this).attr("action");
+            /*
+            $('#content').load(
+                url,
+                datatype: html,
+                { field: field, attr: attr }
+            );
+            */
+            $("form").ajaxForm({
+                target: '#results',
+                success: function(msg) {
+                    //$('#content').click(msg);
+                    //$(window).attr("location",msg);
+                    //window.location.href = msg;
+                }
+            }).submit();
+        }
+    });
+
     $('.delete_form_btn').on('click', function(e) {
         e.preventDefault();
         //var url = $(this).attr("action");
