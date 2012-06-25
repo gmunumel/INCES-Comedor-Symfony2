@@ -125,20 +125,25 @@ class ContabilidadController extends Controller
                     $montoTotal += intval($value->getUsuario()->getRol()->getMonto());
                 }
 
-                // Get quantity of users by rol
-                $roles = array();
-                $isOne = false;
+                // Get total values
+                $totals = array();
+                $count  = 0;
+                $money  = 0;
                 foreach($_roles as $rol){
                     foreach($pagination as $value){
                         if($rol == $value->getUsuario()->getRol()->getNombre()){
-                            $temp = array((string)$rol => "1");
-                            $roles = array_merge((array)$roles, (array)$temp);
-                            $isOne = true;
-                            break;
+                            $count++;
+                            $money = intval($value->getUsuario()->getRol()->getMonto());
                         }
                     }
-                    $temp = array((string)$rol => "0");
-                    if(!$isOne) $roles = array_merge((array)$roles, (array)$temp); else $isOne = false;
+                    $money = $money * $count;
+                    if($count == 0)
+                        $temp = array((string)$rol => array("0", (string)$money));
+                    else
+                        $temp = array((string)$rol => array((string)$count, (string)$money));
+                    $count  = 0;
+                    $money  = 0;
+                    $totals = array_merge((array)$totals, (array)$temp);
                 }
 
                 return $this->render('INCESComedorBundle:Contabilidad:_reporte_ingresos.html.twig', array(
@@ -149,8 +154,7 @@ class ContabilidadController extends Controller
                     ,'cantidadTotal' => $cantidadTotal
                     ,'from'          => $from
                     ,'to'            => $to
-                    ,'roles'         => $roles
-                    //,'one'           => $one
+                    ,'totals'        => $totals
                 ));
             }
         }

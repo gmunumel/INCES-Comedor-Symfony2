@@ -7,8 +7,31 @@
 <br />
 Monto ganado: <b>{{montoTotal}}</b>
 </p>
-{% for key, len in roles %}
-    {% if len > 0 %}
+{# Totales #}
+<table style="border:1px solid black;">
+    <thead>
+        <tr>
+            <th>Rol</th>
+            <th>Cantidad</th>
+            <th>Monto(Bs)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key, len in totals %}
+            {% if len.0 > 0 %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ len.0 }}</td>
+                    <td>{{ len.1 }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+{# Get users by role #}
+{% for key, len in totals %}
+    {% if len.0 > 0 %}
         <p>{{ key }}</p>
         <table class="records_list">
             <thead>
