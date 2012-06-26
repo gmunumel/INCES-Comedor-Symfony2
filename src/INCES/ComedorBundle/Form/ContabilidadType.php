@@ -10,6 +10,7 @@ class ContabilidadType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
+            ->add('cedula', 'text')
             ->add('from', 'date', array(
                 'widget'        => 'single_text',
                 'format'        => 'dd/MM/yy',

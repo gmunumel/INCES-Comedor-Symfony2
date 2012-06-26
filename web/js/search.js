@@ -76,7 +76,7 @@ $(document).ready(function()
         }
     });
 
-    $('button[type=submit]:not(.delete_form_btn, .reporte_ingresos_form_btn)').on('click', function(e) {
+    $('button[type=submit]:not(.delete_form_btn, .reporte_form_btn)').on('click', function(e) {
         e.preventDefault();
         var form = $(this).closest('form');
         if (form.valid()){
@@ -91,9 +91,9 @@ $(document).ready(function()
         }
     });
 
-    $('.reporte_ingresos_form_btn').on('click', function(e) {
+    $('.reporte_form_btn').on('click', function(e) {
         e.preventDefault();
-        var url = $('.reporte_ingresos_form_btn').parents('form').attr('action');
+        var url = $('.reporte_form_btn').parents('form').attr('action');
         var form = $(this).closest('form');
         if (form.valid()){
             //var url = $(this).attr("action");

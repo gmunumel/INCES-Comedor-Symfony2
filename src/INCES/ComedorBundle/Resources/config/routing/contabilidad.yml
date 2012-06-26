@@ -8,3 +8,8 @@ contabilidad_reporte_ingresos:
     pattern:  /reporteingresos
     defaults: { _controller: "INCESComedorBundle:Contabilidad:reporteIngresos" }
     requirements: { _method: get|post }
+
+contabilidad_reporte_usuario_all:
+    pattern:  /reporteusuarioall
+    defaults: { _controller: "INCESComedorBundle:Contabilidad:reporteUsuarioAll" }
+    requirements: { _method: get|post }

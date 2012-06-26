@@ -1,0 +1,47 @@
+{% if pagination|length != 0 %}
+    <table style="border:1px solid black;">
+        <thead>
+            <tr>
+                <th>Cédula</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>N Carnet</th>
+                <th>Rol</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ pagination.0.usuario.cedula }}</td>
+                <td>{{ pagination.0.usuario.nombre }}</td>
+                <td>{{ pagination.0.usuario.apellido }}</td>
+                <td>{{ pagination.0.usuario.ncarnet }}</td>
+                <td>{{ pagination.0.usuario.rol.nombre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {# Totales #}
+    <table style="border:1px solid black;">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Menu</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in pagination %}
+                <tr>
+                    <td>{{ entity.dia|date('d/m/Y') }}</td>
+                    {% if entity.menu.nombre is defined %}
+                        <td>{{ entity.menu.nombre }}</td>
+                    {% else %}
+                        <td>No hay información.</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No hay información.</p>
+{% endif %}
+

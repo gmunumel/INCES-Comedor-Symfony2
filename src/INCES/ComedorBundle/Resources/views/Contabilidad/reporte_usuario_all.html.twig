@@ -6,11 +6,18 @@
     <h2 id="slogan"><span></span>Place for your slogan.</h2>
     <h1>Reporte Ingresos</h1>
 
-    <form action="{{ app.request.uriForPath('/contabilidad/reporteingresos') }}" method="post">
+    <form action="{{ app.request.uriForPath('/contabilidad/reporteusuarioall') }}" method="post">
         {#
         {{ form_widget(filter_form) }}
         #}
         <table>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    {{ form_row(filter_form.cedula) }}
+                </td>
+                <td>&nbsp;</td>
+            </tr>
             <tr>
                 <td>Filtro</td>
                 <td>
@@ -19,13 +26,6 @@
                 <td>
                     {{ form_row(filter_form.to) }}
                 </td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                    {{ form_row(filter_form.rol) }}
-                </td>
-                <td>&nbsp;</td>
             </tr>
             <tr>
                 <td><button class="reporte_form_btn" type="submit">Filtrar</button></td>

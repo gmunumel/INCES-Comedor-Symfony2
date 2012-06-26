@@ -55,11 +55,6 @@ class ContabilidadController extends Controller
                 //if($from != "") $from = $filterForm->get('from')->getData()->format('d/m/Y');
                 //if($to   != "") $to   = $filterForm->get('to')->getData()->format('d/m/Y');
 
-                $emConfig = $em->getConfiguration();
-                $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
-                $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
-                $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
-
                 $dql = $em->createQueryBuilder();
                 // First Case: Fechas vacio y rol vacio
                 if($from == "" and $to == "" and $rol == "")
@@ -75,13 +70,8 @@ class ContabilidadController extends Controller
                         ->from('INCESComedorBundle:UsuarioMenu', 'um')
                         ->join('um.usuario', 'u')
                         ->join('u.rol', 'r')
-                        ->where('YEAR(um.dia)     <= ' .$to->format('Y'))
-                        ->andWhere('MONTH(um.dia) <= ' .$to->format('m'))
-                        ->andWhere('DAY(um.dia)   <= ' .$to->format('d'))
-                        ->andWhere('YEAR(um.dia)  >= ' .$from->format('Y'))
-                        ->andWhere('MONTH(um.dia) >= ' .$from->format('m'))
-                        ->andWhere('DAY(um.dia)   >= ' .$from->format('d'))
-                        //->andWhere('um.dia >= ' .$filterForm->get('from')->getData()->format('Y-m-d H:i:s'))
+                        ->where("um.dia <= '". $to->format('Y-m-d'). "'")
+                        ->andWhere("um.dia >= '". $from->format('Y-m-d'). "'")
                         ->addOrderby('r.id', 'ASC');
                 // Thrid Case: fechas vacio y rol no vacio
                 elseif($from == "" and $to == "" and $rol != "" )
@@ -98,12 +88,8 @@ class ContabilidadController extends Controller
                         ->join('um.usuario', 'u')
                         ->join('u.rol', 'r')
                         ->where('r.id = '. $rol->getId())
-                        ->andWhere('YEAR(um.dia)  <= ' .$to->format('Y'))
-                        ->andWhere('MONTH(um.dia) <= ' .$to->format('m'))
-                        ->andWhere('DAY(um.dia)   <= ' .$to->format('d'))
-                        ->andWhere('YEAR(um.dia)  >= ' .$from->format('Y'))
-                        ->andWhere('MONTH(um.dia) >= ' .$from->format('m'))
-                        ->andWhere('DAY(um.dia)   >= ' .$from->format('d'))
+                        ->andWhere("um.dia <= '". $to->format('Y-m-d'). "'")
+                        ->andWhere("um.dia >= '". $from->format('Y-m-d'). "'")
                         ->addOrderby('r.id', 'ASC');
 
                 $qry = $em->createQuery($dql);
@@ -128,12 +114,12 @@ class ContabilidadController extends Controller
                 // Get total values
                 $totals = array();
                 $count  = 0;
-                $money  = 0;
+                $money  = 0.0;
                 foreach($_roles as $rol){
                     foreach($pagination as $value){
                         if($rol == $value->getUsuario()->getRol()->getNombre()){
                             $count++;
-                            $money = intval($value->getUsuario()->getRol()->getMonto());
+                            $money = floatval($value->getUsuario()->getRol()->getMonto());
                         }
                     }
                     $money = $money * $count;
@@ -142,7 +128,7 @@ class ContabilidadController extends Controller
                     else
                         $temp = array((string)$rol => array((string)$count, (string)$money));
                     $count  = 0;
-                    $money  = 0;
+                    $money  = 0.0;
                     $totals = array_merge((array)$totals, (array)$temp);
                 }
 
@@ -160,6 +146,62 @@ class ContabilidadController extends Controller
         }
 
         return $this->render('INCESComedorBundle:Contabilidad:reporte_ingresos.html.twig', array(
+             //'entities' => $entities
+            'filter_form' => $filterForm->createView(),
+        ));
+    }
+
+    public function reporteUsuarioAllAction(){
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $request    = $this->getRequest();
+        $filterForm = $this->createForm(new ContabilidadType());
+
+        if ($request->getMethod() == 'POST') {
+            $filterForm->bindRequest($request);
+            if(true){
+
+                $from   = $filterForm->get('from')->getData();
+                $to     = $filterForm->get('to')->getData();
+                $ced    = $filterForm->get('cedula')->getData();
+
+                $dql = $em->createQueryBuilder();
+                // First Case: Fechas vacio
+                if($from == "" and $to == "")
+                    $dql->select('um', 'u', 'r')
+                        ->from('INCESComedorBundle:UsuarioMenu', 'um')
+                        ->join('um.usuario', 'u')
+                        ->join('u.rol', 'r')
+                        ->where("u.cedula = '".$ced."'");
+                // Second Case: fechas no vacio
+                else
+                    $dql->select('um', 'u', 'r')
+                        ->from('INCESComedorBundle:UsuarioMenu', 'um')
+                        ->join('um.usuario', 'u')
+                        ->join('u.rol', 'r')
+                        ->where("u.cedula = '".$ced."'")
+                        ->andWhere("um.dia <= '". $to->format('Y-m-d'). "'")
+                        ->andWhere("um.dia >= '". $from->format('Y-m-d'). "'");
+
+                $qry = $em->createQuery($dql);
+                $paginator  = $this->get('knp_paginator');
+                $pagination = $paginator->paginate(
+                    $qry,
+                    $this->get('request')->query->get('page', 1),//page number
+                    2//limit per page
+                );
+
+                return $this->render('INCESComedorBundle:Contabilidad:_reporte_usuario_all.html.twig', array(
+                     //'entities' => $entities
+                     //'filter_form' => $filterForm->createView(),
+                    'pagination'     => $pagination
+                    ,'from'          => $from
+                    ,'to'            => $to
+                ));
+            }
+        }
+
+        return $this->render('INCESComedorBundle:Contabilidad:reporte_usuario_all.html.twig', array(
              //'entities' => $entities
             'filter_form' => $filterForm->createView(),
         ));
