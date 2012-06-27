@@ -184,12 +184,15 @@ class ContabilidadController extends Controller
                         ->andWhere("um.dia >= '". $from->format('Y-m-d'). "'");
 
                 $qry = $em->createQuery($dql);
+                $pagination = $qry->getResult();
+                /*
                 $paginator  = $this->get('knp_paginator');
                 $pagination = $paginator->paginate(
                     $qry,
                     $this->get('request')->query->get('page', 1),//page number
                     2//limit per page
                 );
+                */
 
                 return $this->render('INCESComedorBundle:Contabilidad:_reporte_usuario_all.html.twig', array(
                      //'entities' => $entities
