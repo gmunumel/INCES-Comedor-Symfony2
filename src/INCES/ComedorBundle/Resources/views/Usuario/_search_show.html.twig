@@ -18,6 +18,7 @@
             </div>
         </form>
     </div>
+    {# Datos del usuario #}
     <table class="records_list">
         <thead>
             <tr>
@@ -33,19 +34,51 @@
             </tr>
         </thead>
         <tbody>
-            {% for entity in users %}
             <tr>
-                <td>{{ entity.nombre }}</td>
-                <td>{{ entity.apellido }}</td>
-                <td>{{ entity.cedula }}</td>
-                <td>{{ entity.ncarnet }}</td>
-                {#
-                <td>{{ entity.ai }}</td>
-                #}
-                <td>{{ entity.correo }}</td>
-                <td>{{ entity.image }}</td>
+                {% if usuariomenu|length != 0 %}
+                    <td>{{ usuariomenu.0.usuario.nombre }}</td>
+                    <td>{{ usuariomenu.0.usuario.apellido }}</td>
+                    <td>{{ usuariomenu.0.usuario.cedula }}</td>
+                    <td>{{ usuariomenu.0.usuario.ncarnet }}</td>
+                    {#
+                    <td>{{ entity.ai }}</td>
+                    #}
+                    <td>{{ usuariomenu.0.usuario.correo }}</td>
+                    <td>{{ usuariomenu.0.usuario.image }}</td>
+                {% endif %}
             </tr>
-            {% endfor %}
+        </tbody>
+    </table>
+
+    {# Datos de menus #}
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Menu</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if usuariomenu|length == 0 %}
+                <td>No hay información disponible.</td>
+            {% else %}
+                {% for entity in usuariomenu %}
+                    <tr>
+                        {% set hora = entity.dia|date("H") %}
+                        {% set ampm = "am" %}
+                        {% if hora > 12 %}
+                            {% set hora = hora - 12 %}
+                            {% set ampm = "pm" %}
+                        {% endif %}
+                        <td>{{ entity.dia|date("d/m/Y") }} {{ hora }}{{ entity.dia|date(":i:s") }} {{ ampm }}</td>
+                        {% if entity.menu == "" %}
+                            <td>No hay información disponible.</td>
+                        {% else %}
+                            <td>{{entity.menu}}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
         </tbody>
     </table>
 

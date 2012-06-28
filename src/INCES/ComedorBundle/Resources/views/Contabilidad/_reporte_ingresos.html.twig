@@ -49,7 +49,11 @@ Monto ganado: <b>{{montoTotal}}</b>
                     <tr>
                         <td>{% if entity.dia %}{{ entity.dia|date('d/m/Y') }}{% endif%}</td>
                         <td>{{ entity.usuario.nombre }}</td>
-                        <td>hola</td>
+                        {% if entity.menu == "" %}
+                            <td>No hay información disponible.</td>
+                        {% else %}
+                            <td>{{entity.menu}}</td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>

@@ -151,7 +151,7 @@ class ContabilidadController extends Controller
         ));
     }
 
-    public function reporteUsuarioAllAction(){
+    public function reporteUsuariosAction(){
 
         $em = $this->getDoctrine()->getEntityManager();
         $request    = $this->getRequest();
@@ -194,7 +194,7 @@ class ContabilidadController extends Controller
                 );
                 */
 
-                return $this->render('INCESComedorBundle:Contabilidad:_reporte_usuario_all.html.twig', array(
+                return $this->render('INCESComedorBundle:Contabilidad:_reporte_usuarios.html.twig', array(
                      //'entities' => $entities
                      //'filter_form' => $filterForm->createView(),
                     'pagination'     => $pagination
@@ -204,7 +204,7 @@ class ContabilidadController extends Controller
             }
         }
 
-        return $this->render('INCESComedorBundle:Contabilidad:reporte_usuario_all.html.twig', array(
+        return $this->render('INCESComedorBundle:Contabilidad:reporte_usuarios.html.twig', array(
              //'entities' => $entities
             'filter_form' => $filterForm->createView(),
         ));

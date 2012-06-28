@@ -32,10 +32,10 @@
             {% for entity in pagination %}
                 <tr>
                     <td>{{ entity.dia|date('d/m/Y') }}</td>
-                    {% if entity.menu.nombre is defined %}
-                        <td>{{ entity.menu.nombre }}</td>
+                    {% if entity.menu == "" %}
+                        <td>No hay información disponible.</td>
                     {% else %}
-                        <td>No hay información.</td>
+                        <td>{{entity.menu}}</td>
                     {% endif %}
                 </tr>
             {% endfor %}

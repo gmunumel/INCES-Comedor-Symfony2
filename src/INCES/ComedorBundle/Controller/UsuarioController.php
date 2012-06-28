@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UsuarioController extends Controller
 {
+    /*
     public function menuToday(){
 
         $em = $this->get('doctrine.orm.entity_manager');
@@ -41,6 +42,7 @@ class UsuarioController extends Controller
         return $userMenuTd;
 
     }
+     */
 
     /**
      * Lists all Usuario entities.
@@ -397,60 +399,23 @@ class UsuarioController extends Controller
      */
     public function searchAction(){
 
-        /*
-        $request = $this->get('request');
-        $entity = "";
-        $query = "";
-
-        if ($request->getMethod() == 'POST') {
-            //$request = $this->get('request');
-            $query   = $request->request->get('query');
-            $query = substr_replace($query ,"",-1);
-
-            //print_r($query);
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('INCESComedorBundle:Usuario')->findBy(array('cedula'=>$query));
-
-
-            //if (!$entity) {
-            //    throw $this->createNotFoundException('Unable to find Usuario entity.');
-            //}
-
-            return $this->render('INCESComedorBundle:Usuario:search_show.html.twig', array(
-                  'users' => $entity
-                 ,'query' => $query
-            ));
-        }
-
-        return $this->render('INCESComedorBundle:Usuario:search.html.twig', array(
-              'users' => $entity
-             ,'query' => $query
-        ));
-        */
         $em = $this->getDoctrine()->getEntityManager();
         $request = $this->get('request');
         $query   = $request->request->get('query');
         $query = substr_replace($query ,"",-1);
 
-        if (!$query) {
-            $entity = $em->getRepository('INCESComedorBundle:Usuario')->findBy(array('cedula'=>$query));
-            return $this->render('INCESComedorBundle:Usuario:_search_show.html.twig', array(
-                 'query' => $query
-                ,'users' => $entity
-            ));
-        }else{
-            if ($request->isXmlHttpRequest()){
-                //if ('*' == $query){
-                    //$query = '';
-                    $entity = $em->getRepository('INCESComedorBundle:Usuario')->findBy(array('cedula'=>$query));
-                    return $this->render('INCESComedorBundle:Usuario:_search_show.html.twig', array(
-                         'query' => $query
-                        ,'users' => $entity
-                    ));
-                //}
-            }
-        }
+        $dql   = $em->createQueryBuilder();
+            $dql->select('um')
+                ->from('INCESComedorBundle:UsuarioMenu', 'um')
+                ->join('um.usuario', 'u')
+                ->where("u.cedula = '".$query."'");
 
+        $qry         = $em->createQuery($dql);
+        $usuariomenu = $qry->getResult();
+        return $this->render('INCESComedorBundle:Usuario:_search_show.html.twig', array(
+             'query'       => $query
+            ,'usuariomenu' => $usuariomenu
+        ));
     }
 
     /*
@@ -498,7 +463,7 @@ class UsuarioController extends Controller
     }
 
     /*
-     *  Search Ajax Lunch
+     *  Search Ajax Lunch de los usuarios que han comido
      */
     public function searchAjaxLunchAction(){
         $request = $this->get('request');
@@ -512,13 +477,13 @@ class UsuarioController extends Controller
             $pagination = $this->_indexLunchAction($query, $field, $attr);
 
             // Buscando las personas que ya comieron hoy
-            $userMenuTd = $this->menuToday();
+            //$userMenuTd = $this->menuToday();
             return $this->render('INCESComedorBundle:Usuario:_index_lunch.html.twig', array(
                 'pagination'   => $pagination
                 ,'query'       => $query
                 ,'field'       => $field
                 ,'attr'        => $attr
-                ,'userMenuTd'  => $userMenuTd
+                //,'userMenuTd'  => $userMenuTd
             ));
         }else{
             if ($request->isXmlHttpRequest()){
@@ -529,13 +494,13 @@ class UsuarioController extends Controller
                     $pagination = $this->_indexLunchAction($query, $field, $attr);
 
                     // Buscando las personas que ya comieron hoy
-                    $userMenuTd = $this->menuToday();
+                    //$userMenuTd = $this->menuToday();
                     return $this->render('INCESComedorBundle:Usuario:_index_lunch.html.twig', array(
                         'pagination'   => $pagination
                         ,'query'       => $query
                         ,'field'       => $field
                         ,'attr'        => $attr
-                        ,'userMenuTd'  => $userMenuTd
+                        //,'userMenuTd'  => $userMenuTd
                     ));
                 }
                 $query = substr_replace($query ,"",-1);
@@ -543,11 +508,11 @@ class UsuarioController extends Controller
                 $pagination = $this->_indexLunchAction($_query);
 
                 // Buscando las personas que ya comieron hoy
-                $userMenuTd = $this->menuToday();
+                //$userMenuTd = $this->menuToday();
                 return $this->render('INCESComedorBundle:Usuario:_list_lunch.html.twig', array(
                     'pagination'   => $pagination
                     ,'query'       => $query
-                    ,'userMenuTd'  => $userMenuTd
+                    //,'userMenuTd'  => $userMenuTd
                 ));
             }
         }

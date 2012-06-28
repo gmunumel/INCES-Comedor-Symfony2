@@ -88,6 +88,11 @@
                         <td>{{ entity.usuario.cedula }}</td>
                         <td>{{ entity.usuario.nombre }}</td>
                         <td>{{ entity.usuario.apellido }}</td>
+                        {% if entity.menu == "" %}
+                            <td>No hay información disponible.</td>
+                        {% else %}
+                            <td>{{entity.menu}}</td>
+                        {% endif %}
                         {#
                         <td>
                             <ul>

@@ -9,7 +9,7 @@ contabilidad_reporte_ingresos:
     defaults: { _controller: "INCESComedorBundle:Contabilidad:reporteIngresos" }
     requirements: { _method: get|post }
 
-contabilidad_reporte_usuario_all:
-    pattern:  /reporteusuarioall
-    defaults: { _controller: "INCESComedorBundle:Contabilidad:reporteUsuarioAll" }
+contabilidad_reporte_usuarios:
+    pattern:  /reporteusuarios
+    defaults: { _controller: "INCESComedorBundle:Contabilidad:reporteUsuarios" }
     requirements: { _method: get|post }
