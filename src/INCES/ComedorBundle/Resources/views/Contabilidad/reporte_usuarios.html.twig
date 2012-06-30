@@ -4,11 +4,20 @@
 <div id="col-text">
 
     <h2 id="slogan"><span></span>Place for your slogan.</h2>
-    <h1>Reporte Ingresos</h1>
+    <h1>Reporte Usuarios</h1>
 
-    <form action="{{ app.request.uriForPath('/contabilidad/reporteusuarios') }}" method="post">
+    <form class="reporte_usuarios_form" action="{{ app.request.uriForPath('/contabilidad/reporteusuarios') }}" method="post">
         {#
         {{ form_widget(filter_form) }}
+        #}
+        <a class="reporte_usuarios_link" href="{{ app.request.uriForPath('/contabilidad/preporteusuarios') }}" alt="imprimir reporte">Imprimir Reporte</a>
+        {#
+        {{ form_widget(filter_form.print , { 'attr': {'class': 'print'} }) }}
+        <input type="hidden" class="pprint" id="pprint" name="pprint" value="">
+        <button class="reporte_print_btn" type="submit">Imprimir</button>
+        #}
+        {#
+        {{ form_row(filter_form.print) }}
         #}
         <table>
             <tr>
@@ -21,10 +30,10 @@
             <tr>
                 <td>Filtro</td>
                 <td>
-                    {{ form_row(filter_form.from) }}
+                    {{ form_widget(filter_form.from, { 'attr': {'autocomplete': 'off'}}) }}
                 </td>
                 <td>
-                    {{ form_row(filter_form.to) }}
+                    {{ form_widget(filter_form.to, { 'attr': {'autocomplete': 'off'}}) }}
                 </td>
             </tr>
             <tr>

@@ -292,7 +292,8 @@ class UsuarioController extends Controller
             if(!$query || $query == '*')
                 $dql->select('um')
                     ->from('INCESComedorBundle:UsuarioMenu', 'um')
-                    ->join('um.usuario', 'u');
+                    ->join('um.usuario', 'u')
+                    ->orderBy('um.dia', 'DESC');
             else
                 $dql = "SELECT um FROM INCES\ComedorBundle\Entity\UsuarioMenu um JOIN um.usuario u WHERE " . $query;
 

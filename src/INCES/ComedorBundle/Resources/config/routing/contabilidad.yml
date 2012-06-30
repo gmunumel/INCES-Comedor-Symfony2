@@ -13,3 +13,11 @@ contabilidad_reporte_usuarios:
     pattern:  /reporteusuarios
     defaults: { _controller: "INCESComedorBundle:Contabilidad:reporteUsuarios" }
     requirements: { _method: get|post }
+
+contabilidad_print_reporte_usuarios:
+    pattern:  /preporteusuarios/{ced}/{from}/{to}
+    defaults: { _controller: "INCESComedorBundle:Contabilidad:printReporteUsuarios", ced: "", from: "", to: ""}
+
+contabilidad_print_reporte_ingresos:
+    pattern:  /preporteingresos/{from}/{to}/{rol}
+    defaults: { _controller: "INCESComedorBundle:Contabilidad:printReporteIngresos", rol: "", from: "", to: ""}

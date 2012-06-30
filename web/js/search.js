@@ -8,6 +8,19 @@ $(document).ready(function()
         },
         "Por favor coloque una fecha en formato dd/mm/yy"
     );
+    $.validator.addMethod(
+        "dateRange",
+        function(value, element) {
+            // put your own logic here, this is just a (crappy) example
+            //var valid = value.match(/^\d\d?\/\d\d?\/\d\d$/);
+            var from = $('#inces_comedorbundle_contabilidadtype_from').val();
+            var to   = $('#inces_comedorbundle_contabilidadtype_to').val();
+            if((from == "" && to != "") || (from != "" && to == ""))
+                return false;
+            return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+        },
+        "Por favor coloque una fecha en formato dd/mm/yy"
+    );
     $('.menu_form').validate({
         rules: {
             'inces_comedorbundle_menutype[seco]'     : { required       : true },
@@ -49,6 +62,30 @@ $(document).ready(function()
             'inces_comedorbundle_roltype[dia]'      : { venezuelanDate : 'Por favor coloque una fecha en formato dd/mm/yy' }
         }
     });
+    $('.reporte_usuarios_form').validate({
+        rules: {
+            'inces_comedorbundle_contabilidadtype[cedula]'   : { required       : true },
+            'inces_comedorbundle_contabilidadtype[from]'     : { dateRange      : true },
+            'inces_comedorbundle_contabilidadtype[to]'       : { dateRange      : true }
+        },
+        messages: {
+            'inces_comedorbundle_contabilidadtype[cedula]'   : { required       : 'Coloque el campo Cedula' },
+            'inces_comedorbundle_contabilidadtype[from]'     : { dateRange      : 'Por favor verifique las fechas' },
+            'inces_comedorbundle_contabilidadtype[to]'       : { dateRange      : 'Por favor verifique las fechas' }
+        }
+    });
+    $('.reporte_ingresos_form').validate({
+        rules: {
+            //'inces_comedorbundle_contabilidadtype[rol]'      : { required       : true },
+            'inces_comedorbundle_contabilidadtype[from]'     : { dateRange      : true },
+            'inces_comedorbundle_contabilidadtype[to]'       : { dateRange      : true }
+        },
+        messages: {
+            //'inces_comedorbundle_contabilidadtype[rol]'      : { required     : 'Coloque el campo Rol' },
+            'inces_comedorbundle_contabilidadtype[from]'     : { dateRange    : 'Por favor verifique las fechas' },
+            'inces_comedorbundle_contabilidadtype[to]'       : { dateRange    : 'Por favor verifique las fechas' }
+        }
+    });
     // Falta definir usuariomenu
     /* END TODO LIST */
 
@@ -58,7 +95,7 @@ $(document).ready(function()
         showButtonPanel: true
     });
     $( "#inces_comedorbundle_contabilidadtype_from" ).datepicker({
-        defaultDate: "+1w",
+        //defaultDate: "+1w",
         dateFormat: 'dd/mm/yy',
         changeMonth: true,
         numberOfMonths: 3,
@@ -67,7 +104,7 @@ $(document).ready(function()
         }
     });
     $( "#inces_comedorbundle_contabilidadtype_to" ).datepicker({
-        defaultDate: "+1w",
+        //defaultDate: "+1w",
         dateFormat: 'dd/mm/yy',
         changeMonth: true,
         numberOfMonths: 3,
@@ -76,6 +113,68 @@ $(document).ready(function()
         }
     });
 
+    function changeDate(date){
+        var year = date.substring(6);
+        var month = date.substring(3,5);
+        var day = date.substring(0,2);
+        return year + '-' + month + '-' + day;
+    }
+    $('.reporte_usuarios_link').on('click', function(e) {
+        e.preventDefault();
+        //$('.pprint').val("print");
+        //alert("print");
+        var form = $(this).closest('form');
+
+        if (form.valid()){
+            var url  = $(this).attr('href');
+            var ced  = $('#inces_comedorbundle_contabilidadtype_cedula').val();
+            var from = $('#inces_comedorbundle_contabilidadtype_from').val();
+            var to   = $('#inces_comedorbundle_contabilidadtype_to').val();
+            var urlFinal = url;
+
+            if(ced != "")
+                urlFinal = urlFinal + '/' + ced;
+            if(from != ""){
+                from = changeDate(from);
+                urlFinal = urlFinal + '/' + from;
+            }
+            if(to != ""){
+                to = changeDate(to);
+                urlFinal = urlFinal + '/' + to;
+            }
+
+            //alert(urlFinal);
+            window.location.href = urlFinal;
+        }
+    });
+    $('.reporte_ingresos_link').on('click', function(e) {
+        e.preventDefault();
+        //$('.pprint').val("print");
+        //alert("print");
+        var form = $(this).closest('form');
+
+        if (form.valid()){
+            var url  = $(this).attr('href');
+            var rol  = $('#inces_comedorbundle_contabilidadtype_rol').val();
+            var from = $('#inces_comedorbundle_contabilidadtype_from').val();
+            var to   = $('#inces_comedorbundle_contabilidadtype_to').val();
+            var urlFinal = url;
+
+            if(from != ""){
+                from = changeDate(from);
+                urlFinal = urlFinal + '/' + from;
+            }
+            if(to != ""){
+                to = changeDate(to);
+                urlFinal = urlFinal + '/' + to;
+            }
+            if(rol != "")
+                urlFinal = urlFinal + '/' + rol;
+
+            alert(urlFinal);
+            window.location.href = urlFinal;
+        }
+    });
     $('button[type=submit]:not(.delete_form_btn, .reporte_form_btn)').on('click', function(e) {
         e.preventDefault();
         var form = $(this).closest('form');
@@ -93,6 +192,7 @@ $(document).ready(function()
 
     $('.reporte_form_btn').on('click', function(e) {
         e.preventDefault();
+        //$('.pprint').val("");
         var url = $('.reporte_form_btn').parents('form').attr('action');
         var form = $(this).closest('form');
         if (form.valid()){
