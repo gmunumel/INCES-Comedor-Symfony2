@@ -24,10 +24,10 @@ $(document).ready(function()
         function(value, element) {
             // put your own logic here, this is just a (crappy) example
             //return value.match(/^\d\d?\/\d\d?\/\d\d$/);
+            if(value == '') return false;
             var val = value.split('.').pop();
             //alert(val);
-            if(val != "csv")
-                return false
+            if(val != "csv") return false; else return true;
         },
         "Por favor coloque un archivo .csv"
     );
@@ -211,7 +211,7 @@ $(document).ready(function()
             window.location.href = urlFinal;
         }
     });
-    $('button[type=submit]:not(.delete_form_btn, .reporte_form_btn)').on('click', function(e) {
+    $('button[type=submit]:not(.delete_form_btn, .reporte_form_btn, .carga_masiva_form_btn)').on('click', function(e) {
         e.preventDefault();
         var form = $(this).closest('form');
         if (form.valid()){
@@ -251,14 +251,14 @@ $(document).ready(function()
         }
     });
 
-    $('.carga_masiva_btn').on('click', function(e) {
+    $('.carga_masiva_form_btn').on('click', function(e) {
         e.preventDefault();
         //alert("hoal");
         //var ur = $(this).parents('form').attr('action');
         var form = $(this).closest('form');
         if (form.valid()){
             $("form").ajaxForm({
-                target: '#results',
+                target: '#messages',
                 success: function(msg) {
                     //$('#content').click(msg);
                     //$(window).attr("location",msg);

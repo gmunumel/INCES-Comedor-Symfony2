@@ -638,7 +638,7 @@ class UsuarioController extends Controller
             $errores = $this->validaciones($arr);
 
             if($errores != "")
-               return new Response("<p>".$errores."</p>");
+                return new Response("<p>".$errores."</p>");
 
             // Guardando en Base de Datos
             $this->saveValues($arr);
@@ -647,8 +647,8 @@ class UsuarioController extends Controller
             unlink($dir . $nameFile);
 
             //return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
-            $route = $request->getBaseUrl();
-            return new Response($route.'/#!/usuario/');
+            $messages = "Usuarios Cargados con éxito";
+            return new Response("<p>".$messages."</p>");
         }
 
 

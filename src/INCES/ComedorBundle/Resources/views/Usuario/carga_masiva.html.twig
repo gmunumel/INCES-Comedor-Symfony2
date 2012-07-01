@@ -6,14 +6,14 @@
     <h2 id="slogan"><span></span>Place for your slogan.</h2>
     <h1>Usuario Carga Masiva</h1>
 
-    <div id="errores"></div>
+    <div id="messages"></div>
     <form class="carga_masiva_form" action="{{ app.request.uriForPath('/usuario/cargamasiva') }}" method="post" {{ form_enctype(cm_form) }}>
         {#
         {{ form_widget(cm_form.file) }}
         #}
         {{ form_widget(cm_form) }}
         <br />
-        <button class="carga_masiva_btn" type="submit">Modificar</button>
+        <button class="carga_masiva_form_btn" type="submit">Modificar</button>
     </form>
 
 </div> <!-- /col-text -->
