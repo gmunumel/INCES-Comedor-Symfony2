@@ -9,6 +9,29 @@ $(document).ready(function()
         "Por favor coloque una fecha en formato dd/mm/yy"
     );
     $.validator.addMethod(
+        "userImageExtension",
+        function(value, element) {
+            // put your own logic here, this is just a (crappy) example
+            //return value.match(/^\d\d?\/\d\d?\/\d\d$/);
+            var val = value.split('.').pop();
+            if(val != "jpg" || val != "gif" || val != "png")
+                return false
+        },
+        "Por favor coloque un archivo jpg|gif|png"
+    );
+    $.validator.addMethod(
+        "cmFileExtension",
+        function(value, element) {
+            // put your own logic here, this is just a (crappy) example
+            //return value.match(/^\d\d?\/\d\d?\/\d\d$/);
+            var val = value.split('.').pop();
+            //alert(val);
+            if(val != "csv")
+                return false
+        },
+        "Por favor coloque un archivo .csv"
+    );
+    $.validator.addMethod(
         "dateRange",
         function(value, element) {
             // put your own logic here, this is just a (crappy) example
@@ -42,14 +65,17 @@ $(document).ready(function()
         }
     });
     /* TODO LIST */
+    // TODO hacer validacion con archivo image y extension .gif|.jpg|.
     $('.usuario_form').validate({
         rules: {
             'inces_comedorbundle_usuariotype[seco]'     : { required       : true },
-            'inces_comedorbundle_usuariotype[dia]'      : { venezuelanDate : true }
+            'inces_comedorbundle_usuariotype[dia]'      : { venezuelanDate : true },
+            'inces_comedorbundle_usuariotype[image]'    : { userImageExtension : true }
         },
         messages: {
             'inces_comedorbundle_usuariotype[seco]'     : { required       : 'Coloque el campo Seco' },
-            'inces_comedorbundle_usuariotype[dia]'      : { venezuelanDate : 'Por favor coloque una fecha en formato dd/mm/yy' }
+            'inces_comedorbundle_usuariotype[dia]'      : { venezuelanDate : 'Por favor coloque una fecha en formato dd/mm/yy' },
+            'inces_comedorbundle_usuariotype[image]'    : { userImageExtension: 'La extension de la imagen debe ser gif|jpg|png' }
         }
     });
     $('.rol_form').validate({
@@ -86,6 +112,16 @@ $(document).ready(function()
             'inces_comedorbundle_contabilidadtype[to]'       : { dateRange    : 'Por favor verifique las fechas' }
         }
     });
+    // TODO hacer validacion con archivo file que sea .csv
+    $('.carga_masiva_form').validate({
+        rules: {
+            'inces_comedorbundle_carga_masivatype[file]'     : { cmFileExtension : true }
+        },
+        messages: {
+            'inces_comedorbundle_carga_masivatype[file]'     : { cmFileExtension : 'El archivo debe ser .csv'}
+        }
+    });
+
     // Falta definir usuariomenu
     /* END TODO LIST */
 
@@ -193,7 +229,7 @@ $(document).ready(function()
     $('.reporte_form_btn').on('click', function(e) {
         e.preventDefault();
         //$('.pprint').val("");
-        var url = $('.reporte_form_btn').parents('form').attr('action');
+        //var url = $('.reporte_form_btn').parents('form').attr('action');
         var form = $(this).closest('form');
         if (form.valid()){
             //var url = $(this).attr("action");
@@ -204,6 +240,23 @@ $(document).ready(function()
                 { field: field, attr: attr }
             );
             */
+            $("form").ajaxForm({
+                target: '#results',
+                success: function(msg) {
+                    //$('#content').click(msg);
+                    //$(window).attr("location",msg);
+                    //window.location.href = msg;
+                }
+            }).submit();
+        }
+    });
+
+    $('.carga_masiva_btn').on('click', function(e) {
+        e.preventDefault();
+        //alert("hoal");
+        //var ur = $(this).parents('form').attr('action');
+        var form = $(this).closest('form');
+        if (form.valid()){
             $("form").ajaxForm({
                 target: '#results',
                 success: function(msg) {

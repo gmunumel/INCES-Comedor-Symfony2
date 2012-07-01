@@ -44,3 +44,8 @@ usuario_search_ajax_lunch:
     pattern:  /searchalnc
     defaults: { _controller: "INCESComedorBundle:Usuario:searchAjaxLunch" }
     requirements: { _method: get|post }
+
+usuario_carga_masiva:
+    pattern:  /cargamasiva
+    defaults: { _controller: "INCESComedorBundle:Usuario:cargaMasiva" }
+    requirements: { _method: get|post }

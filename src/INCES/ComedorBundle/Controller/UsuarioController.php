@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use INCES\ComedorBundle\Entity\Usuario;
 use INCES\ComedorBundle\Form\UsuarioType;
+use INCES\ComedorBundle\Form\CargaMasivaType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -517,5 +518,142 @@ class UsuarioController extends Controller
                 ));
             }
         }
+    }
+
+    public function validaciones($arr){
+        $i     = 0;
+        $em    = $this->getDoctrine()->getEntityManager();
+        $dql = $em->createQueryBuilder();
+        $dql->select('r.nombre')
+            ->from('INCESComedorBundle:Rol', 'r');
+        $qry = $em->createQuery($dql);
+        $_roles = $qry->getResult();
+        $roles = array();
+        foreach($_roles as $value)
+            array_push($roles, $value['nombre']);
+
+        foreach($arr as $value){
+            $i++;
+            if($i == 1) continue;
+
+            // Cantidad de valores
+            $split = explode(",", $value[0]);
+            if(count($split) != 6)
+                return "La línea ".$i." no tiene el correcto número de campos";
+
+            // Rol
+            if(!in_array($split[0], $roles))
+                return "Para la línea ".$i." el campo 'Rol' no se encuentra en base de datos";
+
+            // Nombre
+            if($split[1] == "")
+                return "Para la línea ".$i." el campo 'Nombre' no puede ser vacio";
+            elseif(!ctype_alpha($split[1]))
+                return "Para la línea ".$i." el campo 'Nombre' contiene caracters inválidos";
+
+            // Apellido
+            if($split[2] == "")
+                return "Para la línea ".$i." el campo 'Apellido' no puede ser vacio";
+            elseif(!ctype_alpha($split[2]))
+                return "Para la línea ".$i." el campo 'Apellido' contiene caracters inválidos";
+
+            // Cedula
+            if($split[3] == "")
+                return "Para la línea ".$i." el campo 'Cédula' no puede ser vacio";
+            elseif(!ctype_digit($split[3]))
+                return "Para la línea ".$i." el campo 'Cédula' contiene caracters inválidos";
+
+            // N Carnet
+            if($split[4] == "")
+                return "Para la línea ".$i." el campo 'Número de Carnet' no puede ser vacio";
+            elseif(!ctype_digit($split[4]))
+                return "Para la línea ".$i." el campo 'Número de Carnet' contiene caracters inválidos";
+
+            // Correo
+            if($split[5] == "") continue;
+            elseif(!filter_var($split[5], FILTER_VALIDATE_EMAIL))
+                return "Para la línea ".$i." el campo 'Correo' es inválido";
+        }
+        return "";
+    }
+
+    public function saveValues($arr){
+        $i      = 0;
+        $rol_id = 0;
+        $em     = $this->getDoctrine()->getEntityManager();
+        $roles  = $em->getRepository('INCESComedorBundle:Rol')->findAll();
+        $conn   = $this->get('database_connection');
+
+        foreach($arr as $value){
+            $i++;
+            if($i == 1) continue;
+
+            // Obteniendo valores
+            $split = explode(",", $value[0]);
+
+            // Rol
+            foreach($roles as $rol)
+                if($rol->getNombre() == $split[0]){
+                    $rol_id = $rol->getId();
+                    break;
+                }
+
+            $conn->insert('Usuario',
+                array('rol_id'   => $rol_id
+                     ,'nombre'   => $split[1]
+                     ,'apellido' => $split[2]
+                     ,'cedula'   => $split[3]
+                     ,'ncarnet'  => $split[4]
+                     ,'correo'   => $split[5]
+                )
+            );
+        }
+        return "";
+    }
+
+    public function cargaMasivaAction(){
+
+        $em      = $this->getDoctrine()->getEntityManager();
+        $request = $this->getRequest();
+        $cm_form = $this->createForm(new CargaMasivaType());
+        //$cm_form->bindRequest($request);
+
+        if ($request->getMethod() == 'POST') {
+            $cm_form->bindRequest($request);
+
+            $dir = dirname(__FILE__).'/../../../../web/uploads/';
+
+            // Colocando en el archivo en la carpeta web/uploads/
+            $name        = $cm_form['file']->getData()->move($dir);
+            $nameExplode = explode("/", $name);
+            $nameFile    = end($nameExplode);
+
+            // Comprobando que el archivo tenga los parametros adecuados
+            // Llenando estructura temporal con la informacion del archivo
+            $f = fopen ($dir . $nameFile, 'r');
+            while (false !== $data = fgetcsv($f, 0, ';'))
+                $arr[] = $data;
+            fclose($f);
+
+            $errores = $this->validaciones($arr);
+
+            if($errores != "")
+               return new Response("<p>".$errores."</p>");
+
+            // Guardando en Base de Datos
+            $this->saveValues($arr);
+
+            // Eliminar el archivo .csv
+            unlink($dir . $nameFile);
+
+            //return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
+            $route = $request->getBaseUrl();
+            return new Response($route.'/#!/usuario/');
+        }
+
+
+        return $this->render('INCESComedorBundle:Usuario:carga_masiva.html.twig', array(
+            'cm_form'    => $cm_form->createView()
+        ));
     }
 }

@@ -360,6 +360,7 @@ class ContabilidadController extends Controller
         ));
         return $this->printReporte($html, "ReporteIngresos");
     }
+
     public function printReporte($html, $nameFile){
         return new Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
