@@ -520,17 +520,25 @@ class UsuarioController extends Controller
         }
     }
 
-    public function validaciones($arr){
+    public function validaciones($arr, $edit = false){
         $i     = 0;
         $em    = $this->getDoctrine()->getEntityManager();
-        $dql = $em->createQueryBuilder();
+        $dql   = $em->createQueryBuilder();
         $dql->select('r.nombre')
             ->from('INCESComedorBundle:Rol', 'r');
         $qry = $em->createQuery($dql);
         $_roles = $qry->getResult();
-        $roles = array();
+        $roles  = array();
         foreach($_roles as $value)
             array_push($roles, $value['nombre']);
+
+        $dql->select('u.cedula')
+            ->from('INCESComedorBundle:Usuario', 'u');
+        $qry = $em->createQuery($dql);
+        $_users = $qry->getResult();
+        $users  = array();
+        foreach($_users as $value)
+            array_push($users, $value['cedula']);
 
         foreach($arr as $value){
             $i++;
@@ -562,6 +570,11 @@ class UsuarioController extends Controller
                 return "Para la línea ".$i." el campo 'Cédula' no puede ser vacio";
             elseif(!ctype_digit($split[3]))
                 return "Para la línea ".$i." el campo 'Cédula' contiene caracters inválidos";
+
+            // Cedula que exista en BD
+            if($edit)
+                if(!in_array($split[3], $users))
+                    return "Para la línea ".$i." el campo 'Cédula' no se encuentra en base de datos";
 
             // N Carnet
             if($split[4] == "")
@@ -608,8 +621,43 @@ class UsuarioController extends Controller
                 )
             );
         }
-        return "";
     }
+
+    public function updateValues($arr){
+        $i      = 0;
+        $rol_id = 0;
+        $em     = $this->getDoctrine()->getEntityManager();
+        $roles  = $em->getRepository('INCESComedorBundle:Rol')->findAll();
+        $qb     = $em->createQueryBuilder();
+
+        foreach($arr as $value){
+            $i++;
+            if($i == 1) continue;
+
+            // Obteniendo valores
+            $split = explode(",", $value[0]);
+
+            // Rol
+            foreach($roles as $rol)
+                if($rol->getNombre() == $split[0]){
+                    $rol_id = $rol->getId();
+                    break;
+                }
+
+            // Updating values
+            $q = $qb->update('INCES\ComedorBundle\Entity\Usuario', 'u')
+                    ->set('u.rol', $qb->expr()->literal($rol_id))
+                    ->set('u.nombre', $qb->expr()->literal($split[1]))
+                    ->set('u.apellido', $qb->expr()->literal($split[2]))
+                    ->set('u.ncarnet', $qb->expr()->literal($split[4]))
+                    ->set('u.correo', $qb->expr()->literal($split[5]))
+                    ->where('u.cedula = ?1')
+                    ->setParameter(1, $split[3])
+                    ->getQuery();
+            $p = $q->execute();
+        }
+    }
+
 
     public function cargaMasivaAction(){
 
@@ -637,8 +685,12 @@ class UsuarioController extends Controller
 
             $errores = $this->validaciones($arr);
 
-            if($errores != "")
+            if($errores != ""){
                 return new Response("<p>".$errores."</p>");
+
+                // Eliminar el archivo .csv
+                unlink($dir . $nameFile);
+            }
 
             // Guardando en Base de Datos
             $this->saveValues($arr);
@@ -646,13 +698,60 @@ class UsuarioController extends Controller
             // Eliminar el archivo .csv
             unlink($dir . $nameFile);
 
-            //return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
             $messages = "Usuarios Cargados con éxito";
             return new Response("<p>".$messages."</p>");
         }
 
-
         return $this->render('INCESComedorBundle:Usuario:carga_masiva.html.twig', array(
+            'cm_form'    => $cm_form->createView()
+        ));
+    }
+
+    public function editMasivoAction(){
+
+        $em      = $this->getDoctrine()->getEntityManager();
+        $request = $this->getRequest();
+        $cm_form = $this->createForm(new CargaMasivaType());
+        //$cm_form->bindRequest($request);
+
+        if ($request->getMethod() == 'POST') {
+            $cm_form->bindRequest($request);
+
+            $dir = dirname(__FILE__).'/../../../../web/uploads/';
+
+            // Colocando en el archivo en la carpeta web/uploads/
+            $name        = $cm_form['file']->getData()->move($dir);
+            $nameExplode = explode("/", $name);
+            $nameFile    = end($nameExplode);
+
+            // Comprobando que el archivo tenga los parametros adecuados
+            // Llenando estructura temporal con la informacion del archivo
+            $f = fopen ($dir . $nameFile, 'r');
+            while (false !== $data = fgetcsv($f, 0, ';'))
+                $arr[] = $data;
+            fclose($f);
+
+            // Verifico que el archivo este bien formado
+            $errores = $this->validaciones($arr, true);
+
+            if($errores != ""){
+                return new Response("<p>".$errores."</p>");
+
+                // Eliminar el archivo .csv
+                unlink($dir . $nameFile);
+            }
+
+            // Guardando en Base de Datos
+            $this->updateValues($arr);
+
+            // Eliminar el archivo .csv
+            unlink($dir . $nameFile);
+
+            $messages = "Usuarios Editados con éxito";
+            return new Response("<p>".$messages."</p>");
+        }
+
+        return $this->render('INCESComedorBundle:Usuario:edit_masivo.html.twig', array(
             'cm_form'    => $cm_form->createView()
         ));
     }
