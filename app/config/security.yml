@@ -23,10 +23,10 @@ security:
             pattern:    ^/
             form_login:
                 check_path: /login_check
-                login_path: /login
+                login_path: /admin/login
                 provider: fos_userbundle
             logout:
-                path:   /logout
+                path:   /admin/logout
                 target: /
             anonymous: true
             #http_basic:

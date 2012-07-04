@@ -1,0 +1,65 @@
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
+
+<div id="col-text">
+
+    <h2 id="slogan"><span></span>Place for your slogan.</h2>
+    <h1>UserAdmin</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Username</th>
+                <td>{{ entity.username }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellido</th>
+                <td>{{ entity.apellido }}</td>
+            </tr>
+            <tr>
+                <th>Cedula</th>
+                <td>{{ entity.cedula }}</td>
+            </tr>
+            <tr>
+                <th>Número Carnet</th>
+                <td>{{ entity.ncarnet }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ entity.email }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                {% for val in entity.roles %}
+                    {% if loop.first %}
+                        <td>{{ entity.roles }}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+
+    <ul class="record_actions">
+        <li>
+        <a href="{{ app.request.uriForPath('/#!/admin') }}">
+            Back to the list
+        </a>
+        </li>
+        <li>
+        <form action="{{ app.request.uriForPath('/admin/') }}{{ entity.id }}/delete" method="post">
+            {{ form_widget(delete_form) }}
+            <button class="delete_form_btn" type="submit">Delete</button>
+        </form>
+        </li>
+    </ul>
+    <p id="btns">
+    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
+    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
+    </p>
+
+</div> <!-- /col-text -->
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

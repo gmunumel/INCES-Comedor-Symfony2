@@ -1,0 +1,52 @@
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
+
+<div id="col-text">
+
+    <h2 id="slogan"><span></span>Place for your slogan.</h2>
+    <h1>UserAdmin list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cédula</th>
+                <th>Rol</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+            <tr>
+                <td>{{ entity.username }}</td>
+                <td>{{ entity.nombre }}</td>
+                <td>{{ entity.apellido }}</td>
+                <td>{{ entity.cedula }}</td>
+                {% for val in entity.roles %}
+                    {% if loop.first %}
+                        <td>{{ val }}</td>
+                    {% endif %}
+                {% endfor %}
+                <td>
+                    <a href="{{ app.request.uriForPath('/#!/admin/') }}{{ entity.id }}/show">show</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+        <a href="{{ app.request.uriForPath('/#!/admin/register') }}">
+            Create a new entry
+        </a>
+        </li>
+    </ul>
+    <p id="btns">
+    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
+    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
+    </p>
+
+</div> <!-- /col-text -->

@@ -1,0 +1,51 @@
+# app/config/routing.yml
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /change-password
+
+useradmin:
+    pattern:  /
+    defaults: { _controller: "INCESComedorBundle:UserAdmin:index" }
+    requirements: { _method: get|post }
+
+useradmin_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "INCESComedorBundle:UserAdmin:show" }
+
+#useradmin_new:
+#    pattern:  /new
+#    defaults: { _controller: "INCESComedorBundle:UserAdmin:new" }
+
+#useradmin_create:
+#    pattern:  /create
+#    defaults: { _controller: "INCESComedorBundle:UserAdmin:create" }
+#    requirements: { _method: post }
+
+#useradmin_edit:
+#    pattern:  /{id}/edit
+#    defaults: { _controller: "INCESComedorBundle:UserAdmin:edit" }
+
+#useradmin_update:
+#    pattern:  /{id}/update
+#    defaults: { _controller: "INCESComedorBundle:UserAdmin:update" }
+#    requirements: { _method: post }
+
+useradmin_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "INCESComedorBundle:UserAdmin:delete" }
+    requirements: { _method: post }

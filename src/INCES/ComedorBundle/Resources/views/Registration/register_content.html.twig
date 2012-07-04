@@ -1,0 +1,17 @@
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
+
+<div id="col-text">
+
+    <h2 id="slogan"><span></span>Place for your slogan.</h2>
+    <h1>New Usuario Admin</h1>
+    {% form_theme form theme %}
+
+    <form class="user_admin_form" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+        {{ form_widget(form) }}
+        <div>
+            <input type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+        </div>
+    </form>
+</div> <!-- /col-text -->
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

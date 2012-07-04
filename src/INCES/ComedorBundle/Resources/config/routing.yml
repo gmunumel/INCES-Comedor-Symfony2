@@ -27,5 +27,5 @@ INCESComedorBundle_contabilidad:
     prefix:   /contabilidad
 
 INCESComedorBundle_admin_user:
-    resource: "@INCESComedorBundle/Resources/config/routing/userAdmin.yml"
-    prefix:   /
+    resource: "@INCESComedorBundle/Resources/config/routing/useradmin.yml"
+    prefix:   /admin

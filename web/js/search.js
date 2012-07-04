@@ -123,6 +123,7 @@ $(document).ready(function()
     });
 
     // Falta definir usuariomenu
+    // Falta definir
     /* END TODO LIST */
 
     $("#inces_comedorbundle_menutype_dia" ).datepicker({
@@ -211,7 +212,7 @@ $(document).ready(function()
             window.location.href = urlFinal;
         }
     });
-    $('button[type=submit]:not(.delete_form_btn, .reporte_form_btn, .carga_masiva_form_btn)').on('click', function(e) {
+    $('button[type=submit], input[type=submit]:not(.delete_form_btn, .reporte_form_btn, .carga_masiva_form_btn)').on('click', function(e) {
         e.preventDefault();
         var form = $(this).closest('form');
         if (form.valid()){
