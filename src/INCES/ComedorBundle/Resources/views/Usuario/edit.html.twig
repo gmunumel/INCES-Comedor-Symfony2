@@ -3,8 +3,7 @@
 
 <div id="col-text">
 
-    <h2 id="slogan"><span></span>Place for your slogan.</h2>
-    <h1>Usuario edit</h1>
+    <h1>Editar Usuario</h1>
 
     <form class="usuario_form" action="{{ app.request.uriForPath('/usuario/') }}{{ entity.id }}/update" method="post" {{ form_enctype(edit_form) }}>
         {{ form_widget(edit_form) }}
@@ -27,20 +26,5 @@
         </li>
     </ul>
 
-    <p id="btns">
-    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
-    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
-    </p>
-
 </div> <!-- /col-text -->
-{#
-<script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.validate.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.ui.core.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.ui.widget.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker-es.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>
-#}
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

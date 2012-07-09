@@ -36,10 +36,6 @@ menu_search:
     defaults: { _controller: "INCESComedorBundle:Menu:search" }
     requirements: { _method: get|post }
 
-menu_today:
-    pattern:  /today
-    defaults: { _controller: "INCESComedorBundle:Menu:today" }
-
 menu_facturar:
     pattern:  /facturar
     #defaults: { _controller: "INCESComedorBundle:Usuario:indexFacturar" }
@@ -59,3 +55,34 @@ menu_facturar_procesar:
 menu_show_facturar:
     pattern:  /{id}/showfacturar
     defaults: { _controller: "INCESComedorBundle:Menu:showFacturar" }
+
+menu_today:
+    pattern:  /today
+    defaults: { _controller: "INCESComedorBundle:Menu:today" }
+
+menu_today_show:
+    pattern:  /{id}/showtoday
+    defaults: { _controller: "INCESComedorBundle:Menu:showToday" }
+
+menu_today_new:
+    pattern:  /newtoday
+    defaults: { _controller: "INCESComedorBundle:Menu:newToday" }
+
+menu_today_create:
+    pattern:  /createtoday
+    defaults: { _controller: "INCESComedorBundle:Menu:createToday" }
+    requirements: { _method: post }
+
+menu_today_edit:
+    pattern:  /{id}/edittoday
+    defaults: { _controller: "INCESComedorBundle:Menu:editToday" }
+
+menu_today_update:
+    pattern:  /{id}/updatetoday
+    defaults: { _controller: "INCESComedorBundle:Menu:updateToday" }
+    requirements: { _method: post }
+
+menu_today_delete:
+    pattern:  /{id}/deletetoday
+    defaults: { _controller: "INCESComedorBundle:Menu:deleteToday" }
+    requirements: { _method: post }

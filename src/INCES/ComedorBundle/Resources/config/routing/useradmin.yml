@@ -21,6 +21,10 @@ fos_user_change_password:
 useradmin:
     pattern:  /
     defaults: { _controller: "INCESComedorBundle:UserAdmin:index" }
+
+useradmin_list:
+    pattern:  /list
+    defaults: { _controller: "INCESComedorBundle:UserAdmin:list" }
     requirements: { _method: get|post }
 
 useradmin_show:

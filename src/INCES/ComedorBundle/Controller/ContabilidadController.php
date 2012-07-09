@@ -147,7 +147,7 @@ class ContabilidadController extends Controller
 
         return $this->render('INCESComedorBundle:Contabilidad:reporte_ingresos.html.twig', array(
              //'entities' => $entities
-            'filter_form' => $filterForm->createView(),
+            'filter_form' => $filterForm->createView()
         ));
     }
 
@@ -196,7 +196,7 @@ class ContabilidadController extends Controller
 
         return $this->render('INCESComedorBundle:Contabilidad:reporte_usuarios.html.twig', array(
              //'entities' => $entities
-            'filter_form' => $filterForm->createView(),
+            'filter_form' => $filterForm->createView()
         ));
     }
 

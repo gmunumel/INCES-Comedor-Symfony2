@@ -1,0 +1,24 @@
+<table class="bordered">
+    <thead>
+        <tr>
+            <th>Cédula</th>
+            <th>Nombre</th>
+            <th>Rol</th>
+            <th>Monto</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if pagination|length == 0 %}
+        <p>No hay resultados</p>
+        {% endif %}
+        {% for entity in pagination %}
+        <tr>
+            <td>{{ entity.usuario.cedula }}</td>
+            <td>{{ entity.usuario.nombre }}</td>
+            <td>{{ entity.usuario.rol.nombre }}</td>
+            <td>{{ entity.usuario.rol.monto }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ app.request.uriForPath('/#!/usuario/searchalnc') }}">Ver todos</a>

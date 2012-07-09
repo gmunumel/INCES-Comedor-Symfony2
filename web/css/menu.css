@@ -26,6 +26,7 @@ div#menu {
     background: url(../img/menu_images/left.png) no-repeat;
     _background-image: url(../img/menu_images/left.gif);
     width:auto;
+    /*width:960px;*/
 }
 
 div#menu ul {
@@ -132,8 +133,8 @@ div#menu ul.menu>li:hover>a span {
 div#menu ul.menu>li:hover>a span {
     color: #852a21;
 }
-div#menu li {  }
-div#menu ul li.last { background: none; width: 30px }
+div#menu li { }
+div#menu ul li.last { background: none;  }
 
 div#menu li.current a,
 div#menu li.current a span,

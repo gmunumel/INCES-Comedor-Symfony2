@@ -3,8 +3,7 @@
 
 <div id="col-text">
 
-    <h2 id="slogan"><span></span>Place for your slogan.</h2>
-    <h1>Rol edit</h1>
+    <h1>Editar Rol</h1>
 
     <form class="rol_form" action="{{ app.request.uriForPath('/rol/') }}{{ entity.id }}/update" method="post" {{ form_enctype(edit_form) }}>
         {{ form_widget(edit_form) }}
@@ -26,10 +25,5 @@
         </form>
         </li>
     </ul>
-    <p id="btns">
-    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
-    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
-    </p>
-
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

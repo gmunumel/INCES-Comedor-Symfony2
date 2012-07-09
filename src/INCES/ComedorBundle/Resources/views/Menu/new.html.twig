@@ -1,27 +1,19 @@
-{# src/INCES/ComedorBundle/Resources/views/Menu/new.html.twig #}
-{#
-{% extends '::base.html.twig' %}
-
-{% block body %}
-#}
 <div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
 </div>
 
 <div id="col-text">
 
-    <h2 id="slogan"><span></span>Place for your slogan.</h2>
     <h1>Agregar Menu</h1>
-    <table>
-        <th>
-            <form class="menu_form" action="{{ app.request.uriForPath('/menu/create') }}" method="post" {{ form_enctype(form) }}>
-                {{ form_widget(form) }}
+    <form class="menu_form generic" action="{{ app.request.uriForPath('/menu/create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
 
-                <p>
-                <button type="submit">Agregar</button>
-                </p>
-            </form>
-        </th>
-    </table>
+        <div class="action">
+            {#
+            <button type="submit">Agregar</button>
+            #}
+            <input class="submit-button" type="submit" value="Agregar" />
+        </div>
+    </form>
 
     <ul class="record_actions">
         <li>
@@ -30,27 +22,6 @@
         </a>
         </li>
     </ul>
-    {#
-    {% endblock %}
-    #}
-    {#
-    <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.validate.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
-    #}
-    {#
-    <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.validate.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.ui.core.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.ui.widget.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker-es.js') }}"></script>
-    #}
-    <p id="btns">
-    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
-    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
-    </p>
-
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
 

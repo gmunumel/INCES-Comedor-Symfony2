@@ -54,3 +54,7 @@ usuario_edit_carga_masiva:
     pattern:  /editmasivo
     defaults: { _controller: "INCESComedorBundle:Usuario:editMasivo" }
     requirements: { _method: get|post }
+
+usuario_lunch_today:
+    pattern:  /lunchtoday
+    defaults: { _controller: "INCESComedorBundle:Usuario:lunchToday" }

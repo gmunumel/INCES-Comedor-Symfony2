@@ -3,9 +3,10 @@
 
 <div id="col-text">
 
-    <h1>Menu Show</h1>
+    <h2 id="slogan"><span></span>Place for your slogan.</h2>
+    <h1>Menu Show Today</h1>
 
-    <table class="bordered">
+    <table class="record_properties">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -44,17 +45,17 @@
 
     <ul class="record_actions">
         <li>
-        <a href="{{ app.request.uriForPath('/#!/menu') }}">
+        <a href="{{ app.request.uriForPath('/#!/menu/today') }}">
             Back to the list
         </a>
         </li>
         <li>
-        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edit">
+        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edittoday">
             Edit
         </a>
         </li>
         <li>
-        <form action="{{ app.request.uriForPath('/menu/') }}{{ entity.id }}/delete" method="post">
+        <form action="{{ app.request.uriForPath('/menu/') }}{{ entity.id }}/deletetoday" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>

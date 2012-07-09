@@ -19,6 +19,7 @@
     <link href="{{ asset('css/print.css') }}" media="print" type="text/css" rel="stylesheet" />
     <link href="{{ asset('css/menu.css') }}" media="screen,projection" type="text/css" rel="stylesheet" />
     <link href="{{ asset('css/jquery-ui-1.8.21.custom.css') }}" media="screen,projection" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('css/mycss.css') }}" media="screen,projection" type="text/css" rel="stylesheet" />
 {% endblock %}
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
 
@@ -35,11 +36,26 @@
         <h1 id="logo"><a href="./" title="[Go to homepage]"><img src="{{ asset('img/inces.jpg') }}" width="120" height="90" alt="" /></a></h1>
         <hr class="noscreen" />
 
+        <!-- LightBox -->
+        <a id="show-panel" href="#">Show Panel</a>
+        <div id="lightbox-loader"></div><!-- /lightbox-panel -->
+
+        <!-- Div lightbox
+        <div id="lightbox"> </div>
+        < /lightbox -->
+
         <!-- Navigation -->
         <div id="nav">
         {% block session %}{% endblock %}
-            <a href= "{{ app.request.uriForPath('/#!/login') }}" id="nav-active">Login</a> <span>|</span>
-            <a href= "{{ app.request.uriForPath('/#!/logout') }}" id="nav-active">Logout</a>
+
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+            <a href="{{ path('fos_user_security_logout') }}">
+                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+            </a>
+        {% else %}
+        <a href="{{ app.request.uriForPath('/#!/admin/login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+        {% endif %}
         <!--
             <a href="#">About us</a> <span>|</span>
             <a href="#">Support</a> <span>|</span>
@@ -66,70 +82,113 @@
     {% if is_granted("ROLE_ADMIN") %}
         <div id="menu">
             <ul class="menu">
+                <li><a href="{{ app.request.uriForPath('/#!/menu/today') }}"><span>Menu</span></a>
+                    <div>
+                        <ul>
+                            <li><a href="{{ app.request.uriForPath('/#!/menu/today') }}" class="parent"><span>Del Día</span></a>
+                            <div>
+                                <ul>
+                                    <li><a href="{{ app.request.uriForPath('/#!/menu/today') }}"><span>Acciones</span></a></li>
+                                    <li><a href="{{ app.request.uriForPath('/#!/menu/newtoday') }}"><span>Agregar</span></a></li>
+                                </ul>
+                            </div>
+                            </li>
+                            <li><a href="{{ app.request.uriForPath('/#!/menu') }}" class="parent"><span>En General</span></a>
+                                <div>
+                                    <ul>
+                                        <li><a href="{{ app.request.uriForPath('/#!/menu') }}"><span>Acciones</span></a></li>
+                                        <li><a href="{{ app.request.uriForPath('/#!/menu/new') }}"><span>Agregar</span></a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
                 <li><a href="{{ app.request.uriForPath('/#!/menu/facturar') }}"><span>Facturar</span></a></li>
                 <li><a href="{{ app.request.uriForPath('/#!/usuario') }}"><span>Usuarios</span></a>
-                <div>
-                    <ul>
-                        <li><a href="{{ app.request.uriForPath('/#!/usuario') }}" ><span>Acciones</span></a></li>
-                        <li><a href="#" class="parent"><span>Operación Masiva</span></a>
-                        <div>
-                            <ul>
-                                <li><a href="{{ app.request.uriForPath('/#!/usuario/cmasivo') }}"><span>Carga</span></a></li>
-                                <li><a href="{{ app.request.uriForPath('/#!/usuario/amasivo') }}"><span>Actualización</span></a></li>
-                            </ul>
-                        </div>
-                    </ul>
-                </div>
-                </li>
-                <li><a href="{{ app.request.uriForPath('/#!/padmin') }}"><span>Personal Administrativo</span></a>
                     <div>
                         <ul>
-                            <li><a href="{{ app.request.uriForPath('/#!/register') }}"><span>Acciones</span></a></li>
+                            <li><a href="{{ app.request.uriForPath('/#!/usuario/new') }}" ><span>Agregar</span></a></li>
+                            <li><a href="#" class="parent"><span>Operación Masiva</span></a>
+                                <div>
+                                    <ul>
+                                        <li><a href="{{ app.request.uriForPath('/#!/usuario/cargamasiva') }}"><span>Carga</span></a></li>
+                                        <li><a href="{{ app.request.uriForPath('/#!/usuario/editmasivo') }}"><span>Actualización</span></a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><a href="{{ app.request.uriForPath('/#!/usuario/search') }}"><span>Ver Usuario por Cédula</span></a></li>
                         </ul>
                     </div>
                 </li>
-                <li><a href="{{ app.request.uriForPath('/#!/contabilidad') }}"><span>Contabilidad</span></a></li>
-                <li><a href="{{ app.request.uriForPath('/#!/menu') }}"><span>Menu</span></a>
+                <li><a href="{{ app.request.uriForPath('/#!/admin') }}"><span>Personal Administrativo</span></a>
                     <div>
                         <ul>
-                            <li><a href="{{ app.request.uriForPath('/#!/menu') }}"><span>Acciones</span></a></li>
+                            <li><a href="{{ app.request.uriForPath('/#!/admin/list') }}"><span>Listar</span></a></li>
+                            <li><a href="{{ app.request.uriForPath('/#!/admin/usuarios/new') }}"><span>Agregar</span></a></li>
+                            <li><a href="{{ app.request.uriForPath('/#!/admin/profile/edit') }}"><span>Editar mi información</span></a></li>
                         </ul>
                     </div>
                 </li>
-                <li><a href="{{ app.request.uriForPath('/#!/tickets') }}"><span>Tickets</span></a>
+                <li><a href="{{ app.request.uriForPath('/#!/contabilidad') }}"><span>Contabilidad</span></a>
                     <div>
                         <ul>
-                            <li><a href="{{ app.request.uriForPath('/#!/tickets') }}"><span>Acciones</span></a></li>
+                            <li><a href="{{ app.request.uriForPath('/#!/contabilidad/reporteingresos') }}"><span>Ingresos</span></a></li>
+                            <li><a href="{{ app.request.uriForPath('/#!/contabilidad/reporteusuarios') }}"><span>Usuarios</span></a></li>
                         </ul>
                     </div>
                 </li>
-                <li class="last"><span>&nbsp;&nbsp;&nbsp;</span></li>
+                <li><a href="{{ app.request.uriForPath('/#!/rol') }}"><span>Rol</span></a>
+                    <div>
+                        <ul>
+                            <li><a href="{{ app.request.uriForPath('/#!/rol/new') }}"><span>Agregar</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="last"><a href="#"><span></span></a></li>
             </ul>
         </div>
     {% elseif is_granted("ROLE_GERENTE") %}
         <div id="menu">
             <ul class="menu">
-                <li><a href="{{ app.request.uriForPath('/#!/menu/facturar') }}"><span>Facturar</span></a></li>
-                <li><a href="{{ app.request.uriForPath('/#!/menu') }}"><span>Menu</span></a>
+                <li><a href="{{ app.request.uriForPath('/#!/menu/today') }}"><span>Menu</span></a>
                     <div>
                         <ul>
-                            <li><a href="{{ app.request.uriForPath('/#!/menu') }}"><span>Acciones</span></a></li>
+                            <li><a href="{{ app.request.uriForPath('/#!/menu/today') }}" class="parent"><span>Del Día</span></a>
+                            <div>
+                                <ul>
+                                    <li><a href="{{ app.request.uriForPath('/#!/menu/today') }}"><span>Acciones</span></a></li>
+                                    <li><a href="{{ app.request.uriForPath('/#!/menu/newtoday') }}"><span>Agregar</span></a></li>
+                                </ul>
+                            </div>
+                            </li>
+                            <li><a href="{{ app.request.uriForPath('/#!/menu') }}" class="parent"><span>En General</span></a>
+                                <div>
+                                    <ul>
+                                        <li><a href="{{ app.request.uriForPath('/#!/menu') }}"><span>Acciones</span></a></li>
+                                        <li><a href="{{ app.request.uriForPath('/#!/menu/new') }}"><span>Agregar</span></a></li>
+                                    </ul>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </li>
+                <li><a href="{{ app.request.uriForPath('/#!/menu/facturar') }}"><span>Facturar</span></a></li>
                 <li><a href="{{ app.request.uriForPath('/#!/usuario') }}"><span>Usuarios</span></a>
-                <div>
-                    <ul>
-                        <li><a href="{{ app.request.uriForPath('/#!/usuario') }}" ><span>Acciones</span></a></li>
-                        <li><a href="#" class="parent"><span>Operación Masiva</span></a>
-                        <div>
-                            <ul>
-                                <li><a href="{{ app.request.uriForPath('/#!/usuario/cmasivo') }}"><span>Carga</span></a></li>
-                                <li><a href="{{ app.request.uriForPath('/#!/usuario/amasivo') }}"><span>Actualización</span></a></li>
-                            </ul>
-                        </div>
-                    </ul>
-                </div>
+                    <div>
+                        <ul>
+                            <li><a href="{{ app.request.uriForPath('/#!/usuario/new') }}" ><span>Agregar</span></a></li>
+                            <li><a href="#" class="parent"><span>Operación Masiva</span></a>
+                                <div>
+                                    <ul>
+                                        <li><a href="{{ app.request.uriForPath('/#!/usuario/cargamasiva') }}"><span>Carga</span></a></li>
+                                        <li><a href="{{ app.request.uriForPath('/#!/usuario/editmasivo') }}"><span>Actualización</span></a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><a href="{{ app.request.uriForPath('/#!/usuario/search') }}"><span>Ver Usuario por Cédula</span></a></li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="last"><span>&nbsp;&nbsp;&nbsp;</span></li>
             </ul>
@@ -137,21 +196,23 @@
     {% elseif is_granted("ROLE_OPERADOR") %}
         <div id="menu">
             <ul class="menu">
-                <li><a href="{{ app.request.uriForPath('/#!/menu/facturar') }}"><span>Facturar</span></a></li>
-                <li><a href="{{ app.request.uriForPath('/#!/menu') }}" class="parent"><span>Menu</span></a>
+                <li><a href="{{ app.request.uriForPath('/#!/menu/today') }}" class="parent"><span>Menu del Día</span></a>
                     <div>
                         <ul>
-                            <li><a href="{{ app.request.uriForPath('/#!/menu') }}"><span>Acciones</span></a></li>
+                            <li><a href="{{ app.request.uriForPath('/#!/menu/today') }}"><span>Listar</span></a></li>
+                            <li><a href="{{ app.request.uriForPath('/#!/menu/newtoday') }}"><span>Agregar</span></a></li>
                         </ul>
                     </div>
                 </li>
+                <li><a href="{{ app.request.uriForPath('/#!/usuario/search') }}"><span>Ver Usuario por Cédula</span></a></li>
+                <li><a href="{{ app.request.uriForPath('/#!/menu/facturar') }}"><span>Facturar</span></a></li>
             </ul>
         </div>
     {% else %}
         <div id="menu">
             <ul class="menu">
-                <li><a href="{{ app.request.uriForPath('/#!/menu') }}"><span>Ver Menu</span></a></li>
-                <li><a href="{{ app.request.uriForPath('/#!/usuario/search') }}"><span>Ver Usuario por Cédula</span></a>
+                <li><a href="{{ app.request.uriForPath('/#!/menu/today') }}"><span>Ver Menu Hoy</span></a></li>
+                <li><a href="{{ app.request.uriForPath('/#!/usuario/search') }}"><span>Ver Usuario por Cédula</span></a></li>
             </ul>
         </div>
     {% endif %}
@@ -159,6 +220,7 @@
     <!-- End Menu -->
 
     <!-- Promo -->
+
     <div id="col-top"></div>
     <div id="col" class="box">
 
@@ -175,6 +237,7 @@
 
     <hr class="noscreen" />
 
+    {#
     <!-- 3 columns -->
     <div id="cols3-top"></div>
     <div id="cols3" class="box">
@@ -302,6 +365,7 @@
 
     </div> <!-- /cols2 -->
     <div id="cols2-bottom"></div>
+    #}
 
     <hr class="noscreen" />
 
@@ -309,11 +373,11 @@
     <div id="footer">
 
         <!-- Do you want remove this backlinks? Look at www.nuviotemplates.com/payment.php -->
-        <!--<p class="f-right"><a href="http://www.nuviotemplates.com/">Free
+        <p class="f-right"><a href="http://www.nuviotemplates.com/">Free
         web templates</a> presented by <a
         href="http://www.qartin.cz/">QARTIN</a> &ndash; Our tip: <a
         href="http://last-minute.invia.pl">Wakacje</a> <a
-        href="http://dovolenka.invia.sk">Dovolenka</a></p>-->
+        href="http://dovolenka.invia.sk">Dovolenka</a></p>
         <!-- Do you want remove this backlinks? Look at www.nuviotemplates.com/payment.php -->
 
         <!--<p>Copyright &copy;&nbsp;2008 <strong><a href="#">Your
@@ -321,6 +385,7 @@
 
     </div> <!-- /footer -->
 
+    <div id="lightbox"> </div>
 </div> <!-- /main -->
 
 {% block javascripts %}

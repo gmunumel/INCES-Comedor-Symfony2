@@ -11,6 +11,7 @@ use INCES\ComedorBundle\Form\UsuarioMenuType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
+
 /**
  * UsuarioMenu controller.
  *
@@ -226,7 +227,7 @@ class UsuarioMenuController extends Controller
         $pagination = $paginator->paginate(
             $qry,
             $this->get('request')->query->get('page', 1),//page number
-            2//limit per page
+            $this->container->getParameter('RESULTS_PER_PAGE')//limit per page
         );
         return $pagination;
     }

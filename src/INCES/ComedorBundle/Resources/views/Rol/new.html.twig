@@ -3,19 +3,14 @@
 
 <div id="col-text">
 
-    <h2 id="slogan"><span></span>Place for your slogan.</h2>
     <h1>Agregar Rol</h1>
+    <form class="rol_form" action="{{ app.request.uriForPath('/rol/create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <p>
+        <button type="submit">Agregar</button>
+        </p>
+    </form>
 
-    <table>
-        <th>
-            <form class="rol_form" action="{{ app.request.uriForPath('/rol/create') }}" method="post" {{ form_enctype(form) }}>
-                {{ form_widget(form) }}
-                <p>
-                <button type="submit">Agregar</button>
-                </p>
-            </form>
-        </th>
-    </table>
     <ul class="record_actions">
         <li>
         <a href="{{ app.request.uriForPath('/#!/rol') }}">
@@ -23,10 +18,6 @@
         </a>
         </li>
     </ul>
-    <p id="btns">
-    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
-    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
-    </p>
 
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

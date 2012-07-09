@@ -22,11 +22,20 @@ class UserAdminController extends Controller
      */
     public function indexAction()
     {
+        return $this->render('INCESComedorBundle:UserAdmin:index.html.twig');
+    }
+
+    /**
+     * Lists all UserAdmin entities.
+     *
+     */
+    public function listAction()
+    {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entities = $em->getRepository('INCESComedorBundle:UserAdmin')->findAll();
 
-        return $this->render('INCESComedorBundle:UserAdmin:index.html.twig', array(
+        return $this->render('INCESComedorBundle:UserAdmin:list.html.twig', array(
             'entities' => $entities
         ));
     }
@@ -78,7 +87,7 @@ class UserAdminController extends Controller
 
         //return $this->redirect($this->generateUrl('useradmin'));
         $route = $request->getBaseUrl();
-        return new Response($route.'/#!/admin');
+        return new Response($route.'/#!/admin/list');
     }
 
     private function createDeleteForm($id)

@@ -7,18 +7,7 @@
     <h1>Reporte Usuarios</h1>
 
     <form class="reporte_usuarios_form" action="{{ app.request.uriForPath('/contabilidad/reporteusuarios') }}" method="post">
-        {#
-        {{ form_widget(filter_form) }}
-        #}
         <a class="reporte_usuarios_link" href="{{ app.request.uriForPath('/contabilidad/preporteusuarios') }}" alt="imprimir reporte">Imprimir Reporte</a>
-        {#
-        {{ form_widget(filter_form.print , { 'attr': {'class': 'print'} }) }}
-        <input type="hidden" class="pprint" id="pprint" name="pprint" value="">
-        <button class="reporte_print_btn" type="submit">Imprimir</button>
-        #}
-        {#
-        {{ form_row(filter_form.print) }}
-        #}
         <table>
             <tr>
                 <td>&nbsp;</td>

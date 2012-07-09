@@ -157,6 +157,11 @@ class RolController extends Controller
         ));
     }
 
+    public function errorDeleteAction()
+    {
+        return $this->render('INCESComedorBundle:Rol:_error_delete.html.twig');
+    }
+
     /**
      * Deletes a Rol entity.
      *
@@ -176,12 +181,17 @@ class RolController extends Controller
                 throw $this->createNotFoundException('Unable to find Rol entity.');
             }
 
-            $em->remove($entity);
-            $em->flush();
+            try{
+                $em->remove($entity);
+                $em->flush();
+            }catch (\Exception $e) {
+                $route = $request->getBaseUrl();
+                return new Response($route.'/#!/rol/edelete');
+            }
         }
 
         $route = $request->getBaseUrl();
-        return new Response($route.'/#!/rol');
+        return new Response($route.'/#!/rol/');
         //return $this->redirect($this->generateUrl('rol'));
     }
 

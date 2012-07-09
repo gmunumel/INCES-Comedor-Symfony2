@@ -2,22 +2,23 @@
 </div>
 
 <div id="col-text">
-
-    <h2 id="slogan"><span></span>Place for your slogan.</h2>
-    <div id="filter">
-        <div class="search">
-            <form action="{{ app.request.uriForPath('/usuariomenu/searcha') }}" method="get">
-                <input autocomplete="off" type="text" name="query" value="{{query}}" id="search_keywords" />
-                <input type="submit" value="search" style="display:none;"/>
-                <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
-                <div class="help">
-                    Enter some keywords (city, country, position, ...)
+    <table>
+        <tr class="tsearch">
+            <td>
+                <h1>Listar Usuarios Menu</h1>
+            </td>
+            <td>
+                <div id="filter">
+                    <form class="generic" action="{{ app.request.uriForPath('/usuariomenu/searcha') }}" method="get">
+                        <img src="{{ asset('img/search.png') }}" class="searchbox_submit" value="" />
+                        <input autocomplete="off" type="text" class="text" name="query" value="{{query}}" id="search_keywords" />
+                        <input type="submit" value="search" style="display:none;"/>
+                    </form>
                 </div>
-            </form>
-        </div>
-        <h1>UsuarioMenu _index</h1>
-
-        <table class="records_list">
+            <td>
+        </tr>
+    </table>
+        <table class="bordered">
             <thead>
                 <tr>
                     {% if field is defined %}
@@ -67,18 +68,4 @@
         </div>
         {% endif %}
         <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
-        {#
-        <ul>
-            <li>
-            <a href="{{ app.request.uriForPath('/#!/usuariomenu/new') }}">
-                Create a new entry
-            </a>
-            </li>
-        </ul>
-        #}
-        <p id="btns">
-        <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
-        <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
-        </p>
-
     </div> <!-- /col-text -->

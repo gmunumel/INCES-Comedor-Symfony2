@@ -8,6 +8,7 @@ use INCES\ComedorBundle\Entity\Usuario;
 use INCES\ComedorBundle\Entity\Menu;
 use INCES\ComedorBundle\Entity\UsuarioMenu;
 use INCES\ComedorBundle\Form\MenuType;
+use INCES\ComedorBundle\Form\MenuTodayType;
 use INCES\ComedorBundle\Form\UsuarioMenuType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,7 +49,7 @@ class MenuController extends Controller
         $pagination = $paginator->paginate(
             $qry,
             $this->get('request')->query->get('page', 1),//page number
-            2//limit per page
+            $this->container->getParameter('RESULTS_PER_PAGE')//limit per page
         );
         return $pagination;
     }
@@ -146,7 +147,6 @@ class MenuController extends Controller
                 }
 
                 $query = htmlspecialchars(urldecode($query));
-                print_r($query);
                 $query = substr_replace($query ,"",-1);
                 $_query = $this->params($query);
                 $pagination = $this->_indexAction($_query);
@@ -168,7 +168,6 @@ class MenuController extends Controller
         $request = $this->get('request');
         $query   = $request->request->get('query');
         if (!$query) {
-            print_r("no query");
             $field      = $request->request->get('field');
             $attr       = $request->request->get('attr');
             $pagination = $this->_indexAction($query, $field, $attr);
@@ -181,7 +180,6 @@ class MenuController extends Controller
         }else{
             if ($request->isXmlHttpRequest()){
                 if ('*' == $query){
-                    print_r("*");
                     $field = $request->request->get('field');
                     $attr  = $request->request->get('attr');
                     $pagination = $this->_indexAction($query, $field, $attr);
@@ -198,9 +196,7 @@ class MenuController extends Controller
                 //$query = '2012';
                 //$term  = new \Zend\Search\Lucene\Index\Term($query.'*','dia');
                 //$query = new \Zend\Search\Lucene\Search\Query\Wildcard($term);
-                //print_r($query);
                 $menus = $search->find($query);
-                //print_r($menus);
                 return $this->render('INCESComedorBundle:Menu:_list.html.twig', array(
                     'menus'  => $menus
                     ,'query' => 'hola'
@@ -226,7 +222,7 @@ class MenuController extends Controller
         $pagination = $paginator->paginate(
             $qry,
             $this->get('request')->query->get('page', 1),//page number
-            2//limit per page
+            $this->container->getParameter('RESULTS_PER_PAGE')//limit per page
         );
         return $this->render('INCESComedorBundle:Menu:index.html.twig', array(
              'pagination' => $pagination
@@ -396,6 +392,161 @@ class MenuController extends Controller
         ;
     }
 
+
+    /**
+     * Finds and displays a Menu entity.
+     *
+     */
+    public function showTodayAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('INCESComedorBundle:Menu')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Menu entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('INCESComedorBundle:Menu:show_today.html.twig', array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),
+
+        ));
+    }
+
+    /**
+     * Displays a form to create a new Menu entity.
+     *
+     */
+    public function newTodayAction()
+    {
+        $entity = new Menu();
+        $form   = $this->createForm(new MenuTodayType(), $entity);
+
+        return $this->render('INCESComedorBundle:Menu:new_today.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        ));
+    }
+
+    /**
+     * Creates a new Menu entity.
+     *
+     */
+    public function createTodayAction()
+    {
+        $entity  = new Menu();
+        $request = $this->getRequest();
+        $form    = $this->createForm(new MenuTodayType(), $entity);
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($entity);
+            $em->flush();
+
+            $route = $request->getBaseUrl();
+            return new Response($route.'/#!/menu/'.$entity->getId().'/showtoday');
+        }
+
+        return $this->render('INCESComedorBundle:Menu:new_today.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        ));
+    }
+
+    /**
+     * Displays a form to edit an existing Menu entity.
+     *
+     */
+    public function editTodayAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('INCESComedorBundle:Menu')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Menu entity.');
+        }
+
+        $editForm = $this->createForm(new MenuTodayType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('INCESComedorBundle:Menu:edit_today.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Edits an existing Menu entity.
+     *
+     */
+    public function updateTodayAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('INCESComedorBundle:Menu')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Menu entity.');
+        }
+
+        $editForm   = $this->createForm(new MenuTodayType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        $request = $this->getRequest();
+
+        $editForm->bindRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+
+            $route = $request->getBaseUrl();
+            //return new Response($route.'/#!/menu/');
+            return new Response($route.'/#!/menu/'.$entity->getId().'/showtoday');
+            //return $this->redirect($this->generateUrl('menu_edit', array('id' => $id)));
+        }
+
+        return $this->render('INCESComedorBundle:Menu:edit_today.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Deletes a Menu entity.
+     *
+     */
+    public function deleteTodayAction($id)
+    {
+        $form = $this->createDeleteForm($id);
+        $request = $this->getRequest();
+
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $entity = $em->getRepository('INCESComedorBundle:Menu')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Menu entity.');
+            }
+
+            $em->remove($entity);
+            $em->flush();
+        }
+
+        $route = $request->getBaseUrl();
+        return new Response($route.'/#!/menu/today');
+        //return $this->redirect($this->generateUrl('menu'));
+    }
+
     /*
      * Mostrar el menu del dia
      */
@@ -422,7 +573,6 @@ class MenuController extends Controller
 */
 
         $now = new \DateTime;
-        //print_r($now);
 
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = $em->createQueryBuilder();
@@ -679,7 +829,7 @@ class MenuController extends Controller
         $pagination = $paginator->paginate(
             $qry,
             $this->get('request')->query->get('page', 1),//page number
-            2//limit per page
+            $this->container->getParameter('RESULTS_PER_PAGE')//limit per page
         );
         return $pagination;
     }

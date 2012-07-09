@@ -7,21 +7,16 @@
 
 <div id="col-text">
 
-    <h2 id="slogan"><span></span>Place for your slogan.</h2>
     <h1>Agregar Usuario</h1>
-    <table>
-        <th>
-            <form class="usuario_form" action="{{ app.request.uriForPath('/usuario/create') }}" method="post" {{ form_enctype(form) }}>
-                {{ form_widget(form) }}
-                {#
-                Upload image <input type="file" name="photoimg" id="photoimg" />
-                #}
-                <p>
-                <button type="submit">Agregar</button>
-                </p>
-            </form>
-        </th>
-    </table>
+    <form class="usuario_form" action="{{ app.request.uriForPath('/usuario/create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        {#
+        Upload image <input type="file" name="photoimg" id="photoimg" />
+        #}
+        <p>
+        <button type="submit">Agregar</button>
+        </p>
+    </form>
     <ul class="record_actions">
         <li>
         <a href="{{ app.request.uriForPath('/#!/usuario') }}">
@@ -29,23 +24,5 @@
         </a>
         </li>
     </ul>
-    <p id="btns">
-    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
-    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
-    </p>
-
 </div> <!-- /col-text -->
-{#
-<script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.form.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.validate.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.ui.core.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.ui.widget.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker-es.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
-{% endblock %}
-#}
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

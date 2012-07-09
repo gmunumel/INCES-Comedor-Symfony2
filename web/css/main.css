@@ -70,7 +70,7 @@ ul.ul-list span.date {padding-right:10px;}
 
 #col-top {width:960px; height:5px; margin-top:15px; background:url("../design/col-top.gif") 0 0 no-repeat; font-size:0; line-height:0; overflow:hidden;}
 #col-bottom {width:960px; height:5px; margin-bottom:15px; background:url("../design/col-bottom.gif") 0 0 no-repeat; font-size:0; line-height:0; overflow:hidden;}
-#col {position:relative; padding:15px 30px 15px 20px; background:url("../design/col.gif") 0 0 repeat-y;}
+#col {position:relative; padding:15px 15px 15px 10px; background:url("../design/col.gif") 0 0 repeat-y;}
 
     /*
     #ribbon {position:absolute; top:-5px; left:0; width:100px; height:100px; background:url("../design/ribbon.gif") 0 0 no-repeat; font-size:0; line-height:0; overflow:hidden; z-index:10;}
@@ -80,7 +80,7 @@ ul.ul-list span.date {padding-right:10px;}
     /*
     #col-browser {position:relative; float:left; width:280px; height:215px; background:url("../design/browser.gif") 0 0 no-repeat;}
     */
-    #col-browser {position:relative; float:left; width:280px; height:215px; }
+    #col-browser {position:relative; float:left; width:280px; height:280px; }
     #col-browser img {position:absolute; top:28px; left:10px;}
 
     #col-text {float:right; width:600px; padding-top:15px; line-height:1.7;}

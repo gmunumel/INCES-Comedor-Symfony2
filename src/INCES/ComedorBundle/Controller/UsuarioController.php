@@ -13,7 +13,6 @@ use INCES\ComedorBundle\Form\CargaMasivaType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-
 /**
  * Usuario controller.
  *
@@ -68,7 +67,7 @@ class UsuarioController extends Controller
         $pagination = $paginator->paginate(
             $qry,
             $this->get('request')->query->get('page', 1),//page number
-            2//limit per page
+            $this->container->getParameter('RESULTS_PER_PAGE')//limit per page
         );
         return $this->render('INCESComedorBundle:Usuario:index.html.twig', array(
              'pagination' => $pagination
@@ -256,25 +255,41 @@ class UsuarioController extends Controller
         if (is_null($field))
             if(!$query || $query == '*')
                 $dql->add('select', 'u')
-                ->add('from', 'INCESComedorBundle:Usuario u');
+                ->add('from', 'INCESComedorBundle:Usuario u')
+                ->join('u.rol', 'r');
             else
-                $dql = "SELECT u FROM INCES\ComedorBundle\Entity\Usuario u WHERE " . $query;
+                $dql = "SELECT u FROM INCES\ComedorBundle\Entity\Usuario u JOIN u.rol u WHERE " . $query;
 
         elseif ($attr == '1')
-            $dql->add('select', 'u')
-            ->add('from', 'INCESComedorBundle:Usuario u')
-            ->add('orderBy', 'u.'.$field.' ASC');
+            if($field != 'rol')
+                $dql->add('select', 'u')
+                ->add('from', 'INCESComedorBundle:Usuario u')
+                ->join('u.rol', 'r')
+                ->add('orderBy', 'u.'.$field.' ASC');
+            else
+                $dql->add('select', 'u')
+                ->add('from', 'INCESComedorBundle:Usuario u')
+                ->join('u.rol', 'r')
+                ->add('orderBy', 'r.nombre ASC');
+
         else
-            $dql->add('select', 'u')
-            ->add('from', 'INCESComedorBundle:Usuario u')
-            ->add('orderBy', 'u.'.$field.' DESC');
+            if($field != 'rol')
+                $dql->add('select', 'u')
+                ->add('from', 'INCESComedorBundle:Usuario u')
+                ->join('u.rol', 'r')
+                ->add('orderBy', 'u.'.$field.' DESC');
+            else
+                $dql->add('select', 'u')
+                ->add('from', 'INCESComedorBundle:Usuario u')
+                ->join('u.rol', 'r')
+                ->add('orderBy', 'r.nombre DESC');
 
         $qry = $em->createQuery($dql);
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $qry,
             $this->get('request')->query->get('page', 1),//page number
-            2//limit per page
+            $this->container->getParameter('RESULTS_PER_PAGE')//limit per page
         );
         return $pagination;
     }
@@ -326,7 +341,7 @@ class UsuarioController extends Controller
         $pagination = $paginator->paginate(
             $qry,
             $this->get('request')->query->get('page', 1),//page number
-            2//limit per page
+            $this->container->getParameter('RESULTS_PER_PAGE')//limit per page
         );
         return $pagination;
     }
@@ -753,6 +768,29 @@ class UsuarioController extends Controller
 
         return $this->render('INCESComedorBundle:Usuario:edit_masivo.html.twig', array(
             'cm_form'    => $cm_form->createView()
+        ));
+    }
+
+    /*
+     *  Search Ajax Lunch de los usuarios que han comido
+     */
+    public function lunchTodayAction(){
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = $em->createQueryBuilder();
+        $dql->select('um')
+            ->from('INCESComedorBundle:UsuarioMenu', 'um')
+            ->join('um.usuario', 'u')
+            ->join('u.rol', 'r');
+        $qry = $em->createQuery($dql);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qry,
+            $this->get('request')->query->get('page', 1),//page number
+            $this->container->getParameter('LUNCH_PER_PAGE')//limit per page
+        );
+
+        return $this->render('INCESComedorBundle:Usuario:_lunch_today.html.twig', array(
+            'pagination'   => $pagination
         ));
     }
 }

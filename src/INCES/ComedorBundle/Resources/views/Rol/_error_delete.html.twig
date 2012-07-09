@@ -4,7 +4,11 @@
 <div id="col-text">
 
     <h2 id="slogan"><span></span>Place for your slogan.</h2>
-    <h1>Usuarios Administradores</h1>
+    <h1>Menu Modificar</h1>
+    <p>No se pudo eliminar el rol dado que está siendo utilizado por varios usuarios</p>
 
+    <a href="{{ app.request.uriForPath('/#!/rol') }}">
+        Back to the list
+    </a>
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

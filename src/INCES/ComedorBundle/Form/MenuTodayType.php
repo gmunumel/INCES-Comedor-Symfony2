@@ -5,7 +5,7 @@ namespace INCES\ComedorBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
-class MenuType extends AbstractType
+class MenuTodayType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
@@ -24,6 +24,6 @@ class MenuType extends AbstractType
 
     public function getName()
     {
-        return 'inces_comedorbundle_menutype';
+        return 'inces_comedorbundle_menutodaytype';
     }
 }

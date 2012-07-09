@@ -5,7 +5,7 @@
     <h2 id="slogan"><span></span>Place for your slogan.</h2>
     <h1>Usuario Show Factura</h1>
 
-    <table class="record_properties">
+    <table class="bordered">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -93,28 +93,6 @@
             Back to the list
         </a>
         </li>
-        {#
-        <li>
-        <a href="{{ app.request.uriForPath('/#!/usuario/') }}{{ entity.id }}/edit">
-            Edit
-        </a>
-
-        </li>
-        #}
-        {#
-        <li>
-        <form action="{{ app.request.uriForPath('/usuario/') }}{{ entity.id }}/delete" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Borrar</button>
-        </form>
-        </li>
-        #}
     </ul>
-
-    <p id="btns">
-    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
-    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
-    </p>
-
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

@@ -1,0 +1,49 @@
+{#
+{% extends "FOSUserBundle::layout.html.twig" %}
+#}
+
+{% block fos_user_content %}
+
+<div id="results">
+    <form id="form-signup-login" class="generic" action="{{ path("fos_user_security_check") }}" method="post">
+        {% if error %}
+            <p id="login-msg" class="message red" style="display:;">{{ error|trans({}, 'FOSUserBundle') }}</p>
+
+        {% endif %}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        <input class="route" type="hidden" value="{{route}}"/>
+
+        {#
+        <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+        #}
+        <div id="login-username-block" class="field">
+            <label for="username">Nombre de Usuario</label>
+            <input type="text" class="text" id="username" name="_username" value="{{ last_username }}" />
+        </div>
+
+        {#
+        <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+        #}
+        <div id="login-password-block" class="field">
+            <label for="password">Contraseña</label>
+            <input type="password" class="text" id="password" name="_password" />
+        </div>
+
+        {#
+        <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+        #}
+        <div id="login-checkbox-block" class="inline">
+            <label for="remember_me">¿Recordarme?</label>
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+        </div>
+
+        {#
+        <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
+        #}
+        <div class="action">
+            <input id="login-submit" class="submit-button login_form_btn" type="submit" value="Iniciar Sesión" />
+        </div>
+    </form>
+</div>
+{% endblock fos_user_content %}
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

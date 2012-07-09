@@ -16,8 +16,9 @@ function page_load($href) {
         $href = $href.replace("#!","");
         $str = $str[0] + $href;
         //str = str.replace("/#!","");
-        //alert("hola "+ $str);
-        $('#content').load($str); // replace body the #content with loaded html
+        //alert("hola "+ $href);
+        if($href != "/")
+            $('#content').load($str); // replace body the #content with loaded html
         $('html, body').animate({scrollTop:0}, 'slow'); // bonus
     }
 }

@@ -3,23 +3,24 @@
 
 <div id="col-text">
 
-    <h2 id="slogan"><span></span>Place for your slogan.</h2>
-    <h1>Usuario list Seach_Show</h1>
-
-    <div class="search">
-        <form action="{{ app.request.uriForPath('/usuario/search') }}" method="post">
-            <input autocomplete="off" type="text" name="query" value="{{query}}" id="search_keywords" />
-            {#
-            <input type="submit" value="search" />
-            <img id="loader" src="{{ asset('img/loader.gif') }}" style="vertical-align: middle; display: none" />
-            #}
-            <div class="help">
-                Enter some keywords (city, country, position, ...)
-            </div>
-        </form>
-    </div>
+    <table>
+        <tr class="tsearch">
+            <td>
+                <h1>Usuario</h1>
+            </td>
+            <td>
+                <div id="filter">
+                    <form class="generic" action="{{ app.request.uriForPath('/usuario/search') }}" method="get">
+                        <img src="{{ asset('img/search.png') }}" class="searchbox_submit" value="" />
+                        <input autocomplete="off" type="text" class="text" name="query" value="{{query}}" id="search_keywords" />
+                        <input type="submit" value="search" style="display:none;"/>
+                    </form>
+                </div>
+            <td>
+        </tr>
+    </table>
     {# Datos del usuario #}
-    <table class="records_list">
+    <table class="bordered">
         <thead>
             <tr>
                 <th>Nombre</th>
@@ -51,7 +52,7 @@
     </table>
 
     {# Datos de menus #}
-    <table class="records_list">
+    <table class="bordered">
         <thead>
             <tr>
                 <th>Fecha</th>
@@ -81,11 +82,5 @@
             {% endif %}
         </tbody>
     </table>
-
-    <p id="btns">
-    <a href="#"><img src="{{ asset('design/btn-tell.gif') }}" alt="" /></a>
-    <a href="#"><img src="{{ asset('design/btn-purchase.gif') }}" alt="" /></a>
-    </p>
-
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

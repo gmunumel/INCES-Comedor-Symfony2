@@ -4,9 +4,9 @@ $(document).ready(function()
         "venezuelanDate",
         function(value, element) {
             // put your own logic here, this is just a (crappy) example
-            return value.match(/^\d\d?\/\d\d?\/\d\d$/);
+            return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
         },
-        "Por favor coloque una fecha en formato dd/mm/yy"
+        "Por favor coloque una fecha en formato dd/mm/yyyy"
     );
     $.validator.addMethod(
         "userImageExtension",
@@ -42,7 +42,7 @@ $(document).ready(function()
                 return false;
             return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
         },
-        "Por favor coloque una fecha en formato dd/mm/yy"
+        "Por favor coloque una fecha en formato dd/mm/yyyy"
     );
     $('.menu_form').validate({
         rules: {
@@ -61,7 +61,25 @@ $(document).ready(function()
             'inces_comedorbundle_menutype[jugo]'     : { required       : 'Coloque el campo Jugo' },
             'inces_comedorbundle_menutype[ensalada]' : { required       : 'Coloque el campo Ensalada' },
             'inces_comedorbundle_menutype[postre]'   : { required       : 'Coloque el campo Postre' },
-            'inces_comedorbundle_menutype[dia]'      : { venezuelanDate : 'Por favor coloque una fecha en formato dd/mm/yy' }
+            'inces_comedorbundle_menutype[dia]'      : { venezuelanDate : 'Por favor coloque una fecha en formato dd/mm/yyyy' }
+        }
+    });
+    $('.menu_today_form').validate({
+        rules: {
+            'inces_comedorbundle_menutype[seco]'     : { required       : true },
+            'inces_comedorbundle_menutype[sopa]'     : { required       : true },
+            'inces_comedorbundle_menutype[salado]'   : { required       : true },
+            'inces_comedorbundle_menutype[jugo]'     : { required       : true },
+            'inces_comedorbundle_menutype[ensalada]' : { required       : true },
+            'inces_comedorbundle_menutype[postre]'   : { required       : true }
+        },
+        messages: {
+            'inces_comedorbundle_menutype[seco]'     : { required       : 'Coloque el campo Seco' },
+            'inces_comedorbundle_menutype[sopa]'     : { required       : 'Coloque el campo Sopa' },
+            'inces_comedorbundle_menutype[salado]'   : { required       : 'Coloque el campo Salado' },
+            'inces_comedorbundle_menutype[jugo]'     : { required       : 'Coloque el campo Jugo' },
+            'inces_comedorbundle_menutype[ensalada]' : { required       : 'Coloque el campo Ensalada' },
+            'inces_comedorbundle_menutype[postre]'   : { required       : 'Coloque el campo Postre' }
         }
     });
     /* TODO LIST */
@@ -123,7 +141,8 @@ $(document).ready(function()
     });
 
     // Falta definir usuariomenu
-    // Falta definir
+    // Falta definir menu_today_form El dia tiene que se igual al actual
+    // Falta
     /* END TODO LIST */
 
     $("#inces_comedorbundle_menutype_dia" ).datepicker({
@@ -208,11 +227,11 @@ $(document).ready(function()
             if(rol != "")
                 urlFinal = urlFinal + '/' + rol;
 
-            alert(urlFinal);
+            //alert(urlFinal);
             window.location.href = urlFinal;
         }
     });
-    $('button[type=submit], input[type=submit]:not(.delete_form_btn, .reporte_form_btn, .carga_masiva_form_btn)').on('click', function(e) {
+    $('[type=submit]:not(.delete_form_btn, .reporte_form_btn, .carga_masiva_form_btn, .login_form_btn)').on('click', function(e) {
         e.preventDefault();
         var form = $(this).closest('form');
         if (form.valid()){
@@ -227,8 +246,28 @@ $(document).ready(function()
         }
     });
 
+    $('.login_form_btn').on('click', function(e) {
+        e.preventDefault();
+        //var url = $(this).attr("action");
+        var url = $('.route').val();
+        $("form").ajaxForm({
+            //target: '#results',
+            success: function(msg) {
+                //alert(msg);
+                if(msg.indexOf("ERROR") != -1)
+                    $( "#results" ).html( msg );
+                else
+                    window.location.href = url;
+                //$('#content').click(msg);
+                //$(window).attr("location",msg);
+                //window.location.href = msg;
+            }
+        }).submit();
+    });
+
     $('.reporte_form_btn').on('click', function(e) {
         e.preventDefault();
+        //alert("hola");
         //$('.pprint').val("");
         //var url = $('.reporte_form_btn').parents('form').attr('action');
         var form = $(this).closest('form');
@@ -297,14 +336,16 @@ $(document).ready(function()
             if (val.length >= 3 || val == '')
             {
                 //alert(val);
-                $('#loader').show();
+                //$('#loader').show();
+                $("#lightbox, #lightbox-loader").fadeIn(300);
 
                 $('#content').load(
                     $('#search_keywords').parents('form').attr('action') + "?page=1&query=" + encodeURI(val),
                     //$('#search_keywords').parents('form').attr('action'),
                     { query: val + '*' },
                     function() {
-                        $('#loader').hide();
+                        //$('#loader').hide();
+                        $("#lightbox, #lightbox-loader").fadeOut(300);
                         //window.location.href = $('#search_keywords').parents('form').attr('action') + "?page=1&query=" + val;
                     }
                 );
@@ -386,4 +427,21 @@ $(document).ready(function()
     });
     */
 
+    // Fade In or Fade Out
+    $("a#show-panel").click(function(){
+        $("#lightbox, #lightbox-loader").fadeIn(300);
+    })
+    $("a#close-panel").click(function(){
+        $("#lightbox, #lightbox-loader").fadeOut(300);
+    })
+
+    // Desabilitando input de fecha today
+    //$(".menu_today_form #inces_comedorbundle_menutype_dia").prop("readonly", true);
+    $(".menu_today_form #inces_comedorbundle_menutodaytype_dia").attr('readonly','readonly');
+
+    $('tbody tr').not('.tsearch').click( function() {
+        window.location = $(this).find('a').attr('href');
+    }).hover( function() {
+        $(this).toggleClass('hover');
+    });
 });

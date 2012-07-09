@@ -28,3 +28,7 @@ rol_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "INCESComedorBundle:Rol:delete" }
     requirements: { _method: post }
+
+rol_error_delete:
+    pattern:  /edelete
+    defaults: { _controller: "INCESComedorBundle:Rol:errorDelete" }
