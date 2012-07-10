@@ -1,9 +1,6 @@
-<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
-</div>
 
-<div id="col-text">
+<div id="my-col-text">
 
-    <h2 id="slogan"><span></span>Place for your slogan.</h2>
     <h1>Menu Modificar</h1>
 
     <form class="menu_form" action="{{ app.request.uriForPath('/menu/') }}{{ entity.id }}/update" method="post" {{ form_enctype(edit_form) }}>

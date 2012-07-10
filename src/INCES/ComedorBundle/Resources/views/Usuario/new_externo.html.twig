@@ -1,0 +1,24 @@
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
+
+<div id="col-text">
+
+    <h1>Agregar Usuario Externo</h1>
+    <form class="usuario_form" action="{{ app.request.uriForPath('/usuario/createexterno') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        {#
+        Upload image <input type="file" name="photoimg" id="photoimg" />
+        #}
+        <p>
+        <button type="submit">Agregar</button>
+        </p>
+    </form>
+    <ul class="record_actions">
+        <li>
+        <a href="{{ app.request.uriForPath('/#!/menu/facturar') }}">
+            Regresar a la Lista
+        </a>
+        </li>
+    </ul>
+</div> <!-- /col-text -->
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

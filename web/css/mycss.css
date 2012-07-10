@@ -517,3 +517,9 @@ form.generic input#search_keywords{
     vertical-align:middle;
 }
 */
+#my-col-text {
+    float:right; 
+    width:100%; 
+    padding-top:15px; 
+    line-height:1.7;
+}

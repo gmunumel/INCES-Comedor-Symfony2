@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use INCES\ComedorBundle\Entity\Usuario;
 use INCES\ComedorBundle\Form\UsuarioType;
+use INCES\ComedorBundle\Form\UsuarioExternoType;
 use INCES\ComedorBundle\Form\CargaMasivaType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -146,6 +147,53 @@ class UsuarioController extends Controller
     }
 
     /**
+     * Displays a form to create a new Usuario entity.
+     *
+     */
+    public function newExternoAction()
+    {
+        $entity = new Usuario();
+        $form   = $this->createForm(new UsuarioExternoType(), $entity);
+
+        return $this->render('INCESComedorBundle:Usuario:new_externo.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        ));
+    }
+
+    /**
+     * Creates a new Usuario entity.
+     *
+     */
+    public function createExternoAction()
+    {
+        $entity  = new Usuario();
+        $request = $this->getRequest();
+        $form    = $this->createForm(new UsuarioExternoType(), $entity);
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($entity);
+            $em->flush();
+
+            $dir = dirname(__FILE__).'/../../../../web/img/uploaded/';
+
+            if(!is_null($form->getData()->getImage()))
+                $form->getData()->getImage()->move($dir);
+
+            //return $this->redirect($this->generateUrl('usuario_show', array('id' => $entity->getId())));
+            $route = $request->getBaseUrl();
+            return new Response($route.'/#!/menu/facturar');
+        }
+
+        return $this->render('INCESComedorBundle:Usuario:new_externo.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        ));
+    }
+
+    /**
      * Displays a form to edit an existing Usuario entity.
      *
      */
@@ -258,7 +306,7 @@ class UsuarioController extends Controller
                 ->add('from', 'INCESComedorBundle:Usuario u')
                 ->join('u.rol', 'r');
             else
-                $dql = "SELECT u FROM INCES\ComedorBundle\Entity\Usuario u JOIN u.rol u WHERE " . $query;
+                $dql = "SELECT u FROM INCES\ComedorBundle\Entity\Usuario u JOIN u.rol r WHERE " . $query;
 
         elseif ($attr == '1')
             if($field != 'rol')

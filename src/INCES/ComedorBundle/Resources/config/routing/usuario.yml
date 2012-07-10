@@ -58,3 +58,12 @@ usuario_edit_carga_masiva:
 usuario_lunch_today:
     pattern:  /lunchtoday
     defaults: { _controller: "INCESComedorBundle:Usuario:lunchToday" }
+
+usuario_new_externo:
+    pattern:  /newexterno
+    defaults: { _controller: "INCESComedorBundle:Usuario:newExterno" }
+
+usuario_create_externo:
+    pattern:  /createexterno
+    defaults: { _controller: "INCESComedorBundle:Usuario:createExterno" }
+    requirements: { _method: post }
