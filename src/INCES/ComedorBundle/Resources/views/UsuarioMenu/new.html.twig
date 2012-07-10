@@ -1,15 +1,30 @@
-<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
-</div>
 
-<div id="col-text">
+<div id="my-col-text">
 
     <h1>Crear Usuario Menu</h1>
 
-    <form class="usuariomenu_form" action="{{ app.request.uriForPath('/usuariomenu/create') }}" method="post" {{ form_enctype(form) }}>
+    <form class="usuariomenu_form generic" action="{{ app.request.uriForPath('/usuariomenu/create') }}" method="post" {{ form_enctype(form) }}>
+        {#
         {{ form_widget(form) }}
         <p>
         <button type="submit">Create</button>
         </p>
+        #}
+        <div id="usuario-menu-dia-block" class="field">
+            <label for="dia">Día</label>
+            {{ form_widget(form.dia,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="usuario-menu-usuario-block" class="field">
+            <label for="usuario">Usuario</label>
+            {{ form_widget(form.usuario,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="usuario-menu-menu-block" class="field">
+            <label for="menu">Menu</label>
+            {{ form_widget(form.menu,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div class="action">
+            <input id="login-submit" class="submit-button" type="submit" value="Agregar" />
+        </div>
     </form>
 
     <ul class="record_actions">

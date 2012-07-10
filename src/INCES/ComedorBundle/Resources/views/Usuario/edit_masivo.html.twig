@@ -1,18 +1,28 @@
-<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
-</div>
 
-<div id="col-text">
+<div id="my-col-text">
 
     <h1>Editar Masivo de Usuario </h1>
 
     <div id="messages"></div>
-    <form class="carga_masiva_form" action="{{ app.request.uriForPath('/usuario/editmasivo') }}" method="post" {{ form_enctype(cm_form) }}>
+    <form class="carga_masiva_form generic" action="{{ app.request.uriForPath('/usuario/editmasivo') }}" method="post" {{ form_enctype(cm_form) }}>
         {#
         {{ form_widget(cm_form.file) }}
         #}
+        {#
         {{ form_widget(cm_form) }}
+        #}
+        {{ form_row(cm_form._token) }}
+        <div id="carga-masiva-file-block" class="field">
+            <label for="file">Archivo</label>
+            {{ form_widget(cm_form.file,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        {#
         <br />
         <button class="carga_masiva_form_btn" type="submit">Editar</button>
+        #}
+        <div class="action">
+            <input id="login-submit" class="submit-button carga_masiva_form_btn" type="submit" value="Editar" />
+        </div>
     </form>
 
 </div> <!-- /col-text -->

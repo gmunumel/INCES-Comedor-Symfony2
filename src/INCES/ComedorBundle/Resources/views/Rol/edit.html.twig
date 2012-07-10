@@ -5,25 +5,58 @@
 
     <h1>Editar Rol</h1>
 
-    <form class="rol_form" action="{{ app.request.uriForPath('/rol/') }}{{ entity.id }}/update" method="post" {{ form_enctype(edit_form) }}>
+    <form class="rol_form generic" action="{{ app.request.uriForPath('/rol/') }}{{ entity.id }}/update" method="post" {{ form_enctype(edit_form) }}>
+        {#
         {{ form_widget(edit_form) }}
         <p>
         <button type="submit">Edit</button>
         </p>
+        #}
+        {{ form_row(edit_form._token) }}
+
+        <div id="rol-nombre-block" class="field">
+            <label for="nombre">Nombre</label>
+            {{ form_widget(edit_form.nombre,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="rol-monto-block" class="field">
+            <label for="monto">Monto</label>
+            {{ form_widget(edit_form.monto,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="rol-horaComerStart-block" class="field">
+            <label for="horaComerStart">Hora Comer Inicio</label>
+            {{ form_widget(edit_form.horaComerStart,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="rol-horaComerStartAMPM-block" class="field">
+            <label for="horaComerStartAMPM">Hora Comer Inicio AM/PM</label>
+            {{ form_widget(edit_form.horaComerStartAMPM,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="rol-horaComerEnd-block" class="field">
+            <label for="horaComerEnd">Hora Comer Fin</label>
+            {{ form_widget(edit_form.horaComerEnd,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="rol-horaComerEndAMPM-block" class="field">
+            <label for="horaComerEndAMPM">Hora Comer Fin AM/PM</label>
+            {{ form_widget(edit_form.horaComerEndAMPM,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div class="action">
+            <input id="login-submit" class="submit-button" type="submit" value="Editar" />
+        </div>
     </form>
 
     <ul class="record_actions">
         <li>
         <a href="{{ app.request.uriForPath('/#!/rol') }}">
-            Back to the list
+            Regresar a la lista
         </a>
         </li>
+        {#
         <li>
         <form action="{{ app.request.uriForPath('/rol/') }}{{ entity.id }}/delete" method="post">
             {{ form_widget(delete_form) }}
             <button class="delete_form_btn" type="submit">Delete</button>
         </form>
         </li>
+        #}
     </ul>
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

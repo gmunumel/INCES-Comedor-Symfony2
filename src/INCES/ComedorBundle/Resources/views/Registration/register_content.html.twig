@@ -1,16 +1,56 @@
-<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
-</div>
 
-<div id="col-text">
+<div id="my-col-text">
 
-    <h2 id="slogan"><span></span>Place for your slogan.</h2>
-    <h1>New Usuario Admin</h1>
+    <h1>Nuevo Usuario Administrativo</h1>
     {% form_theme form theme %}
 
-    <form class="user_admin_form" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+    <form class="user_admin_form generic" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+        {#
         {{ form_widget(form) }}
         <div>
             <input type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+        </div>
+        #}
+        {{ form_row(form._token) }}
+
+        <div id="login-admin-username-block" class="field">
+            <label for="username">Nombre de Usuario</label>
+            {{ form_widget(form.username,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="login-admin-password-block" class="field">
+            <label for="password">Contraseña</label>
+            {{ form_widget(form.plainPassword.first,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="login-admin-password2-block" class="field">
+            <label for="password2">Repetir Contraseña</label>
+            {{ form_widget(form.plainPassword.second,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="login-admin-nombre-block" class="field">
+            <label for="nombre">Nombre</label>
+            {{ form_widget(form.nombre,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="login-admin-apellido-block" class="field">
+            <label for="apellido">Apellido</label>
+            {{ form_widget(form.apellido,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="login-admin-cedula-block" class="field">
+            <label for="cedula">Cédula</label>
+            {{ form_widget(form.cedula,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="login-admin-ncarnet-block" class="field">
+            <label for="ncarnet">Número de Carnet</label>
+            {{ form_widget(form.ncarnet,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="login-admin-email-block" class="field">
+            <label for="email">Correo</label>
+            {{ form_widget(form.email,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div id="login-admin-roles-block" class="field">
+            <label for="roles">Roles</label>
+            {{ form_widget(form.roles,  { 'attr': {'class': 'text'}}) }}
+        </div>
+        <div class="action">
+            <input id="login-submit" class="submit-button" type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
         </div>
     </form>
 </div> <!-- /col-text -->

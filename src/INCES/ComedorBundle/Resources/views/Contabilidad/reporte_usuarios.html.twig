@@ -4,31 +4,24 @@
     <h2 id="slogan"><span></span>Place for your slogan.</h2>
     <h1>Reporte Usuarios</h1>
 
-    <form class="reporte_usuarios_form" action="{{ app.request.uriForPath('/contabilidad/reporteusuarios') }}" method="post">
+    <form class="reporte_usuarios_form generic" action="{{ app.request.uriForPath('/contabilidad/reporteusuarios') }}" method="post">
         <a class="reporte_usuarios_link" href="{{ app.request.uriForPath('/contabilidad/preporteusuarios') }}" alt="imprimir reporte">Imprimir Reporte</a>
-        <table>
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                    {{ form_row(filter_form.cedula) }}
-                </td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td>Filtro</td>
-                <td>
-                    {{ form_widget(filter_form.from, { 'attr': {'autocomplete': 'off'}}) }}
-                </td>
-                <td>
-                    {{ form_widget(filter_form.to, { 'attr': {'autocomplete': 'off'}}) }}
-                </td>
-            </tr>
-            <tr>
-                <td><button class="reporte_form_btn" type="submit">Filtrar</button></td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-        </table>
+
+        <div id="reporte-cedula-block" class="field">
+            <label for="Cedula">Cédula</label>
+            {{ form_widget(filter_form.cedula, { 'attr': {'autocomplete': 'off', 'class': 'text'}}) }}
+        </div>
+        <div id="reporte-from-block" class="field">
+            <label for="from">Desde</label>
+            {{ form_widget(filter_form.from, { 'attr': {'autocomplete': 'off', 'class': 'text'}}) }}
+        </div>
+        <div id="reporte-from-block" class="field">
+            <label for="from">Hasta</label>
+            {{ form_widget(filter_form.to, { 'attr': {'autocomplete': 'off', 'class': 'text'}}) }}
+        </div>
+        <div class="action">
+            <input id="login-submit" class="reporte_form_btn submit-button" type="submit" value="Filtrar" />
+        </div>
         <div id="results">
         </div>
     </form>
