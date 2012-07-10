@@ -11,9 +11,11 @@ class RegistrationController extends BaseController
 {
     public function registerAction()
     {
-        $form = $this->container->get('fos_user.registration.form');
-        $formHandler = $this->container->get('fos_user.registration.form.handler');
+        $form                = $this->container->get('fos_user.registration.form');
+        $formHandler         = $this->container->get('fos_user.registration.form.handler');
         $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
+        $request             = $this->container->get('request');
+        $route               = $request->getBaseUrl();
 
         $process = $formHandler->process($confirmationEnabled);
         if ($process) {
@@ -38,15 +40,21 @@ class RegistrationController extends BaseController
             $url = $this->container->get('router')->generate($route);
 
             //$request = $this->getRequest();
-            $request = $this->container->get('request');
+            //$request = $this->container->get('request');
             $route = $request->getBaseUrl();
-            return new Response($route.'/#!/admin');
+            return new Response($route);
             //return new RedirectResponse($url);
+        }
+        if ('POST' === $request->getMethod()) {
+            return new Response(
+                "<p>ERROR: ha ocurrido un error. Por favor, coloque otro nombre de usuario o correo.</p>"
+            );
         }
 
         return $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:register.html.'.$this->getEngine(), array(
-            'form' => $form->createView(),
+            'form'  => $form->createView(),
             'theme' => $this->container->getParameter('fos_user.template.theme'),
+            'route' => $route
         ));
     }
 }
