@@ -1,24 +1,25 @@
 
-<div id="my-col-text">
+<div id="col-browser"><a href="#"><img src="{{ asset('img/uploaded/') }}{{entity.image|replace({'/tmp/':''})}}" width="255" height="350" alt="" /></a></div>
+<div id="col-text">
 
-    <h1>Usuario Show</h1>
+    <h1>Mostrar Usuario </h1>
 
     <table class="bordered">
         <tbody>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Nombre</th>
                 <td>{{ entity.nombre }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Apellido</th>
                 <td>{{ entity.apellido }}</td>
             </tr>
-            <tr>
-                <th>Cedula</th>
+            <tr class="fix-tsearch">
+                <th>Cédula</th>
                 <td>{{ entity.cedula }}</td>
             </tr>
-            <tr>
-                <th>Ncarnet</th>
+            <tr class="fix-tsearch">
+                <th>Número de Carnet</th>
                 <td>{{ entity.ncarnet }}</td>
             </tr>
             {#
@@ -27,14 +28,16 @@
                 <td>{{ entity.ai }}</td>
             </tr>
             #}
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Correo</th>
                 <td>{{ entity.correo }}</td>
             </tr>
+            {#
             <tr>
                 <th>Imagen</th>
                 <td>{{ entity.image }}</td>
             </tr>
+            #}
         </tbody>
     </table>
 
@@ -49,7 +52,6 @@
             Editar
         </a>
         </li>
-        <li>
         <form class="generic" action="{{ app.request.uriForPath('/usuario/') }}{{ entity.id }}/delete" method="post">
             {{ form_widget(delete_form) }}
             {#
@@ -59,6 +61,5 @@
                 <input id="login-submit" class="submit-button" type="submit" value="Eliminar" />
             </div>
         </form>
-        </li>
     </ul>
 </div> <!-- /col-text -->

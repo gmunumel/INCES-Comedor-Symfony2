@@ -3,34 +3,35 @@
 
     <h1>Mostrar Menu del Día</h1>
 
-    <table class="record_properties">
+    <table class="bordered">
         <tbody>
             <tr>
+            <tr class="fix-tsearch">
                 <th>Seco</th>
                 <td>{{ entity.seco }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Sopa</th>
                 <td>{{ entity.sopa }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Salado</th>
                 <td>{{ entity.salado }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Jugo</th>
                 <td>{{ entity.jugo }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Ensalada</th>
                 <td>{{ entity.ensalada }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Postre</th>
                 <td>{{ entity.postre }}</td>
             </tr>
-            <tr>
-                <th>Dia</th>
+            <tr class="fix-tsearch">
+                <th>Día</th>
                 <td>{{ entity.dia|date('d/m/Y') }}</td>
             </tr>
         </tbody>
@@ -47,14 +48,14 @@
             Editar
         </a>
         </li>
-        <li>
         {#
+        <li>
         <form class"generic" action="{{ app.request.uriForPath('/menu/') }}{{ entity.id }}/deletetoday" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>
         </form>
-        #}
         </li>
+        #}
     </ul>
 
 </div> <!-- /col-text -->

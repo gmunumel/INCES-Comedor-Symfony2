@@ -66,12 +66,12 @@ p.message.red {
 }
 
 .success-overlay .big-icon.error {
-	background: url(../img/message-sprite.png) 0 -128px no-repeat;
+	background: 0 -128px no-repeat;
 }
 
 form.generic input.text.error {
 	border-color: #E92D6C;
-    background: url(../img/sprite_v13.png) no-repeat 250px -1262px #fff;
+    background: no-repeat 250px -1262px #fff;
 }
 
 form.modal .field.checkbox {
@@ -84,8 +84,9 @@ form.modal .field p.info.error {
 }
 
 p.form-message.error {
-	background: #E92E6C url(../img/sprite_v13.png) no-repeat -385px -25px;
+	background: #E92E6C no-repeat -385px -25px;
 }
+
 
 form input.text, form input.search, .contact-wrapper textarea {
 	padding: 10px;
@@ -167,11 +168,11 @@ form.modal .field input.text.success, form.modal .field input.text.failed {
 }
 
 form.modal .field input.text.success {
-	background: url(../img/sprite_v13.png) no-repeat 430px -1182px;
+	background: no-repeat 430px -1182px;
 }
 
 form.modal .field input.text.failed {
-	background: url(../img/sprite_v13.png) no-repeat 430px -1262px;
+	background: no-repeat 430px -1262px;
 }
 
 form.modal .field input.file {
@@ -284,7 +285,7 @@ form.generic input.text:focus {
 
 form.generic input.text.error {
 	border-color: #E92D6C;
-    background: url(../img/sprite_v13.png) no-repeat 250px -1262px #fff;
+    background: no-repeat 250px -1262px #fff;
 }
 
 form.generic .action {
@@ -522,4 +523,8 @@ form.generic input#search_keywords{
     width:70%; 
     padding-top:15px; 
     line-height:1.7;
+}
+
+.bordered .fix-tsearch th {
+    width:30%;
 }

@@ -1,6 +1,47 @@
 $(document).ready(function()
 {
     $.validator.addMethod(
+        "isEqual",
+        function(value, element) {
+            // put your own logic here, this is just a (crappy) example
+            var pass1 = $('#fos_user_registration_form_plainPassword_first').val();
+            var pass2 = $('#fos_user_registration_form_plainPassword_second').val();
+            if(pass1 == "" || pass2 == "")
+                return false;
+            if(pass1 == pass2) return true;
+            else return false;
+        },
+        "Por favor coloque un correo"
+    );
+    $.validator.addMethod(
+        "validateEmail",
+        function(value, element) {
+            // put your own logic here, this is just a (crappy) example
+            if(value == '') return true;
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\ ".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA -Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(value);
+        },
+        "Por favor coloque un correo"
+    );
+    $.validator.addMethod(
+        "validateEmailNoNull",
+        function(value, element) {
+            // put your own logic here, this is just a (crappy) example
+            if(value == '') return false;
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\ ".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA -Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(value);
+        },
+        "Por favor coloque un correo"
+    );
+    $.validator.addMethod(
+        "isANumber",
+        function(value, element) {
+            // put your own logic here, this is just a (crappy) example
+            return (value - 0) == value && value.length > 0;
+        },
+        "Por favor coloque un numero"
+    );
+    $.validator.addMethod(
         "venezuelanDate",
         function(value, element) {
             // put your own logic here, this is just a (crappy) example
@@ -13,9 +54,11 @@ $(document).ready(function()
         function(value, element) {
             // put your own logic here, this is just a (crappy) example
             //return value.match(/^\d\d?\/\d\d?\/\d\d$/);
+            if(value == '') return true;
             var val = value.split('.').pop();
-            if(val != "jpg" || val != "gif" || val != "png")
+            if(val != "jpg" && val != "gif" && val != "png")
                 return false
+            return true;
         },
         "Por favor coloque un archivo jpg|gif|png"
     );
@@ -44,6 +87,8 @@ $(document).ready(function()
         },
         "Por favor coloque una fecha en formato dd/mm/yyyy"
     );
+
+    /* --------- Inicio de las validaciones ------- */
     $('.menu_form').validate({
         rules: {
             'inces_comedorbundle_menutype[seco]'     : { required       : true },
@@ -66,44 +111,90 @@ $(document).ready(function()
     });
     $('.menu_today_form').validate({
         rules: {
-            'inces_comedorbundle_menutype[seco]'     : { required       : true },
-            'inces_comedorbundle_menutype[sopa]'     : { required       : true },
-            'inces_comedorbundle_menutype[salado]'   : { required       : true },
-            'inces_comedorbundle_menutype[jugo]'     : { required       : true },
-            'inces_comedorbundle_menutype[ensalada]' : { required       : true },
-            'inces_comedorbundle_menutype[postre]'   : { required       : true }
+            'inces_comedorbundle_menutodaytype[seco]'     : { required       : true },
+            'inces_comedorbundle_menutodaytype[sopa]'     : { required       : true },
+            'inces_comedorbundle_menutodaytype[salado]'   : { required       : true },
+            'inces_comedorbundle_menutodaytype[jugo]'     : { required       : true },
+            'inces_comedorbundle_menutodaytype[ensalada]' : { required       : true },
+            'inces_comedorbundle_menutodaytype[postre]'   : { required       : true }
         },
         messages: {
-            'inces_comedorbundle_menutype[seco]'     : { required       : 'Coloque el campo Seco' },
-            'inces_comedorbundle_menutype[sopa]'     : { required       : 'Coloque el campo Sopa' },
-            'inces_comedorbundle_menutype[salado]'   : { required       : 'Coloque el campo Salado' },
-            'inces_comedorbundle_menutype[jugo]'     : { required       : 'Coloque el campo Jugo' },
-            'inces_comedorbundle_menutype[ensalada]' : { required       : 'Coloque el campo Ensalada' },
-            'inces_comedorbundle_menutype[postre]'   : { required       : 'Coloque el campo Postre' }
+            'inces_comedorbundle_menutodaytype[seco]'     : { required       : 'Coloque el campo Seco' },
+            'inces_comedorbundle_menutodaytype[sopa]'     : { required       : 'Coloque el campo Sopa' },
+            'inces_comedorbundle_menutodaytype[salado]'   : { required       : 'Coloque el campo Salado' },
+            'inces_comedorbundle_menutodaytype[jugo]'     : { required       : 'Coloque el campo Jugo' },
+            'inces_comedorbundle_menutodaytype[ensalada]' : { required       : 'Coloque el campo Ensalada' },
+            'inces_comedorbundle_menutodaytype[postre]'   : { required       : 'Coloque el campo Postre' }
         }
     });
-    /* TODO LIST */
-    // TODO hacer validacion con archivo image y extension .gif|.jpg|.
     $('.usuario_form').validate({
         rules: {
-            'inces_comedorbundle_usuariotype[seco]'     : { required       : true },
-            'inces_comedorbundle_usuariotype[dia]'      : { venezuelanDate : true },
+            'inces_comedorbundle_usuariotype[nombre]'   : { required           : true },
+            'inces_comedorbundle_usuariotype[apellido]' : { required           : true },
+            'inces_comedorbundle_usuariotype[cedula]'   : { isANumber          : true },
+            'inces_comedorbundle_usuariotype[ncarnet]'  : { isANumber          : true },
+            'inces_comedorbundle_usuariotype[correo]'   : { validateEmail      : true },
             'inces_comedorbundle_usuariotype[image]'    : { userImageExtension : true }
         },
         messages: {
-            'inces_comedorbundle_usuariotype[seco]'     : { required       : 'Coloque el campo Seco' },
-            'inces_comedorbundle_usuariotype[dia]'      : { venezuelanDate : 'Por favor coloque una fecha en formato dd/mm/yy' },
-            'inces_comedorbundle_usuariotype[image]'    : { userImageExtension: 'La extension de la imagen debe ser gif|jpg|png' }
+            'inces_comedorbundle_usuariotype[nombre]'   : { required           : 'Coloque un Nombre' },
+            'inces_comedorbundle_usuariotype[apellido]' : { required           : 'Coloque un Apellido' },
+            'inces_comedorbundle_usuariotype[cedula]'   : { isANumber          : 'Coloque una Cédula válida' },
+            'inces_comedorbundle_usuariotype[ncarnet]'  : { isANumber          : 'Coloque un Número de Carnet válido' },
+            'inces_comedorbundle_usuariotype[correo]'   : { validateEmail      : 'Coloque un Correo válido' },
+            'inces_comedorbundle_usuariotype[image]'    : { userImageExtension : 'La extension de la imagen debe ser gif|jpg|png' }
+        }
+    });
+    $('.user_admin_form').validate({
+        rules: {
+            'fos_user_registration_form[username]'              : { required              : true },
+            'fos_user_registration_form[plainPassword][first]'  : { isEqual               : true },
+            'fos_user_registration_form[plainPassword][second]' : { isEqual               : true },
+            'fos_user_registration_form[nombre]'                : { required              : true },
+            'fos_user_registration_form[apellido]'              : { required              : true },
+            'fos_user_registration_form[cedula]'                : { isANumber             : true },
+            'fos_user_registration_form[ncarnet]'               : { isANumber             : true },
+            'fos_user_registration_form[email]'                 : { validateEmailNoNull   : true }
+        },
+        messages: {
+            'fos_user_registration_form[username]'              : { required              : 'Coloque el Nombre de Usuario'},
+            'fos_user_registration_form[plainPassword][first]'  : { isEqual               : 'Las contraseñas deben coincidir y no pueden ser vacías'},
+            'fos_user_registration_form[plainPassword][second]' : { isEqual               : 'Las contraseñas deben coincidir y no pueden ser vacías'},
+            'fos_user_registration_form[nombre]'                : { required              : 'Coloque un Nombre'},
+            'fos_user_registration_form[apellido]'              : { required              : 'Coloque un Apellido'},
+            'fos_user_registration_form[cedula]'                : { isANumber             : 'Coloque un valor válido'},
+            'fos_user_registration_form[ncarnet]'               : { isANumber             : 'Coloque un valor válido'},
+            'fos_user_registration_form[email]'                 : { validateEmailNoNull   : 'Coloque un correo válido'}
+        }
+    });
+    $('.user_admin_profile_form').validate({
+        rules: {
+            'fos_user_profile_form[user][username]'        : { required              : true },
+            'fos_user_profile_form[current]'               : { required              : true },
+            'fos_user_profile_form[user][email]'           : { validateEmailNoNull   : true }
+        },
+        messages: {
+            'fos_user_profile_form[user][username]'        : { required              : 'Colocar un Nombre de Usuario'},
+            'fos_user_profile_form[current]'               : { required              : 'Colocar una Contraseña'},
+            'fos_user_profile_form[user][email]'           : { validateEmailNoNull   : 'Colocar un correo válido'}
         }
     });
     $('.rol_form').validate({
         rules: {
-            'inces_comedorbundle_roltype[seco]'     : { required       : true },
-            'inces_comedorbundle_roltype[dia]'      : { venezuelanDate : true }
+            'inces_comedorbundle_roltype[nombre]'             : { required       : true },
+            'inces_comedorbundle_roltype[monto]'              : { isANumber      : true },
+            'inces_comedorbundle_roltype[horaComerStart]'     : { isANumber      : true },
+            'inces_comedorbundle_roltype[horaComerStartAMPM]' : { required       : true },
+            'inces_comedorbundle_roltype[horaComerEnd]'       : { isANumber      : true },
+            'inces_comedorbundle_roltype[horaComerEndAMPM]'   : { required       : true }
         },
         messages: {
-            'inces_comedorbundle_roltype[seco]'     : { required       : 'Coloque el campo Seco' },
-            'inces_comedorbundle_roltype[dia]'      : { venezuelanDate : 'Por favor coloque una fecha en formato dd/mm/yy' }
+            'inces_comedorbundle_roltype[nombre]'             : { required       : 'Coloque un Nombre' },
+            'inces_comedorbundle_roltype[monto]'              : { isANumber      : 'Coloque un valor válido' },
+            'inces_comedorbundle_roltype[horaComerStart]'     : { isANumber      : 'Coloque un valor válido' },
+            'inces_comedorbundle_roltype[horaComerStartAMPM]' : { required       : true },
+            'inces_comedorbundle_roltype[horaComerEnd]'       : { isANumber      : 'Coloque un valor válido' },
+            'inces_comedorbundle_roltype[horaComerEndAMPM]'   : { required       : true }
         }
     });
     $('.reporte_usuarios_form').validate({
@@ -130,7 +221,6 @@ $(document).ready(function()
             'inces_comedorbundle_contabilidadtype[to]'       : { dateRange    : 'Por favor verifique las fechas' }
         }
     });
-    // TODO hacer validacion con archivo file que sea .csv
     $('.carga_masiva_form').validate({
         rules: {
             'inces_comedorbundle_carga_masivatype[file]'     : { cmFileExtension : true }
@@ -140,11 +230,9 @@ $(document).ready(function()
         }
     });
 
-    // Falta definir usuariomenu
-    // Falta definir menu_today_form El dia tiene que se igual al actual
-    // Falta
-    /* END TODO LIST */
+    /* -------- Fin de las validaciones --------- */
 
+    /* -------- Propiedades generales para las fechas ------ */
     $("#inces_comedorbundle_menutype_dia" ).datepicker({
         timeFormat: 'hh:mm:ss',
         dateFormat: 'dd/mm/yy',
@@ -169,6 +257,8 @@ $(document).ready(function()
         }
     });
 
+    /* ------ Fin Propiedades generales para las fechas ----- */
+
     function changeDate(date){
         var year = date.substring(6);
         var month = date.substring(3,5);
@@ -176,12 +266,15 @@ $(document).ready(function()
         return year + '-' + month + '-' + day;
     }
     $('.reporte_usuarios_link').on('click', function(e) {
+        if(e.keyCode == 13) return false;
         e.preventDefault();
         //$('.pprint').val("print");
         //alert("print");
         var form = $(this).closest('form');
 
         if (form.valid()){
+            $("#lightbox, #lightbox-loader").fadeIn(300);
+
             var url  = $(this).attr('href');
             var ced  = $('#inces_comedorbundle_contabilidadtype_cedula').val();
             var from = $('#inces_comedorbundle_contabilidadtype_from').val();
@@ -200,16 +293,20 @@ $(document).ready(function()
             }
 
             //alert(urlFinal);
+            $("#lightbox, #lightbox-loader").fadeOut(300);
             window.location.href = urlFinal;
         }
     });
     $('.reporte_ingresos_link').on('click', function(e) {
+        if(e.keyCode == 13) return false;
         e.preventDefault();
         //$('.pprint').val("print");
         //alert("print");
         var form = $(this).closest('form');
 
         if (form.valid()){
+            $("#lightbox, #lightbox-loader").fadeIn(300);
+
             var url  = $(this).attr('href');
             var rol  = $('#inces_comedorbundle_contabilidadtype_rol').val();
             var from = $('#inces_comedorbundle_contabilidadtype_from').val();
@@ -228,18 +325,22 @@ $(document).ready(function()
                 urlFinal = urlFinal + '/' + rol;
 
             //alert(urlFinal);
+            $("#lightbox, #lightbox-loader").fadeOut(300);
             window.location.href = urlFinal;
         }
     });
     $('[type=submit]:not(.delete_form_btn, .reporte_form_btn, .carga_masiva_form_btn, .login_form_btn)').on('click', function(e) {
+        if(e.keyCode == 13) return false;
         e.preventDefault();
         var form = $(this).closest('form');
         if (form.valid()){
+            $("#lightbox, #lightbox-loader").fadeIn(300);
             $("form:first").ajaxForm({
                 //target: '#content',
                 success: function(msg) {
                     //$('#content').click(msg);
                     //$(window).attr("location",msg);
+                    $("#lightbox, #lightbox-loader").fadeOut(300);
                     window.location.href = msg;
                 }
             }).submit();
@@ -247,42 +348,44 @@ $(document).ready(function()
     });
 
     $('.login_form_btn').on('click', function(e) {
+        if(e.keyCode == 13) return false;
         e.preventDefault();
         //var url = $(this).attr("action");
         var url = $('.route').val();
-        $("form").ajaxForm({
-            //target: '#results',
-            success: function(msg) {
-                //alert(msg);
-                if(msg.indexOf("ERROR") != -1)
-                    $( "#results" ).html( msg );
-                else
-                    window.location.href = url;
-                //$('#content').click(msg);
-                //$(window).attr("location",msg);
-                //window.location.href = msg;
-            }
-        }).submit();
+        var form = $(this).closest('form');
+        if (form.valid()){
+            $("#lightbox, #lightbox-loader").fadeIn(300);
+            $("form").ajaxForm({
+                //target: '#results',
+                success: function(msg) {
+                    //alert(msg);
+                    if(msg.indexOf("ERROR") != -1)
+                        $( "#results" ).html( msg );
+                    else{
+                        $("#lightbox, #lightbox-loader").fadeOut(300);
+                        window.location.href = url;
+                    }
+                    //$('#content').click(msg);
+                    //$(window).attr("location",msg);
+                    //window.location.href = msg;
+                }
+            }).submit();
+        }
     });
 
     $('.reporte_form_btn').on('click', function(e) {
+        if(e.keyCode == 13) return false;
         e.preventDefault();
         //alert("hola");
         //$('.pprint').val("");
         //var url = $('.reporte_form_btn').parents('form').attr('action');
         var form = $(this).closest('form');
         if (form.valid()){
-            //var url = $(this).attr("action");
-            /*
-            $('#content').load(
-                url,
-                datatype: html,
-                { field: field, attr: attr }
-            );
-            */
+            $("#lightbox, #lightbox-loader").fadeIn(300);
             $("form").ajaxForm({
                 target: '#results',
                 success: function(msg) {
+                    $("#lightbox, #lightbox-loader").fadeOut(300);
                     //$('#content').click(msg);
                     //$(window).attr("location",msg);
                     //window.location.href = msg;
@@ -292,14 +395,17 @@ $(document).ready(function()
     });
 
     $('.carga_masiva_form_btn').on('click', function(e) {
+        if(e.keyCode == 13) return false;
         e.preventDefault();
         //alert("hoal");
         //var ur = $(this).parents('form').attr('action');
         var form = $(this).closest('form');
         if (form.valid()){
+            $("#lightbox, #lightbox-loader").fadeIn(300);
             $("form").ajaxForm({
                 target: '#messages',
                 success: function(msg) {
+                    $("#lightbox, #lightbox-loader").fadeOut(300);
                     //$('#content').click(msg);
                     //$(window).attr("location",msg);
                     //window.location.href = msg;
@@ -309,13 +415,16 @@ $(document).ready(function()
     });
 
     $('.delete_form_btn').on('click', function(e) {
+        if(e.keyCode == 13) return false;
         e.preventDefault();
         //var url = $(this).attr("action");
+        $("#lightbox, #lightbox-loader").fadeIn(300);
         $("form").ajaxForm({
             //target: '#content',
             success: function(msg) {
                 //$('#content').click(msg);
                 //$(window).attr("location",msg);
+                $("#lightbox, #lightbox-loader").fadeOut(300);
                 window.location.href = msg;
             }
         }).submit();
@@ -330,6 +439,7 @@ $(document).ready(function()
     })();
 
     $('#search_keywords').keyup(function(key) {
+        if(key.which == 13) return false;
 
         var val = this.value;
         delay(function(){
@@ -355,7 +465,9 @@ $(document).ready(function()
     });
 
     $(".filter").click(function(event) {
+        if(event.keyCode == 13) return false;
         event.preventDefault();
+        $("#lightbox, #lightbox-loader").fadeIn(300);
         var field = $(this).attr('value');
         var attr  = $(this).attr('asc');
         var url   = $(this).attr('href');
@@ -365,7 +477,8 @@ $(document).ready(function()
             attr = '1';
         $('#content').load(
             url,
-            { field: field, attr: attr }
+            { field: field, attr: attr },
+            $("#lightbox, #lightbox-loader").fadeOut(300);
         );
     });
 

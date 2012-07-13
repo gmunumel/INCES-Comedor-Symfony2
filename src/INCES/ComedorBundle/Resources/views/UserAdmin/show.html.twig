@@ -5,33 +5,33 @@
 
     <h1>Usuarios Administradores</h1>
 
-    <table class="record_properties">
+    <table class="bordered">
         <tbody>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Username</th>
                 <td>{{ entity.username }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Nombre</th>
                 <td>{{ entity.nombre }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Apellido</th>
                 <td>{{ entity.apellido }}</td>
             </tr>
-            <tr>
-                <th>Cedula</th>
+            <tr class="fix-tsearch">
+                <th>Cédula</th>
                 <td>{{ entity.cedula }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Número Carnet</th>
                 <td>{{ entity.ncarnet }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Email</th>
                 <td>{{ entity.email }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Roles</th>
                 {% for val in entity.roles %}
                     {% if loop.first %}
@@ -45,13 +45,16 @@
     <ul class="record_actions">
         <li>
         <a href="{{ app.request.uriForPath('/#!/admin/list') }}">
-            Back to the list
+            Regresar a la lista
         </a>
         </li>
         <li>
-        <form action="{{ app.request.uriForPath('/admin/') }}{{ entity.id }}/delete" method="post">
+        <form class="generic" action="{{ app.request.uriForPath('/admin/') }}{{ entity.id }}/delete" method="post">
             {{ form_widget(delete_form) }}
+            {#}
             <button class="delete_form_btn" type="submit">Delete</button>
+            #}
+            <input id="login-submit" class="submit-button delete_form-btn" type="submit" value="Eliminar" />
         </form>
         </li>
     </ul>

@@ -49,12 +49,13 @@
         {% block session %}{% endblock %}
 
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+        <a href="{{ app.request.uriForPath('/#!/admin/profile/edit') }}">{{app.user.username}}</a>
+            |
             <a href="{{ path('fos_user_security_logout') }}">
-                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                Cerrar Sesión
             </a>
         {% else %}
-        <a href="{{ app.request.uriForPath('/#!/admin/login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+        <a href="{{ app.request.uriForPath('/#!/admin/login') }}">Iniciar Sesión</a>
         {% endif %}
         <!--
             <a href="#">About us</a> <span>|</span>

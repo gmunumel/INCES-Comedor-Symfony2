@@ -10,15 +10,27 @@ class UserAdminType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('username')
-            ->add('nombre')
-            ->add('apellido')
-            ->add('cedula')
-            ->add('ncarnet')
+            ->add('username', 'text',
+                array('required' => false)
+            )
+            ->add('nombre', 'text',
+                array('required' => false)
+            )
+            ->add('apellido', 'text',
+                array('required' => false)
+            )
+            ->add('cedula', 'text',
+                array('required' => false)
+            )
+            ->add('ncarnet', 'text',
+                array('required' => false)
+            )
             //->add('a_i')
-            ->add('email')
+            ->add('email', 'text',
+                array('required' => false)
+            )
             ->add('roles', 'collection', array(
-                'type'      => 'choice',
+                'type'     => 'choice',
                 'options'  => array(
                     'choices'=> array(
                         'ROLE_ADMIN'    => 'Administrador',

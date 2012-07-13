@@ -2,7 +2,7 @@
 <div id="my-col-text">
 
     <h1>Agregar Rol</h1>
-    <form class="rol_form" action="{{ app.request.uriForPath('/rol/create') }}" method="post" {{ form_enctype(form) }}>
+    <form class="rol_form generic" action="{{ app.request.uriForPath('/rol/create') }}" method="post" {{ form_enctype(form) }}>
         {#
         {{ form_widget(form) }}
         <p>

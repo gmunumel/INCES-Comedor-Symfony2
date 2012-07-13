@@ -12,10 +12,14 @@ class UsuarioType extends AbstractType
         $builder
             ->add('nombre')
             ->add('apellido')
-            ->add('cedula')
+            ->add('cedula', 'text',
+                array('required' => false)
+            )
             ->add('ncarnet')
             //->add('a_i')
-            ->add('correo')
+            ->add('correo', 'text',
+                array('required' => false)
+            )
             ->add('image', 'file',
                 array('required' => false)
             )

@@ -5,16 +5,16 @@
 
     <table class="bordered">
         <tbody>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Día</th>
                 <td>{{ entity.dia|date('d-m-Y H:i:s') }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Usuario</th>
                 <td>{{ entity.usuario }}</td>
             </tr>
-            <tr>
-                <th>Menu</th>
+            <tr class="fix-tsearch">
+                <th>Menú</th>
                 {% if entity.menu != ""  %}
                     <td>{{ entity.menu }}</td>
                 {% else %}
@@ -37,7 +37,6 @@
         </a>
         </li>
         #}
-        <li>
         <form class="generic" action="{{ app.request.uriForPath('/usuariomenu/') }}{{ entity.id }}/delete" method="post">
             {{ form_widget(delete_form) }}
             {#
@@ -47,7 +46,6 @@
                 <input id="login-submit" class="delete_form_btn submit-button" type="submit" value="Eliminar" />
             </div>
         </form>
-        </li>
     </ul>
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

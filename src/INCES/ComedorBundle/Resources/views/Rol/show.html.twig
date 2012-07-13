@@ -5,19 +5,19 @@
 
     <table class="bordered">
         <tbody>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Nombre</th>
                 <td>{{ entity.nombre }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Monto</th>
                 <td>{{ entity.monto }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Hora Comienzo</th>
                 <td>{{ entity.horaComerStart }} {{ entity.horaComerStartAMPM }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Hora Finalización</th>
                 <td>{{ entity.horaComerEnd }} {{ entity.horaComerEndAMPM }}</td>
             </tr>
@@ -46,3 +46,4 @@
         </li>
     </ul>
 </div> <!-- /col-text -->
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

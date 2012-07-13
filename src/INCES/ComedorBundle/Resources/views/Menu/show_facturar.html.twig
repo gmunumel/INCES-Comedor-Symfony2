@@ -6,23 +6,25 @@
 
     <table class="bordered">
         <tbody>
+            {#
             <tr>
                 <th>Id</th>
                 <td>{{ entity.id }}</td>
             </tr>
-            <tr>
+            #}
+            <tr class="fix-tsearch">
                 <th>Nombre</th>
                 <td>{{ entity.nombre }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Apellido</th>
                 <td>{{ entity.apellido }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Cedula</th>
                 <td>{{ entity.cedula }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Ncarnet</th>
                 <td>{{ entity.ncarnet }}</td>
             </tr>
@@ -32,11 +34,11 @@
                 <td>{{ entity.ai }}</td>
             </tr>
             #}
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Correo</th>
                 <td>{{ entity.correo }}</td>
             </tr>
-            <tr>
+            <tr class="fix-tsearch">
                 <th>Imagen</th>
                 <td>{{ entity.image }}</td>
             </tr>

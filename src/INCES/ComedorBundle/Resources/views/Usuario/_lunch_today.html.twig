@@ -12,7 +12,7 @@
         <p>No hay resultados</p>
         {% endif %}
         {% for entity in pagination %}
-        <tr>
+        <tr class="tsearch">
             <td>{{ entity.usuario.cedula }}</td>
             <td>{{ entity.usuario.nombre }}</td>
             <td>{{ entity.usuario.rol.nombre }}</td>

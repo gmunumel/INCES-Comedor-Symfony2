@@ -13,10 +13,13 @@ class RegistrationFormType extends BaseType
         parent::buildForm($builder, $options);
 
         // add your custom field
-        $builder->add('nombre');
-        $builder->add('apellido');
-        $builder->add('cedula');
-        $builder->add('ncarnet');
+        $builder->add('nombre', 'text', array('required' => false));
+        $builder->add('plainPassword', 'password', array('required' => false, 'type' => 'password'));
+        $builder->add('plainPassword', 'repeated', array('required' => false, 'type' => 'password'));
+        $builder->add('apellido', 'text', array('required' => false));
+        $builder->add('cedula', 'text', array('required' => false));
+        $builder->add('ncarnet', 'text', array('required' => false));
+        $builder->add('email', 'text', array('required' => false));
         //$builder->add('roles');
         //$user = new UserAdmin();
         //$builder->add('roles' ,'choice' ,array('choices'=>$user->getRoles()));

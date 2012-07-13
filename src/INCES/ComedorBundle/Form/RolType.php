@@ -11,7 +11,9 @@ class RolType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('monto')
+            ->add('monto', 'text',
+                array('required' => false)
+            )
             ->add('horaComerStart', 'choice', array(
                 'choices' => array(
                     '00' => '00',
