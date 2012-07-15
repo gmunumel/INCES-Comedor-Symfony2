@@ -43,20 +43,9 @@
         </div>
     </form>
 
-    <ul class="record_actions">
-        <li>
-        <a href="{{ app.request.uriForPath('/#!/rol') }}">
-            Regresar a la lista
-        </a>
-        </li>
-        {#
-        <li>
-        <form action="{{ app.request.uriForPath('/rol/') }}{{ entity.id }}/delete" method="post">
-            {{ form_widget(delete_form) }}
-            <button class="delete_form_btn" type="submit">Delete</button>
-        </form>
-        </li>
-        #}
-    </ul>
+    <br />
+    <a href="{{ app.request.uriForPath('/#!/rol') }}">
+        <button type="button">Regresar a la lista</button>
+    </a>
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

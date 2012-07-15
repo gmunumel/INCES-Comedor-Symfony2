@@ -1,5 +1,7 @@
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
 
-<div id="my-col-text">
+<div id="col-text">
 
     <h1>Agregar Menu del Día</h1>
     <form class="menu_today_form generic" action="{{ app.request.uriForPath('/menu/createtoday') }}" method="post" {{ form_enctype(form) }}>
@@ -41,13 +43,10 @@
         </div>
     </form>
 
-    <ul class="record_actions">
-        <li>
-        <a href="{{ app.request.uriForPath('/#!/menu/today') }}">
-            Regresar a la lista
-        </a>
-        </li>
-    </ul>
+    <br />
+    <a href="{{ app.request.uriForPath('/#!/menu/today') }}">
+        <button type="button">Regresar a la lista</button>
+    </a>
 
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

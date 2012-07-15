@@ -1,14 +1,15 @@
+<div id="col-browser"></div>
+<div id="col-text">
 
-<div id="my-col-text">
-
-    <h2 id="slogan"><span></span>Place for your slogan.</h2>
     <h1>Reporte Ingresos</h1>
 
     <form class="reporte_ingresos_form generic" action="{{ app.request.uriForPath('/contabilidad/reporteingresos') }}" method="post">
         {#
         {{ form_widget(filter_form) }}
         #}
-        <a class="reporte_ingresos_link" href="{{ app.request.uriForPath('/contabilidad/preporteingresos') }}" alt="imprimir reporte">Imprimir Reporte</a>
+        <div class="right">
+            <a class="reporte_ingresos_link" href="{{ app.request.uriForPath('/contabilidad/preporteingresos') }}" alt="imprimir reporte"><img src="{{ asset('img/impresora1.ico') }}" alt="img" height="100" width="60" /></a>
+        </div>
 
         <div id="reporte-rol-block" class="field">
             <label for="Rol">Rol</label>

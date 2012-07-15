@@ -28,12 +28,12 @@ class Usuario
     private $apellido;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable="true")
      */
     private $cedula;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable="true")
      */
     private $ncarnet;
 
@@ -43,7 +43,7 @@ class Usuario
     private $a_i;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable="true")
      */
     private $correo;
 
@@ -240,7 +240,7 @@ class Usuario
     {
         $this->usuario_menus = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add usuario_menus
      *
@@ -254,7 +254,7 @@ class Usuario
     /**
      * Get usuario_menus
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getUsuarioMenus()
     {

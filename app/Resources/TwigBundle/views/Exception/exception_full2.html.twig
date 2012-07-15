@@ -1,0 +1,33 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+{#
+<a href="{{ app.request.uriForPath('/ticket/2/show') }}">Ticket</a>
+#}
+<div id="col-browser"><img class="error404" src="{{ asset('img/error_image.jpg') }}" width="200" height="200" alt="" /></div>
+<div id="col-text">
+    <h1>Oops! Un error ha ocurrido</h1>
+    {#
+    <h2>The server returned a "{{ status_code }} {{ status_text }}".</h2>
+    #}
+    <h2>El servidor retorno a "{{ status_code }} {{ status_text }}".</h2>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.bgiframe-2.1.2.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.validate.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.core.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.widget.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.datepicker-es.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.mouse.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.button.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.draggable.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.position.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.dialog.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
+{% endblock %}

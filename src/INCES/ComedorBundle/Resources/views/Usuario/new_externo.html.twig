@@ -1,8 +1,11 @@
 
-<div id="my-col-text">
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
+
+<div id="col-text">
 
     <h1>Agregar Usuario Externo</h1>
-    <form class="usuario_form generic" action="{{ app.request.uriForPath('/usuario/createexterno') }}" method="post" {{ form_enctype(form) }}>
+    <form class="usuario_externo_form generic" action="{{ app.request.uriForPath('/usuario/createexterno') }}" method="post" {{ form_enctype(form) }}>
         {#
         {{ form_widget(form) }}
         Upload image <input type="file" name="photoimg" id="photoimg" />
@@ -14,18 +17,19 @@
         #}
         {{ form_row(form._token) }}
 
-        <div id="usuario-nombre-block" class="field">
+        <div id="usuario-externo-nombre-block" class="field">
             <label for="nombre">Nombre</label>
             {{ form_widget(form.nombre,  { 'attr': {'class': 'text'}}) }}
         </div>
-        <div id="usuario-apellido-block" class="field">
+        <div id="usuario-externo-apellido-block" class="field">
             <label for="apellido">Apellido</label>
             {{ form_widget(form.apellido,  { 'attr': {'class': 'text'}}) }}
         </div>
-        <div id="usuario-cedula-block" class="field">
+        <div id="usuario-externo-cedula-block" class="field">
             <label for="cedula">Cédula</label>
             {{ form_widget(form.cedula,  { 'attr': {'class': 'text'}}) }}
         </div>
+        {#
         <div id="usuario-ncarnet-block" class="field">
             <label for="ncarnet">Número de Carnet</label>
             {{ form_widget(form.ncarnet,  { 'attr': {'class': 'text'}}) }}
@@ -38,6 +42,7 @@
             <label for="image">Imagen</label>
             {{ form_widget(form.image,  { 'attr': {'class': 'text'}}) }}
         </div>
+        #}
         <div id="usuario-roles-block" class="field">
             <label for="rol">Roles</label>
             {{ form_widget(form.rol,  { 'attr': {'class': 'text'}}) }}

@@ -10,4 +10,9 @@ class DefaultController extends Controller
     {
         return $this->render('INCESComedorBundle:Default:index.html.twig');
     }
+
+    public function errorAction()
+    {
+        return $this->render('INCESComedorBundle:Default:error.html.twig');
+    }
 }

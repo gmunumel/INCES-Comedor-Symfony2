@@ -1,4 +1,5 @@
-<div id="my-col-text">
+<div id="col-browser"></div>
+<div id="col-text">
 
     <h1>Editar Usuario Administrativo</h1>
     {% form_theme form theme %}
@@ -41,7 +42,7 @@
             {{ form_widget(form.current,  { 'attr': {'class': 'text'}}) }}
         </div>
         <div class="action">
-            <input id="login-submit" class="login_form_btn submit-button" type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+            <input id="login-submit" class="login_form_btn submit-button" type="submit" value="Actualizar" />
         </div>
     </form>
 </div> <!-- /col-text -->

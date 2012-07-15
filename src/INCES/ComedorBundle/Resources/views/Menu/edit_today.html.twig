@@ -1,5 +1,5 @@
 
-<div id="my-col-text">
+<div id="my2-col-text">
 
     <h1>Menu Modificar del Día</h1>
 
@@ -42,13 +42,10 @@
         </div>
     </form>
 
-    <ul class="record_actions">
-        <li>
-        <a href="{{ app.request.uriForPath('/#!/menu/today') }}">
-            Regresar a la lista
-        </a>
-        </li>
-    </ul>
+    <br />
+    <a href="{{ app.request.uriForPath('/#!/menu/today') }}">
+        <button type="button">Regresar a la lista</button>
+    </a>
 
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

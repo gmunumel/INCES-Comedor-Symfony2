@@ -11,15 +11,25 @@ class UsuarioExternoType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('nombre')
-            ->add('apellido')
-            ->add('cedula')
-            ->add('ncarnet')
-            //->add('a_i')
-            ->add('correo')
-            ->add('image', 'file',
+            ->add('nombre', 'text',
                 array('required' => false)
             )
+            ->add('apellido', 'text',
+                array('required' => false)
+            )
+            ->add('cedula', 'text',
+                array('required' => false)
+            )
+            //->add('ncarnet', 'text',
+            //    array('required' => false)
+            //)
+            //->add('a_i')
+            //->add('correo', 'text',
+            //    array('required' => false)
+            //)
+            //->add('image', 'file',
+            //    array('required' => false)
+            //)
             ->add('rol', 'entity', array(
                 'class' => 'INCESComedorBundle:Rol',
                 'query_builder' => function(EntityRepository $er) {

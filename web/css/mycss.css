@@ -236,7 +236,7 @@ form.page .field.checkbox ul li {
 }
 
 form#form-signup-login {
-	width: 280px;
+	width: 150px;
 	margin: 15px auto;
     /*background: url(../img/seperator.png) no-repeat top center;*/
     padding-top: 30px;
@@ -264,7 +264,7 @@ form.generic label span {
 	font-weight: normal;
 }
 
-form.generic input.text {
+form.generic input.text, .mybutton {
 	font-size: 14px;
 	border-color: #ddd;
 	-webkit-transition: border-color .2s linear;
@@ -283,16 +283,16 @@ form.generic input.text {
 form.generic input.text:focus {
 }
 
-form.generic input.text.error {
+form.generic input.text.error, .mybutton {
 	border-color: #E92D6C;
     background: no-repeat 250px -1262px #fff;
 }
 
-form.generic .action {
+form.generic .action, .mybutton {
 	overflow: hidden;
 }
 
-form.generic a.button, form.generic #login-submit, form.generic input.submit-btn {
+form.generic a.button, form.generic #login-submit, form.generic input.submit-btn, .mybutton {
     cursor: pointer;
 	display: block;
 	line-height: 34px;
@@ -311,22 +311,24 @@ form.generic a.button, form.generic #login-submit, form.generic input.submit-btn
     -webkit-box-shadow: 0 0 0 1px rgba(255, 255, 255, .4) inset, 0 1px #fff;
     text-shadow: 0 -1px rgba(0, 0, 0, .2);
     text-align: center;
+    text-decoration:none;
 }
 
-form.generic a.button:hover, form.generic #login-submit:hover, form.generic input.submit-btn:hover {
+form.generic a.button:hover, form.generic #login-submit:hover, form.generic input.submit-btn:hover, .mybutton:hover {
 	background-color: #FF3E24;
+	color: #fff;
 }
 
-form.generic a.button:active, form.generic #login-submit:active, form.generic input.submit-btn:active {
+form.generic a.button:active, form.generic #login-submit:active, form.generic input.submit-btn:active, .mybutton:active {
 	background-color: #BD0000;
     box-shadow: 0 1px 2px rgba(0, 0, 0, .2) inset, 0 1px #fff;
     -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2) inset, 0 1px #fff;
     -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2) inset, 0 1px #fff;
 }
 
-form.generic #login-submit, form.generic input.submit-btn {
+form.generic #login-submit, form.generic input.submit-btn, .mybutton {
     height: 36px;
-    width: 280px;
+    width: 150px;
     padding: 0 0 1px;
 }
 
@@ -350,7 +352,7 @@ form.generic #login-submit, form.generic input.submit-btn {
 
 .side-dock .special-social-block .fb_edge_widget_with_comment {
     float: right;
-    top: 200px;
+    top: 150px;
     margin-right: 16px;
 }
 
@@ -433,7 +435,7 @@ tbody tr.hover {
     border-left: 1px solid #ccc;
     border-top: 1px solid #ccc;
     padding: 5px;
-    text-align: left;    
+    text-align: center;    
 }
 
 .bordered th {
@@ -519,12 +521,31 @@ form.generic input#search_keywords{
 }
 */
 #my-col-text {
-    float:right; 
-    width:70%; 
+    /*float:right; */
+    width:75%; 
     padding-top:15px; 
     line-height:1.7;
+    margin-left: 100px;
+}
+
+table.together{
+    /*float:right; */
+    text-align:center;
+    width: 100px;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 .bordered .fix-tsearch th {
     width:30%;
 }
+
+.center{
+    text-align:center;
+}
+
+.right{
+    text-align:right;
+    float: right;
+}
+

@@ -1,7 +1,5 @@
-<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
-</div>
 
-<div id="col-text">
+<div id="my-col-text">
     <table>
         <tr class="tsearch">
             <td>
@@ -12,7 +10,7 @@
                     <form class="generic" action="{{ app.request.uriForPath('/menu/search') }}" method="get">
                         <img src="{{ asset('img/search.png') }}" class="searchbox_submit" value="" />
                         <input autocomplete="off" type="text" class="text" name="query" value="{{query}}" id="search_keywords" />
-                        <input type="submit" value="search" style="display:none;"/>
+                        <input class="search_keywords" type="submit" value="search" style="display:none;"/>
                     </form>
                 </div>
             <td>
@@ -66,11 +64,11 @@
                     <th><a class="filter" value="postre"  asc="1" href="{{ path('menu_search') }}">Postre</a></th>
                     {% endif %}
                     {% if field == "dia" and attr == "1" %}
-                    <th><a class="filter" value="dia"  asc="{{attr}}" href="{{ path('menu_search') }}">Dia /\</a></th>
+                    <th><a class="filter" value="dia"  asc="{{attr}}" href="{{ path('menu_search') }}">Día /\</a></th>
                     {% elseif field == "dia" and attr == "0" %}
-                    <th><a class="filter" value="dia"  asc="{{attr}}" href="{{ path('menu_search') }}">Dia \/</a></th>
+                    <th><a class="filter" value="dia"  asc="{{attr}}" href="{{ path('menu_search') }}">Día \/</a></th>
                     {% else %}
-                    <th><a class="filter" value="dia"  asc="1" href="{{ path('menu_search') }}">Dia</a></th>
+                    <th><a class="filter" value="dia"  asc="1" href="{{ path('menu_search') }}">Día</a></th>
                     {% endif %}
                     {% else %}
                     <th><a class="filter" value="seco"     asc="1" href="{{ path('menu_search') }}">Seco</a></th>
@@ -79,7 +77,7 @@
                     <th><a class="filter" value="jugo"     asc="1" href="{{ path('menu_search') }}">Jugo</a></th>
                     <th><a class="filter" value="ensalada" asc="1" href="{{ path('menu_search') }}">Ensalada</a></th>
                     <th><a class="filter" value="postre"   asc="1" href="{{ path('menu_search') }}">Postre</a></th>
-                    <th><a class="filter" value="dia"      asc="1" href="{{ path('menu_search') }}">Dia</a></th>
+                    <th><a class="filter" value="dia"      asc="1" href="{{ path('menu_search') }}">Día</a></th>
                     {% endif %}
                     {% else %}
                     <th><a class="filter" value="seco"     asc="1" href="{{ path('menu_search') }}">Seco</a></th>
@@ -88,9 +86,9 @@
                     <th><a class="filter" value="jugo"     asc="1" href="{{ path('menu_search') }}">Jugo</a></th>
                     <th><a class="filter" value="ensalada" asc="1" href="{{ path('menu_search') }}">Ensalada</a></th>
                     <th><a class="filter" value="postre"   asc="1" href="{{ path('menu_search') }}">Postre</a></th>
-                    <th><a class="filter" value="dia"      asc="1" href="{{ path('menu_search') }}">Dia</a></th>
+                    <th><a class="filter" value="dia"      asc="1" href="{{ path('menu_search') }}">Día</a></th>
                     {% endif %}
-                    <th>Actions</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -107,19 +105,15 @@
                     <td>{{ entity.postre }}</td>
                     <td>{% if entity.dia %}{{ entity.dia|date('d/m/Y') }}{% endif%}</td>
                     <td>
-                        <ul>
-                            <li>
-                            {#
-                            <a href="{{ path('menu_show', { 'id': entity.id }) }}">show</a>
-                            #}
-                            <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/show">show2</a>
-                            </li>
-                            {% if is_granted("ROLE_USER") %}
-                            <li>
-                            <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edit">edit2</a>
-                            </li>
-                            {% endif %}
-                        </ul>
+                        {#
+                        <a href="{{ path('menu_show', { 'id': entity.id }) }}">show</a>
+                        #}
+                        {#
+                        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/show"><img src="{{ asset('img/Search.ico') }}" class="searchbox_submit" value="" width="10" height="10" /></a>
+                        #}
+                        {% if is_granted("ROLE_USER") %}
+                        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edit"><img src="{{ asset('img/edit.ico') }}" value="" height="30" width="30" /></a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

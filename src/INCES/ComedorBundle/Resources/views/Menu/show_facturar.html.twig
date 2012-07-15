@@ -1,5 +1,4 @@
 <div id="col-browser"><a href="#"><img src="{{ asset('img/uploaded/') }}{{entity.image|replace({'/tmp/':''})}}" width="255" height="350" alt="" /></a></div>
-
 <div id="col-text">
 
     <h1>Mostrar Usuario Factura</h1>
@@ -21,11 +20,11 @@
                 <td>{{ entity.apellido }}</td>
             </tr>
             <tr class="fix-tsearch">
-                <th>Cedula</th>
+                <th>Cédula</th>
                 <td>{{ entity.cedula }}</td>
             </tr>
             <tr class="fix-tsearch">
-                <th>Ncarnet</th>
+                <th>Número de Carnet</th>
                 <td>{{ entity.ncarnet }}</td>
             </tr>
             {#
@@ -45,11 +44,11 @@
         </tbody>
     </table>
 
-    <ul class="record_actions">
-        <li>
-        <form action="{{ app.request.uriForPath('/menu/facturar/procesar') }}" method="post">
+    <br />
+    <h3>Menus del Día</h3>
+        <form class="generic" action="{{ app.request.uriForPath('/menu/facturar/procesar') }}" method="post">
             <input type="hidden" id="usuario" name="usuario" value="{{entity.id}}" />
-            <table class="records_list">
+            <table class="bordered">
                 <thead>
                     <tr>
                         <th></th>
@@ -63,9 +62,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% if menus|length == 0 %}
-                    <p>No hay resultados</p>
-                    {% endif %}
                     {% for entity in menus %}
                     <tr>
                         <td><input type="radio" name="menus" value="{{entity.id}}" /></td>
@@ -81,19 +77,24 @@
                 </tbody>
             </table>
 
+            <br />
+            <br />
+            <div class="action right">
+                <input id="login-submit" class="submit-button" type="submit" value="Facturar" />
+            </div>
+            {#
             <button type="submit">Facturar</button>
+            #}
         </form>
         {#
         <a href="{{ app.request.uriForPath('/#!/menu/facturar/procesar') }}">
             Facturar
         </a>
         #}
-        </li>
-        <li>
+        <br />
         <a href="{{ app.request.uriForPath('/#!/menu/facturar') }}">
-            Regresar a la lista
+            <button type="button">Regresar a la lista</button>
         </a>
-        </li>
     </ul>
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

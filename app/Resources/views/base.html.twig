@@ -37,7 +37,9 @@
         <hr class="noscreen" />
 
         <!-- LightBox -->
+        {#
         <a id="show-panel" href="#">Show Panel</a>
+        #}
         <div id="lightbox-loader"></div><!-- /lightbox-panel -->
 
         <!-- Div lightbox
@@ -126,7 +128,7 @@
                     <div>
                         <ul>
                             <li><a href="{{ app.request.uriForPath('/#!/admin/list') }}"><span>Listar</span></a></li>
-                            <li><a href="{{ app.request.uriForPath('/#!/admin/usuarios/new') }}"><span>Agregar</span></a></li>
+                            <li><a href="{{ app.request.uriForPath('/#!/admin/register') }}"><span>Agregar</span></a></li>
                             <li><a href="{{ app.request.uriForPath('/#!/admin/profile/edit') }}"><span>Editar mi información</span></a></li>
                         </ul>
                     </div>

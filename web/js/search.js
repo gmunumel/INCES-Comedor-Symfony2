@@ -145,6 +145,18 @@ $(document).ready(function()
             'inces_comedorbundle_usuariotype[image]'    : { userImageExtension : 'La extension de la imagen debe ser gif|jpg|png' }
         }
     });
+    $('.usuario_externo_form').validate({
+        rules: {
+            'inces_comedorbundle_usuarioexternotype[nombre]'   : { required           : true },
+            'inces_comedorbundle_usuarioexternotype[apellido]' : { required           : true },
+            'inces_comedorbundle_usuarioexternotype[cedula]'   : { isANumber          : true }
+        },
+        messages: {
+            'inces_comedorbundle_usuarioexternotype[nombre]'   : { required           : 'Coloque un Nombre' },
+            'inces_comedorbundle_usuarioexternotype[apellido]' : { required           : 'Coloque un Apellido' },
+            'inces_comedorbundle_usuarioexternotype[cedula]'   : { isANumber          : 'Coloque una Cédula válida' }
+        }
+    });
     $('.user_admin_form').validate({
         rules: {
             'fos_user_registration_form[username]'              : { required              : true },
@@ -266,7 +278,6 @@ $(document).ready(function()
         return year + '-' + month + '-' + day;
     }
     $('.reporte_usuarios_link').on('click', function(e) {
-        if(e.keyCode == 13) return false;
         e.preventDefault();
         //$('.pprint').val("print");
         //alert("print");
@@ -298,7 +309,6 @@ $(document).ready(function()
         }
     });
     $('.reporte_ingresos_link').on('click', function(e) {
-        if(e.keyCode == 13) return false;
         e.preventDefault();
         //$('.pprint').val("print");
         //alert("print");
@@ -329,8 +339,7 @@ $(document).ready(function()
             window.location.href = urlFinal;
         }
     });
-    $('[type=submit]:not(.delete_form_btn, .reporte_form_btn, .carga_masiva_form_btn, .login_form_btn)').on('click', function(e) {
-        if(e.keyCode == 13) return false;
+    $('[type=submit]:not(.search_keywords, .delete_form_btn, .reporte_form_btn, .carga_masiva_form_btn, .login_form_btn)').on('click', function(e) {
         e.preventDefault();
         var form = $(this).closest('form');
         if (form.valid()){
@@ -348,7 +357,6 @@ $(document).ready(function()
     });
 
     $('.login_form_btn').on('click', function(e) {
-        if(e.keyCode == 13) return false;
         e.preventDefault();
         //var url = $(this).attr("action");
         var url = $('.route').val();
@@ -374,7 +382,6 @@ $(document).ready(function()
     });
 
     $('.reporte_form_btn').on('click', function(e) {
-        if(e.keyCode == 13) return false;
         e.preventDefault();
         //alert("hola");
         //$('.pprint').val("");
@@ -395,7 +402,6 @@ $(document).ready(function()
     });
 
     $('.carga_masiva_form_btn').on('click', function(e) {
-        if(e.keyCode == 13) return false;
         e.preventDefault();
         //alert("hoal");
         //var ur = $(this).parents('form').attr('action');
@@ -415,7 +421,6 @@ $(document).ready(function()
     });
 
     $('.delete_form_btn').on('click', function(e) {
-        if(e.keyCode == 13) return false;
         e.preventDefault();
         //var url = $(this).attr("action");
         $("#lightbox, #lightbox-loader").fadeIn(300);
@@ -438,30 +443,29 @@ $(document).ready(function()
         };
     })();
 
-    $('#search_keywords').keyup(function(key) {
-        if(key.which == 13) return false;
+    $('#search_keywords').keyup(function(e) {
+        if(e.keyCode == 13) return false;
+        var val = this.value + '*';
+        if (val.length >= 3 || val == '*') {
+            delay(function(){
+                if (val.length >= 3 || val == '*') {
+                    //alert(val);
+                    //$('#loader').show();
+                    $("#lightbox, #lightbox-loader").fadeIn(300);
 
-        var val = this.value;
-        delay(function(){
-            if (val.length >= 3 || val == '')
-            {
-                //alert(val);
-                //$('#loader').show();
-                $("#lightbox, #lightbox-loader").fadeIn(300);
-
-                $('#content').load(
-                    $('#search_keywords').parents('form').attr('action') + "?page=1&query=" + encodeURI(val),
-                    //$('#search_keywords').parents('form').attr('action'),
-                    { query: val + '*' },
-                    function() {
-                        //$('#loader').hide();
-                        $("#lightbox, #lightbox-loader").fadeOut(300);
-                        //window.location.href = $('#search_keywords').parents('form').attr('action') + "?page=1&query=" + val;
-                    }
-                );
-            }
-
-        }, 800 );
+                    $('#content').load(
+                        $('#search_keywords').parents('form').attr('action') + "?page=1&query=" + encodeURI(val),
+                        //$('#search_keywords').parents('form').attr('action'),
+                        { query: val },
+                        function() {
+                            //$('#loader').hide();
+                            $("#lightbox, #lightbox-loader").fadeOut(300);
+                            //window.location.href = $('#search_keywords').parents('form').attr('action') + "?page=1&query=" + val;
+                        }
+                    );
+                }
+            }, 800 );
+        }
     });
 
     $(".filter").click(function(event) {
@@ -478,7 +482,7 @@ $(document).ready(function()
         $('#content').load(
             url,
             { field: field, attr: attr },
-            $("#lightbox, #lightbox-loader").fadeOut(300);
+            $("#lightbox, #lightbox-loader").fadeOut(300)
         );
     });
 

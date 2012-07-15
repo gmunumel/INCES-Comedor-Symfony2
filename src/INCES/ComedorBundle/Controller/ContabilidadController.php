@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ContabilidadController extends Controller
 {
     public function indexAction(){
-        return new Response("hola");
+        return $this->render('INCESComedorBundle:Contabilidad:index.html.twig');
     }
 
     public function isValid($value){

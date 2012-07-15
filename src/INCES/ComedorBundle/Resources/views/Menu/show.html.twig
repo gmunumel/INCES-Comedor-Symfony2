@@ -36,23 +36,20 @@
                 <td>{{ entity.postre }}</td>
             </tr>
             <tr class="fix-tsearch">
-                <th>Dia</th>
+                <th>Día</th>
                 <td>{{ entity.dia|date('d/m/Y') }}</td>
             </tr>
         </tbody>
     </table>
 
-    <ul class="record_actions">
-        <li>
-        <a href="{{ app.request.uriForPath('/#!/menu') }}">
-            Regresar a la lista
-        </a>
-        </li>
-        <li>
-        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edit">
-            Editar
-        </a>
-        </li>
+    <br />
+    <a class="mybutton" href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edit">
+        Editar
+    </a>
+    <br />
+    <a href="{{ app.request.uriForPath('/#!/menu') }}">
+        <button type="submit">Regresar a la lista</button>
+    </a>
         {#
         <li>
         <form action="{{ app.request.uriForPath('/menu/') }}{{ entity.id }}/delete" method="post">
@@ -61,7 +58,6 @@
         </form>
         </li>
         #}
-    </ul>
 
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

@@ -11,14 +11,18 @@ function page_load($href) {
     //alert($href);
     //alert(document.URL);
     if($href != undefined && $href.substring(0, 2) == '#!') {
-        $str = document.URL;
-        $str = $str.split("/#!");
-        $href = $href.replace("#!","");
-        $str = $str[0] + $href;
+        $str      = document.URL;
+        $str      = $str.split("/#!");
+        $href     = $href.replace("#!","");
+        $loadPage = $str[0] + $href;
+        //alert($str);
         //str = str.replace("/#!","");
         //alert("hola "+ $href);
         if($href != "/")
-            $('#content').load($str); // replace body the #content with loaded html
+            $('#content').load($loadPage, function(response, status, xhr) {
+                if (status == "error") $('#content').load($str[0] + '/error');
+            }); // replace body the #content with loaded html
+
         $('html, body').animate({scrollTop:0}, 'slow'); // bonus
     }
 }

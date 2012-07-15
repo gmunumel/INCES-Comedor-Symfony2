@@ -1,7 +1,5 @@
-<div id="col-browser">
-</div>
 
-<div id="col-text">
+<div id="my-col-text">
 
     <table>
         <tr class="tsearch">
@@ -73,6 +71,7 @@
                         <th><a class="filter" value="ncarnet"    asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
                         <th><a class="filter" value="rol"        asc="1" href="{{ path('usuario_search_ajax') }}">Rol</a></th>
                         {% endif %}
+                        <th>Correo</th>
                         <th>Imagen</th>
                         <th>Acciones</th>
                     </tr>
@@ -91,13 +90,13 @@
                             <td>{{ entity.apellido }}</td>
                             <td>{{ entity.ncarnet }}</td>
                             <td>{{ entity.rol.nombre }}</td>
-                            <td>{{ entity.image }}</td>
+                            <td>{{ entity.correo }}</td>
+                            <td><img src="{{ asset('img/uploaded/') }}{{entity.image|replace({'/tmp/':''})}}" width="40" height="40" alt="" /></td>
                             <td>
-                                <a href="{{ app.request.uriForPath('/#!/usuario/') }}{{ entity.id }}/show">Mostrar</a>
                                 {% if is_granted("ROLE_ADMIN")  %}
-                                <li>
-                                <a href="{{ app.request.uriForPath('/#!/usuario/') }}{{ entity.id }}/edit">edit2</a>
-                                </li>
+                                <a href="{{ app.request.uriForPath('/#!/usuario/') }}{{ entity.id }}/edit"><img src="{{ asset('img/edit.ico') }}" height="30" width="30" /></a>
+                                {% else %}
+                                    <p>N/A</p>
                                 {% endif %}
                             </td>
                         </tr>
@@ -107,11 +106,6 @@
                     #}
                 </tbody>
             </table>
-            {% if is_granted("ROLE_USER") %}
-            <a href="{{ app.request.uriForPath('/#!/usuario/new') }}">
-                Create a new entry
-            </a>
-            {% endif %}
             {#
             <ul>
                 <li>
@@ -136,6 +130,13 @@
             <div class="navigation">
                 {{pagination.render()|replace({'usuario': '#!/usuario'})|raw}}
             </div>
+            {% endif %}
+
+            {% if is_granted("ROLE_USER") %}
+            <br />
+            <a class="mybutton" href="{{ app.request.uriForPath('/#!/usuario/new') }}">
+                Crear Nuevo
+            </a>
             {% endif %}
             <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
 

@@ -42,24 +42,15 @@
     </table>
 
     <ul class="record_actions">
-        <li>
-        <a href="{{ app.request.uriForPath('/#!/usuario/') }}">
-            Regresar a la lista
-        </a>
-        </li>
-        <li>
-        <a href="{{ app.request.uriForPath('/usuario/') }}{{ entity.id }}/edit">
-            Editar
-        </a>
-        </li>
+        <a class="mybutton" href="{{ app.request.uriForPath('/#!/usuario/') }}{{ entity.id }}/edit">Editar</a>
         <form class="generic" action="{{ app.request.uriForPath('/usuario/') }}{{ entity.id }}/delete" method="post">
             {{ form_widget(delete_form) }}
-            {#
-            <button type="submit">Borrar</button>
-            #}
             <div class="action">
                 <input id="login-submit" class="submit-button" type="submit" value="Eliminar" />
             </div>
         </form>
+        <a href="{{ app.request.uriForPath('/#!/usuario/') }}">
+            <button type="button">Regresar a la lista</button>
+        </a>
     </ul>
 </div> <!-- /col-text -->

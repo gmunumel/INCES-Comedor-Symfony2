@@ -1,7 +1,5 @@
-<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
-</div>
 
-<div id="col-text">
+<div id="my-col-text">
 
     <table>
         <tr class="tsearch">
@@ -65,7 +63,6 @@
                     <th><a class="filter" value="apellido"   asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
                     <th><a class="filter" value="ncarnet"    asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
                     <th><a class="filter" value="rol"        asc="1" href="{{ path('usuario_search_ajax') }}">Rol</a></th>
-                    <th>Imagen</th>
                     {% endif %}
                     {% else %}
                     <th><a class="filter" value="cedula"     asc="1" href="{{ path('usuario_search_ajax') }}">Cédula</a></th>
@@ -73,8 +70,10 @@
                     <th><a class="filter" value="apellido"   asc="1" href="{{ path('usuario_search_ajax') }}">Apellido</a></th>
                     <th><a class="filter" value="ncarnet"    asc="1" href="{{ path('usuario_search_ajax') }}">Número Carnet</a></th>
                     <th><a class="filter" value="rol"        asc="1" href="{{ path('usuario_search_ajax') }}">Rol</a></th>
-                    <th>Imagen</th>
                     {% endif %}
+                    <th>Correo</th>
+                    <th>Imagen</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -93,13 +92,14 @@
                         <td>{{ entity.apellido }}</td>
                         <td>{{ entity.ncarnet }}</td>
                         <td>{{ entity.rol.nombre }}</td>
-                        <td>{{ entity.image }}</td>
+                        <td>{{ entity.correo }}</td>
+                        <td><img src="{{ asset('img/uploaded/') }}{{entity.image|replace({'/tmp/':''})}}" width="40" height="40" alt="" /></td>
                         <td>
+                            {#
                             <a href="{{ app.request.uriForPath('/#!/usuario/') }}{{ entity.id }}/show">Mostrar</a>
+                            #}
                             {% if is_granted("ROLE_ADMIN")  %}
-                            <li>
-                            <a href="{{ app.request.uriForPath('/#!/usuario/') }}{{ entity.id }}/edit">edit2</a>
-                            </li>
+                            <a href="{{ app.request.uriForPath('/#!/usuario/') }}{{ entity.id }}/edit"><img src="{{ asset('img/edit.ico') }}" class="searchbox_submit" value=""  /></a>
                             {% endif %}
                         </td>
                     </tr>

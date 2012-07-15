@@ -2,6 +2,10 @@ INCESComedorBundle_homepage:
     pattern:  /
     defaults: { _controller: INCESComedorBundle:Default:index}
 
+INCESComedorBundle_error:
+    pattern:  /error
+    defaults: { _controller: INCESComedorBundle:Default:error}
+
 INCESComedorBundle_menu:
     resource: "@INCESComedorBundle/Resources/config/routing/menu.yml"
     prefix:   /menu

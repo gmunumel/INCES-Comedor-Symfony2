@@ -1,5 +1,7 @@
+<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
+</div>
 
-<div id="my-col-text">
+<div id="col-text">
 
     <h1>Nuevo Usuario Administrativo</h1>
     {% form_theme form theme %}
@@ -52,7 +54,7 @@
             {{ form_widget(form.roles,  { 'attr': {'class': 'text'}}) }}
         </div>
         <div class="action">
-            <input id="login-submit" class="login_form_btn submit-button" type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+            <input id="login-submit" class="login_form_btn submit-button" type="submit" value="Registrar" />
         </div>
     </form>
 </div> <!-- /col-text -->
