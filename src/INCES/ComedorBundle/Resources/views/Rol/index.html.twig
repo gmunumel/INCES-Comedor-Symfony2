@@ -21,7 +21,7 @@
                 <td>{{ entity.horaComerStart }} {{ entity.horaComerStartAMPM }}</td>
                 <td>{{ entity.horaComerEnd }} {{ entity.horaComerEndAMPM }}</td>
                 <td>
-                    <a href="{{ app.request.uriForPath('/#!/rol/') }}{{ entity.id }}/show"><img src="{{ asset('img/show.ico') }}" height="30" width="30" /></a>
+                    {#<a href="{{ app.request.uriForPath('/#!/rol/') }}{{ entity.id }}/show"><img src="{{ asset('img/show.ico') }}" height="30" width="30" /></a>#}
                     <a href="{{ app.request.uriForPath('/#!/rol/') }}{{ entity.id }}/edit"><img src="{{ asset('img/edit.ico') }}" height="30" width="30" /></a>
                 </td>
             </tr>

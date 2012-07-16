@@ -30,12 +30,12 @@
                 <td>{% if entity.dia %}{{ entity.dia|date('d/m/Y') }}{% endif%}</td>
                 <td>
                     <ul>
-                        <li>
+                        {#<li>
                         <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/showtoday">show</a>
-                        </li>
-                        <li>
-                        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edittoday">edit</a>
-                        </li>
+                        </li>#}
+  
+                        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edittoday"><img src="{{ asset('img/edit.ico') }}" height="30" width="30" /></a>
+
                     </ul>
                 </td>
             </tr>

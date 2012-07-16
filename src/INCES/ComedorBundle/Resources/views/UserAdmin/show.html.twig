@@ -43,12 +43,10 @@
     </table>
 
     <ul class="record_actions">
-        <li>
-        <a href="{{ app.request.uriForPath('/#!/admin/list') }}">
-            Regresar a la lista
-        </a>
-        </li>
-        <li>
+
+        <a href="{{ app.request.uriForPath('/#!/admin/list') }}"><img src="{{ asset('img/back.ico') }}" height="40" width="40" /></a>
+
+
         <form class="generic" action="{{ app.request.uriForPath('/admin/') }}{{ entity.id }}/delete" method="post">
             {{ form_widget(delete_form) }}
             {#}
@@ -56,7 +54,7 @@
             #}
             <input id="login-submit" class="submit-button delete_form-btn" type="submit" value="Eliminar" />
         </form>
-        </li>
+
     </ul>
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

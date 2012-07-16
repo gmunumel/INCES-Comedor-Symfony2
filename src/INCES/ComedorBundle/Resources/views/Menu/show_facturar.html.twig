@@ -37,10 +37,10 @@
                 <th>Correo</th>
                 <td>{{ entity.correo }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            {#<tr class="fix-tsearch">
                 <th>Imagen</th>
                 <td>{{ entity.image }}</td>
-            </tr>
+            </tr>#}
         </tbody>
     </table>
 
@@ -92,9 +92,7 @@
         </a>
         #}
         <br />
-        <a href="{{ app.request.uriForPath('/#!/menu/facturar') }}">
-            <button type="button">Regresar a la lista</button>
-        </a>
+        <a href="{{ app.request.uriForPath('/#!/menu/facturar') }}"><img src="{{ asset('img/back.ico') }}" height="40" width="40" /></a>
     </ul>
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
