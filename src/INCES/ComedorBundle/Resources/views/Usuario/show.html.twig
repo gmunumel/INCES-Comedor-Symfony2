@@ -41,14 +41,19 @@
         </tbody>
     </table>
 
+	<a class="mybutton" href="{{ app.request.uriForPath('/#!/usuario/') }}{{ entity.id }}/edit">Editar</a>
     <ul class="record_actions">
+	{#
         <a class="mybutton" href="{{ app.request.uriForPath('/#!/usuario/') }}{{ entity.id }}/edit">Editar</a>
+	#}
         <form class="generic" action="{{ app.request.uriForPath('/usuario/') }}{{ entity.id }}/delete" method="post">
             {{ form_widget(delete_form) }}
             <div class="action">
                 <input id="login-submit" class="submit-button" type="submit" value="Eliminar" />
             </div>
         </form>
-        <a href="{{ app.request.uriForPath('/#!/usuario/') }}"><img src="{{ asset('img/back.ico') }}" height="40" width="40" /></a>
+	<a href="{{ app.request.uriForPath('/#!/usuario/') }}"><img src="{{ asset('img/back.ico') }}" height="50" width="50" />
+	</a>
     </ul>
 </div> <!-- /col-text -->
+

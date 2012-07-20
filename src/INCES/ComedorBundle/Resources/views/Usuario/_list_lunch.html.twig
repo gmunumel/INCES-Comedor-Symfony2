@@ -76,7 +76,7 @@
                         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
                     </div>
                     {% for entity in pagination %}
-                    <tr>
+                    <tr class="tsearch">
                         <td>{{ entity.dia|date("d-m-Y H:i:s") }}</td>
                         <td>{{ entity.usuario.cedula }}</td>
                         <td>{{ entity.usuario.nombre }}</td>

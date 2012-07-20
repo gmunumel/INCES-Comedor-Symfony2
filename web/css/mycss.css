@@ -549,3 +549,6 @@ table.together{
     float: right;
 }
 
+#fix-menu{
+    margin:0 auto;
+}

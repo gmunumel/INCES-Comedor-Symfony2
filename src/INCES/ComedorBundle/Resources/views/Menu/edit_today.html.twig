@@ -41,11 +41,12 @@
             <input id="login-submit" class="submit-button" type="submit" value="Modificar" />
         </div>
     </form>
-
+    <a href="{{ app.request.uriForPath('/#!/menu/today') }}"><img src="{{ asset('img/back.ico') }}" height="50" width="50" />
+    </a>
     <br />
-    <a href="{{ app.request.uriForPath('/#!/menu/today') }}"><img src="{{ asset('img/back.ico') }}" height="40" width="40" /></a>
-
 </div> <!-- /col-text -->
+
+
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
 
 

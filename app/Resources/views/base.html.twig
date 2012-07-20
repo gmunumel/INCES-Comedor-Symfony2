@@ -33,7 +33,7 @@
     <!-- Header -->
     <div id="header">
 
-        <h1 id="logo"><a href="./" title="[Go to homepage]"><img src="{{ asset('img/inces.jpg') }}" width="120" height="90" alt="" /></a></h1>
+        <h1 id="logo"><img src="{{ asset('img/Inces3.gif') }}" width="150" height="100" alt="" /></h1>
         <hr class="noscreen" />
 
         <!-- LightBox -->
@@ -82,6 +82,8 @@
 
     <!-- Menu -->
     <br />
+
+    <div id="fix-menu">
     {% if is_granted("ROLE_ADMIN") %}
         <div id="menu">
             <ul class="menu">
@@ -148,9 +150,9 @@
                         </ul>
                     </div>
                 </li>
-                <li class="last"><a href="#"><span></span></a></li>
             </ul>
         </div>
+
     {% elseif is_granted("ROLE_GERENTE") %}
         <div id="menu">
             <ul class="menu">
@@ -193,7 +195,6 @@
                         </ul>
                     </div>
                 </li>
-                <li class="last"><span>&nbsp;&nbsp;&nbsp;</span></li>
             </ul>
         </div>
     {% elseif is_granted("ROLE_OPERADOR") %}
@@ -219,7 +220,7 @@
             </ul>
         </div>
     {% endif %}
-
+    </div>	
     <!-- End Menu -->
 
     <!-- Promo -->
@@ -374,13 +375,14 @@
 
     <!-- Footer -->
     <div id="footer">
+	<h1 id="logo"><img src="{{ asset('img/down_principal.jpg') }}" width="900" height="90" alt="" /></h1>
 
         <!-- Do you want remove this backlinks? Look at www.nuviotemplates.com/payment.php -->
-        <p class="f-right"><a href="http://www.nuviotemplates.com/">Free
+        {#<p class="f-right"><a href="http://www.nuviotemplates.com/">Free
         web templates</a> presented by <a
         href="http://www.qartin.cz/">QARTIN</a> &ndash; Our tip: <a
         href="http://last-minute.invia.pl">Wakacje</a> <a
-        href="http://dovolenka.invia.sk">Dovolenka</a></p>
+        href="http://dovolenka.invia.sk">Dovolenka</a></p>#}
         <!-- Do you want remove this backlinks? Look at www.nuviotemplates.com/payment.php -->
 
         <!--<p>Copyright &copy;&nbsp;2008 <strong><a href="#">Your

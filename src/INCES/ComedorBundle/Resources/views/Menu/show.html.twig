@@ -11,31 +11,31 @@
                 <td>{{ entity.id }}</td>
             </tr>
             #}
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Seco</th>
                 <td>{{ entity.seco }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Sopa</th>
                 <td>{{ entity.sopa }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Salado</th>
                 <td>{{ entity.salado }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Jugo</th>
                 <td>{{ entity.jugo }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Ensalada</th>
                 <td>{{ entity.ensalada }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Postre</th>
                 <td>{{ entity.postre }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Día</th>
                 <td>{{ entity.dia|date('d/m/Y') }}</td>
             </tr>
@@ -47,9 +47,7 @@
         Editar
     </a>
     <br />
-    <a href="{{ app.request.uriForPath('/#!/menu') }}">
-        <button type="submit">Regresar a la lista</button>
-    </a>
+    <a href="{{ app.request.uriForPath('/#!/menu') }}"><img src="{{ asset('img/back.ico') }}" height="40" width="40" /></a>
         {#
         <li>
         <form action="{{ app.request.uriForPath('/menu/') }}{{ entity.id }}/delete" method="post">

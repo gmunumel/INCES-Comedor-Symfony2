@@ -444,6 +444,7 @@ $(document).ready(function()
     })();
 
     $('#search_keywords').keyup(function(e) {
+        e.preventDefault();
         if(e.keyCode == 13) return false;
         var val = this.value + '*';
         if (val.length >= 3 || val == '*') {
@@ -543,6 +544,10 @@ $(document).ready(function()
         }
     });
     */
+
+    $('#search_keywords').bind("keypress", function (e) {
+       if (e.keyCode == 13) return false;
+    });
 
     // Fade In or Fade Out
     $("a#show-panel").click(function(){

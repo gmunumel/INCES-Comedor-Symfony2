@@ -11,19 +11,19 @@
                 <td>{{ entity.id }}</td>
             </tr>
             #}
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Nombre</th>
                 <td>{{ entity.nombre }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Apellido</th>
                 <td>{{ entity.apellido }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Cédula</th>
                 <td>{{ entity.cedula }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Número de Carnet</th>
                 <td>{{ entity.ncarnet }}</td>
             </tr>
@@ -33,11 +33,11 @@
                 <td>{{ entity.ai }}</td>
             </tr>
             #}
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Correo</th>
                 <td>{{ entity.correo }}</td>
             </tr>
-            {#<tr class="fix-tsearch">
+            {#<tr class="tsearch">
                 <th>Imagen</th>
                 <td>{{ entity.image }}</td>
             </tr>#}
@@ -63,7 +63,7 @@
                 </thead>
                 <tbody>
                     {% for entity in menus %}
-                    <tr>
+                    <tr class="tsearch">
                         <td><input type="radio" name="menus" value="{{entity.id}}" /></td>
                         <td>{{ entity.seco }}</td>
                         <td>{{ entity.sopa }}</td>
@@ -91,8 +91,9 @@
             Facturar
         </a>
         #}
-        <br />
-        <a href="{{ app.request.uriForPath('/#!/menu/facturar') }}"><img src="{{ asset('img/back.ico') }}" height="40" width="40" /></a>
+	<a href="{{ app.request.uriForPath('/#!/menu/facturar') }}"><img src="{{ asset('img/back.ico') }}" height="50" width="50" />
+        </a>
     </ul>
 </div> <!-- /col-text -->
+
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>

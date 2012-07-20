@@ -44,7 +44,7 @@ class ContabilidadController extends Controller
             if(true){
 
                 /* TODO Hacer el calculo del dinero ganado */
-                $montoTotal = 0;
+                $montoTotal = 0.0;
                 $cantidadTotal = 0;
                 //print_r($filterForm->get('from')->getData()->format('d/m/Y'));
                 $from  = $filterForm->get('from')->getData();
@@ -108,7 +108,7 @@ class ContabilidadController extends Controller
 
                 // Get monto total
                 foreach($pagination as $value){
-                    $montoTotal += intval($value->getUsuario()->getRol()->getMonto());
+                    $montoTotal += floatval($value->getUsuario()->getRol()->getMonto());
                 }
 
                 // Get total values
@@ -258,7 +258,7 @@ class ContabilidadController extends Controller
         //if ($this->isValid($filterForm)) {
 
         /* TODO Hacer el calculo del dinero ganado */
-        $montoTotal = 0;
+        $montoTotal = 0.0;
         $cantidadTotal = 0;
         //print_r($filterForm->get('from')->getData()->format('d/m/Y'));
         /*
@@ -324,7 +324,7 @@ class ContabilidadController extends Controller
 
         // Get monto total
         foreach($pagination as $value){
-            $montoTotal += intval($value->getUsuario()->getRol()->getMonto());
+            $montoTotal += floatval($value->getUsuario()->getRol()->getMonto());
         }
 
         // Get total values
