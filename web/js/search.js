@@ -367,10 +367,10 @@ $(document).ready(function()
                 //target: '#results',
                 success: function(msg) {
                     //alert(msg);
+                    $("#lightbox, #lightbox-loader").fadeOut(300);
                     if(msg.indexOf("ERROR") != -1)
                         $( "#results" ).html( msg );
                     else{
-                        $("#lightbox, #lightbox-loader").fadeOut(300);
                         window.location.href = url;
                     }
                     //$('#content').click(msg);

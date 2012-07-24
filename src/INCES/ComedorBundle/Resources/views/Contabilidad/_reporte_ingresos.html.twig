@@ -1,4 +1,4 @@
-<p>
+<h3>
 {% if from == "" or to == "" %}
     Cantidad de personas totales es <b>{{cantidadTotal}}</b>
 {% else %}
@@ -6,9 +6,10 @@
 {% endif %}
 <br />
 Monto ganado: <b>{{montoTotal}}</b>
-</p>
+</h3>
 {# Totales #}
-<table style="border:1px solid black;">
+
+<table class="bordered">
     <thead>
         <tr>
             <th>Rol</th>
@@ -32,8 +33,8 @@ Monto ganado: <b>{{montoTotal}}</b>
 {# Get users by role #}
 {% for key, len in totals %}
     {% if len.0 > 0 %}
-        <p>{{ key }}</p>
-        <table class="records_list">
+        <ul><li><h3>{{ key }}</h3></li></ul>
+        <table class="bordered">
             <thead>
                 <tr>
                     <th>Fecha</th>
