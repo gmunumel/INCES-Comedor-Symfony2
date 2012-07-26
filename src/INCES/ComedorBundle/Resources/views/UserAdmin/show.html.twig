@@ -1,37 +1,35 @@
-<div id="col-browser">{#<a href="#"><img src="{{ asset('img/browser.gif') }}" width="255" height="177" alt="" /></a>#}
-</div>
 
-<div id="col-text">
+<div id="my-col-text">
 
     <h1>Usuarios Administradores</h1>
 
     <table class="bordered">
         <tbody>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Username</th>
                 <td>{{ entity.username }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Nombre</th>
                 <td>{{ entity.nombre }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Apellido</th>
                 <td>{{ entity.apellido }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Cédula</th>
                 <td>{{ entity.cedula }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Número Carnet</th>
                 <td>{{ entity.ncarnet }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Email</th>
                 <td>{{ entity.email }}</td>
             </tr>
-            <tr class="fix-tsearch">
+            <tr class="tsearch">
                 <th>Roles</th>
                 {% for val in entity.roles %}
                     {% if loop.first %}
@@ -44,7 +42,7 @@
 
     <ul class="record_actions">
 
-        <a href="{{ app.request.uriForPath('/#!/admin/list') }}"><img src="{{ asset('img/back.ico') }}" height="40" width="40" /></a>
+
 
 
         <form class="generic" action="{{ app.request.uriForPath('/admin/') }}{{ entity.id }}/delete" method="post">
@@ -54,7 +52,9 @@
             #}
             <input id="login-submit" class="submit-button delete_form-btn" type="submit" value="Eliminar" />
         </form>
-
+    </br>
+        <a href="{{ app.request.uriForPath('/#!/admin/list') }}"><img src="{{ asset('img/back.ico') }}" height="50" width="50" />
+	</a>
     </ul>
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
