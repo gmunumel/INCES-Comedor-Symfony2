@@ -23,8 +23,8 @@
             <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Cedula</th>
-                <th>Ncarnet</th>
+                <th>Cédula</th>
+                <th>Número Carnet</th>
                 {#
                 <th>A_i</th>
                 #}
@@ -62,7 +62,7 @@
                 <td>No hay información disponible.</td>
             {% else %}
                 {% for entity in usuariomenu %}
-                    <tr>
+                    <tr class="tsearch">
                         {% set hora = entity.dia|date("H") %}
                         {% set ampm = "am" %}
                         {% if hora > 12 %}

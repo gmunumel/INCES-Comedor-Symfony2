@@ -9,6 +9,11 @@ contabilidad_reporte_ingresos:
     defaults: { _controller: "INCESComedorBundle:Contabilidad:reporteIngresos" }
     requirements: { _method: get|post }
 
+contabilidad_reporte_ingresos_today:
+    pattern:  /reporteingresostoday
+    defaults: { _controller: "INCESComedorBundle:Contabilidad:reporteIngresosToday" }
+    requirements: { _method: get|post }
+
 contabilidad_reporte_usuarios:
     pattern:  /reporteusuarios
     defaults: { _controller: "INCESComedorBundle:Contabilidad:reporteUsuarios" }
@@ -21,3 +26,7 @@ contabilidad_print_reporte_usuarios:
 contabilidad_print_reporte_ingresos:
     pattern:  /preporteingresos/{from}/{to}/{rol}
     defaults: { _controller: "INCESComedorBundle:Contabilidad:printReporteIngresos", rol: "", from: "", to: ""}
+
+contabilidad_print_reporte_ingresos_today:
+    pattern:  /preporteingresostoday
+    defaults: { _controller: "INCESComedorBundle:Contabilidad:printReporteIngresosToday", rol: "", from: "", to: ""}

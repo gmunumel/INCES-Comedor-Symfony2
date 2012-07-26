@@ -29,6 +29,115 @@ class ContabilidadController extends Controller
         $rol  = $value->get('rol')->getData();
     }
 
+    public function reporteIngresosTodayAction(){
+
+        $from = new \DateTime('now');
+        $to   = new \DateTime('now');
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $request    = $this->getRequest();
+        $filterForm = $this->createForm(new ContabilidadType());
+        //$filterForm->bindRequest($request);
+
+        if ($request->getMethod() == 'POST') {
+            $filterForm->bindRequest($request);
+            //print_r($filterForm->getData());
+            //if($filterForm->isValid()){
+            //if ($this->isValid($filterForm)) {
+            if(true){
+
+                /* TODO Hacer el calculo del dinero ganado */
+                $montoTotal = 0.0;
+                $cantidadTotal = 0;
+                //print_r($filterForm->get('from')->getData()->format('d/m/Y'));
+                //$from  = $filterForm->get('from')->getData();
+                //$to    = $filterForm->get('to')->getData();
+                $rol   = $filterForm->get('rol')->getData();
+                $_roles = $em->getRepository('INCESComedorBundle:Rol')->findAll();
+                //print_r($rol);
+                //if($from != "") $from = $filterForm->get('from')->getData()->format('d/m/Y');
+                //if($to   != "") $to   = $filterForm->get('to')->getData()->format('d/m/Y');
+
+                $dql = $em->createQueryBuilder();
+                // First Case: fechas no vacio y rol vacio
+                if($from != "" and $to != "" and $rol == "" )
+                    $dql->select('um', 'u', 'r')
+                        ->from('INCESComedorBundle:UsuarioMenu', 'um')
+                        ->join('um.usuario', 'u')
+                        ->join('u.rol', 'r')
+                        ->where("um.dia <= '". $to->modify('+1 day')->format('Y-m-d'). "'")
+                        ->andWhere("um.dia >= '". $from->modify('-1 day')->format('Y-m-d'). "'")
+                        ->addOrderby('r.id', 'ASC');
+                // Second Case: fechas no vacio y rol no vacio
+                else
+                    $dql->select('um', 'u', 'r')
+                        ->from('INCESComedorBundle:UsuarioMenu', 'um')
+                        ->join('um.usuario', 'u')
+                        ->join('u.rol', 'r')
+                        ->where('r.id = '. $rol->getId())
+                        ->andWhere("um.dia <= '". $to->modify('+1 day')->format('Y-m-d'). "'")
+                        ->andWhere("um.dia >= '". $from->modify('-1 day')->format('Y-m-d'). "'")
+                        ->addOrderby('r.id', 'ASC');
+
+                $qry = $em->createQuery($dql);
+                $pagination = $qry->getResult();
+                /*
+                $paginator  = $this->get('knp_paginator');
+                $pagination = $paginator->paginate(
+                    $qry,
+                    $this->get('request')->query->get('page', 1),//page number
+                    2//limit per page
+                );
+                 */
+
+                // Get cantidadTotal
+                $cantidadTotal = count($pagination);
+
+                // Get monto total
+                foreach($pagination as $value){
+                    $montoTotal += floatval($value->getUsuario()->getRol()->getMonto());
+                }
+
+                // Get total values
+                $totals = array();
+                $count  = 0;
+                $money  = 0.0;
+                foreach($_roles as $rol){
+                    foreach($pagination as $value){
+                        if($rol == $value->getUsuario()->getRol()->getNombre()){
+                            $count++;
+                            $money = floatval($value->getUsuario()->getRol()->getMonto());
+                        }
+                    }
+                    $money = $money * $count;
+                    if($count == 0)
+                        $temp = array((string)$rol => array("0", (string)$money));
+                    else
+                        $temp = array((string)$rol => array((string)$count, (string)$money));
+                    $count  = 0;
+                    $money  = 0.0;
+                    $totals = array_merge((array)$totals, (array)$temp);
+                }
+
+                return $this->render('INCESComedorBundle:Contabilidad:_reporte_ingresos_today.html.twig', array(
+                     //'entities' => $entities
+                     //'filter_form' => $filterForm->createView(),
+                    'pagination'     => $pagination
+                    ,'montoTotal'    => $montoTotal
+                    ,'cantidadTotal' => $cantidadTotal
+                    ,'from'          => $from
+                    ,'to'            => $to
+                    ,'totals'        => $totals
+                ));
+            }
+        }
+
+        return $this->render('INCESComedorBundle:Contabilidad:reporte_ingresos_today.html.twig', array(
+             //'entities' => $entities
+            'filter_form' => $filterForm->createView()
+        ));
+    }
+
     public function reporteIngresosAction(){
 
         $em = $this->getDoctrine()->getEntityManager();
@@ -235,7 +344,7 @@ class ContabilidadController extends Controller
         $qry = $em->createQuery($dql);
         $pagination = $qry->getResult();
 
-        $html = $this->renderView('INCESComedorBundle:Contabilidad:_reporte_usuarios.html.twig', array(
+        $html = $this->renderView('INCESComedorBundle:Contabilidad:_print_reporte_usuarios.html.twig', array(
              //'entities' => $entities
              //'filter_form' => $filterForm->createView(),
             'pagination'     => $pagination
@@ -243,6 +352,113 @@ class ContabilidadController extends Controller
             ,'to'            => $to
         ));
         return $this->printReporte($html, "ReporteUsuarios");
+    }
+
+    public function printReporteIngresosTodayAction($rol = "", $from = "", $to = ""){
+
+        $from = new \DateTime('now');
+        $to   = new \DateTime('now');
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $request    = $this->getRequest();
+        //$filterForm = $this->createForm(new ContabilidadType());
+        //$filterForm->bindRequest($request);
+
+        //$filterForm->bindRequest($request);
+        //print_r($filterForm->getData());
+        //if($filterForm->isValid()){
+        //if ($this->isValid($filterForm)) {
+
+        /* TODO Hacer el calculo del dinero ganado */
+        $montoTotal = 0.0;
+        $cantidadTotal = 0;
+        //print_r($filterForm->get('from')->getData()->format('d/m/Y'));
+        /*
+        $from  = $filterForm->get('from')->getData();
+        $to    = $filterForm->get('to')->getData();
+        $rol   = $filterForm->get('rol')->getData();
+        */
+        $_roles = $em->getRepository('INCESComedorBundle:Rol')->findAll();
+        //print_r($rol);
+        //if($from != "") $from = $filterForm->get('from')->getData()->format('d/m/Y');
+        //if($to   != "") $to   = $filterForm->get('to')->getData()->format('d/m/Y');
+
+        $dql = $em->createQueryBuilder();
+        // First Case: fechas no vacio y rol vacio
+        if($from != "" and $to != "" and $rol == "" )
+            $dql->select('um', 'u', 'r')
+            ->from('INCESComedorBundle:UsuarioMenu', 'um')
+            ->join('um.usuario', 'u')
+            ->join('u.rol', 'r')
+            //->where("um.dia <= '". $to. "'")
+            //->andWhere("um.dia >= '". $from. "'")
+            ->andWhere("um.dia <= '". $to->modify('+1 day')->format('Y-m-d'). "'")
+            ->andWhere("um.dia >= '". $from->modify('-1 day')->format('Y-m-d'). "'")
+            ->addOrderby('r.id', 'ASC');
+        // Second Case: fechas no vacio y rol no vacio
+        else
+            $dql->select('um', 'u', 'r')
+            ->from('INCESComedorBundle:UsuarioMenu', 'um')
+            ->join('um.usuario', 'u')
+            ->join('u.rol', 'r')
+            ->where('r.id = '. $rol)
+            //->andWhere("um.dia <= '". $to. "'")
+            //->andWhere("um.dia >= '". $from. "'")
+            ->andWhere("um.dia <= '". $to->modify('+1 day')->format('Y-m-d'). "'")
+            ->andWhere("um.dia >= '". $from->modify('-1 day')->format('Y-m-d'). "'")
+            ->addOrderby('r.id', 'ASC');
+
+        $qry = $em->createQuery($dql);
+        $pagination = $qry->getResult();
+                /*
+                $paginator  = $this->get('knp_paginator');
+                $pagination = $paginator->paginate(
+                    $qry,
+                    $this->get('request')->query->get('page', 1),//page number
+                    2//limit per page
+                );
+                 */
+
+        // Get cantidadTotal
+        $cantidadTotal = count($pagination);
+
+        // Get monto total
+        foreach($pagination as $value){
+            $montoTotal += floatval($value->getUsuario()->getRol()->getMonto());
+        }
+
+        // Get total values
+        $totals = array();
+        $count  = 0;
+        $money  = 0.0;
+        foreach($_roles as $rol){
+            foreach($pagination as $value){
+                if($rol == $value->getUsuario()->getRol()->getNombre()){
+                    $count++;
+                    $money = floatval($value->getUsuario()->getRol()->getMonto());
+                }
+            }
+            $money = $money * $count;
+            if($count == 0)
+                $temp = array((string)$rol => array("0", (string)$money));
+            else
+                $temp = array((string)$rol => array((string)$count, (string)$money));
+            $count  = 0;
+            $money  = 0.0;
+            $totals = array_merge((array)$totals, (array)$temp);
+        }
+
+        $html = $this->renderView('INCESComedorBundle:Contabilidad:_print_reporte_ingresos_today.html.twig', array(
+            //'entities' => $entities
+            //'filter_form' => $filterForm->createView(),
+            'pagination'     => $pagination
+            ,'montoTotal'    => $montoTotal
+            ,'cantidadTotal' => $cantidadTotal
+            ,'from'          => $from
+            ,'to'            => $to
+            ,'totals'        => $totals
+        ));
+        return $this->printReporte($html, "ReporteIngresosHoy");
     }
 
     public function printReporteIngresosAction($rol = "", $from = "", $to = ""){
@@ -348,7 +564,7 @@ class ContabilidadController extends Controller
             $totals = array_merge((array)$totals, (array)$temp);
         }
 
-        $html = $this->renderView('INCESComedorBundle:Contabilidad:_reporte_ingresos.html.twig', array(
+        $html = $this->renderView('INCESComedorBundle:Contabilidad:_print_reporte_ingresos.html.twig', array(
             //'entities' => $entities
             //'filter_form' => $filterForm->createView(),
             'pagination'     => $pagination
