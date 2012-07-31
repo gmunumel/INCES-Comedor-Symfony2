@@ -29,23 +29,32 @@
                 <td>{{ entity.postre }}</td>
                 <td>{% if entity.dia %}{{ entity.dia|date('d/m/Y') }}{% endif%}</td>
                 <td>
-                    <ul>
-                        {#<li>
-                        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/showtoday">show</a>
-                        </li>#}
-  
-                        <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edittoday"><img src="{{ asset('img/edit.ico') }}" height="30" width="30" /></a>
-
-                    </ul>
-                </td>
+                                       {% if is_granted("ROLE_ADMIN") %}
+                                               <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edittoday"><img src="{{ asset('img/edit.ico') }}" height="30" width="30" /></a>
+                                       {% elseif is_granted("ROLE_GERENTE") %}
+                                               <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edittoday"><img src="{{ asset('img/edit.ico') }}" height="30" width="30" /></a>
+ 				       {% elseif is_granted("ROLE_OPERADOR") %}
+					       <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edittoday"><img src="{{ asset('img/edit.ico') }}" height="30" width="30" /></a>
+                                       {% endif %}
+               </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     <br />
-    <a class="mybutton" href="{{ app.request.uriForPath('/#!/menu/newtoday') }}">
-        Crear Nuevo
-    </a>
+	{% if is_granted("ROLE_ADMIN") %}
+    		<a class="mybutton" href="{{ app.request.uriForPath('/#!/menu/newtoday') }}">
+        	Crear Nuevo
+    		</a>
+	{% elseif is_granted("ROLE_GERENTE") %}
+		<a class="mybutton" href="{{ app.request.uriForPath('/#!/menu/newtoday') }}">
+        	Crear Nuevo
+    		</a>
+	{% elseif is_granted("ROLE_OPERADOR") %}
+		<a class="mybutton" href="{{ app.request.uriForPath('/#!/menu/newtoday') }}">
+        	Crear Nuevo
+    		</a>
+	{% endif %}
 
 </div> <!-- /col-text -->
 <script type="text/javascript" src="{{ asset('js/search.js') }}"></script>
