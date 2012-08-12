@@ -37,9 +37,19 @@
     </table>
 
     <br />
+		{% if is_granted("ROLE_ADMIN") %}
     <a class="mybutton" href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edittoday">
         Editar
     </a>
+		{% elseif is_granted("ROLE_GERENTE") %}
+   <a class="mybutton" href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edittoday">
+        Editar
+    </a>
+		{% elseif is_granted("ROLE_OPERADOR") %}
+<a class="mybutton" href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edittoday">
+        Editar
+    </a>
+		{% endif %}
     <br />
     <a href="{{ app.request.uriForPath('/#!/menu/today') }}"><img src="{{ asset('img/back.ico') }}" height="50" width="50" /></a>
 </div> <!-- /col-text -->

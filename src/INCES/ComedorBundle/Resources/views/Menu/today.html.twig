@@ -35,6 +35,8 @@
                                                <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edittoday"><img src="{{ asset('img/edit.ico') }}" height="30" width="30" /></a>
  				       {% elseif is_granted("ROLE_OPERADOR") %}
 					       <a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/edittoday"><img src="{{ asset('img/edit.ico') }}" height="30" width="30" /></a>
+				       {% else %}
+						<a href="{{ app.request.uriForPath('/#!/menu/') }}{{ entity.id }}/showtoday"><img src="{{ asset('img/show.ico') }}" height="30" width="30" /></a>
                                        {% endif %}
                </td>
             </tr>

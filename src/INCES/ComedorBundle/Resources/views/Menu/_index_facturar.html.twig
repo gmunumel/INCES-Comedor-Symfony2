@@ -2,11 +2,15 @@
     <div class="side-dock">
         <div class="social-block">
             {% render 'INCESComedorBundle:Usuario:lunchToday' %}
+	    <br />
+	    <div class="center">
+                <a href="{{ app.request.uriForPath('/#!/contabilidad/reporteingresostoday') }}" ><button type="button" >Reporte de Ingresos</button></a>
+            </div> 
             <br />
             <div class="center">
                 <a href="{{ app.request.uriForPath('/#!/usuario/newexterno') }}" ><button type="button" >Crear Usuario Externo</button></a>
             </div>
-        </div>
+         </div>
     </div>
 </div>
 
