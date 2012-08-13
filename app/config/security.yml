@@ -34,9 +34,27 @@ security:
 
     access_control:
         - { path: ^/secured/admin, roles: ROLE_ADMIN }
-        #- { path: ^/menu/new, roles: [ROLE_OPERADOR, ROLE_GERENTE, ROLE_ADMIN] }
-        #- { path: ^/menu, roles: [ROLE_USUARIO, ROLE_OPERADOR, ROLE_GERENTE, ROLE_ADMIN] }
-        #- { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/menu/newtoday, roles: [ROLE_OPERADOR, ROLE_GERENTE, ROLE_ADMIN] }
+        - { path: ^/menu/new, roles: [ROLE_GERENTE, ROLE_ADMIN] }
+        - { path: ^/menu/facturar, roles: [ROLE_OPERADOR, ROLE_GERENTE, ROLE_ADMIN] }
+        - { path: ^/menu, roles: [ROLE_GERENTE, ROLE_ADMIN] }
+        - { path: ^/usuario/searchalnc, roles: [ROLE_OPERADOR, ROLE_GERENTE, ROLE_ADMIN] }
+        - { path: ^/contabilidad/reporteingresostoday, roles: [ROLE_OPERADOR, ROLE_GERENTE, ROLE_ADMIN] }
+        - { path: ^/usuario/newexterno, roles: [ROLE_OPERADOR, ROLE_GERENTE, ROLE_ADMIN] }
+        - { path: ^/usuario/new, roles: [ROLE_GERENTE, ROLE_ADMIN] }
+        - { path: ^/usuario/cargamasiva, roles: [ROLE_GERENTE, ROLE_ADMIN] }
+        - { path: ^/usuario/editmasivo, roles: [ROLE_GERENTE, ROLE_ADMIN] }
+        - { path: ^/usuario/.*/edit, roles: [ROLE_GERENTE, ROLE_ADMIN] }
+        - { path: ^/usuario, roles: [ROLE_GERENTE, ROLE_ADMIN] }
+        - { path: ^/admin/list, roles: [ROLE_ADMIN] }
+        - { path: ^/admin/register, roles: [ROLE_ADMIN] }
+        - { path: ^/admin/profile/edit, roles: [ROLE_ADMIN] }
+        - { path: ^/contabilidad/reporteingresos, roles: [ROLE_ADMIN] }
+        - { path: ^/contabilidad/reporteusuarios, roles: [ROLE_ADMIN] }
+        - { path: ^/contabilidad, roles: [ROLE_ADMIN] }
+        - { path: ^/rol/new, roles: [ROLE_ADMIN] }
+        - { path: ^/rol/.*/edit, roles: [ROLE_ADMIN] }
+        - { path: ^/rol, roles: [ROLE_ADMIN] }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        #- { path: ^/menu/facturar, roles: [ROLE_OPERADOR, ROLE_GERENTE, ROLE_ADMIN] }
         #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
